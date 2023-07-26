@@ -5,13 +5,17 @@ GoalSense is a user-friendly web application designed to help individuals in the
 ## Features
 
 - Create and manage personal goals and habits.
+- Keep goals private or allow public views.
 - Track progress through an intuitive and clutter-free interface.
 - Quickly analyze data visually with our easy to read calendar.
 - Personalize the app's appearance according to individual preferences.
 - Responsive design for seamless use across different devices.
+- Follow other users with the ability to 'like' and comment their public goals.
+- 'Feed' view based on followed users.
 
 Coming soon:
 
+- Pomodoro timer to help with finding balance betwen focus and healthy breaks.
 - Set reminders and notifications to stay on track.
 
 ## How It's Made:
