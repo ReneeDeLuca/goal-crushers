@@ -40,11 +40,9 @@ Frontend:
 
 ### Prerequisites
 
-Before running the NeuroTrack web app, make sure you have the following installed on your system:
-
-Node.js is required
-npm install
-Create a .env file in the root directory and set the required environment variables, such as database credentials, API keys, etc.
+- Node.js (required)
+- npm install
+- Create a .env file in the root directory and set the required environment variables, such as database credentials, API keys, etc.
 
 ## Optimizations
 
