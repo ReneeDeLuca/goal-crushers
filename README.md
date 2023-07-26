@@ -24,16 +24,19 @@ Coming soon:
 
 Backend:
 
-- Node.js with Express
+- Node.js: Backend server environment for building scalable web applications.
+- Express.js: Web application framework for Node.js, used to handle routing and server-side logic.
 - MVC (Model-View-Controller) Architecture
 - JSON Web Token stored in secure httpOnly cookie for authentication
-- MongoDB w/ Mongoose
-- Cloudinary for image cloud storage
-- Custom Error Handler
+- MongoDB: NoSQL database for storing user data securely.
+- Mongoose: straight-forward, schema-based solution for modeling application data.
+- Cloudinary: Digital Asset Management (DAM) focused on flexibility, intelligent automation, and scale.
+- Custom Error Handler -
 
 Frontend:
 
--
+- JavaScript: Programming language for implementing interactive functionality.
+- Tailwind CSS: Utility-first CSS framework for easy and consistent UI design.
 
 ## Optimizations
 
