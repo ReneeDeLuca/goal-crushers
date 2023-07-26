@@ -38,9 +38,29 @@ Frontend:
 - JavaScript: Programming language for implementing interactive functionality.
 - Tailwind CSS: Utility-first CSS framework for easy and consistent UI design.
 
+### Prerequisites
+
+Before running the NeuroTrack web app, make sure you have the following installed on your system:
+
+Node.js is required
+npm install
+Create a .env file in the root directory and set the required environment variables, such as database credentials, API keys, etc.
+
 ## Optimizations
 
-- Authentication/Route Protection:
-  Changed from original authentication/session strategy to JSON Web Token within Secure httpOnly cookie to reduce storage needs. Cookie is stored in the browser instead of session information being stored in the DB. Upon logout, the cookie is destroyed. Authentication middleware ensures that the routes are protected.
+**MVC Architecture**
+
+GoalSense follows the MVC architecture to ensure a clear separation of concerns and maintainable code:
+
+- Model: Responsible for managing the data and business logic. It interacts with the database to store and retrieve goal and habit information.
+- View: Handles the presentation and user interface. The views are designed with low perceptual load to support users in the neurodivergent community.
+- Controller: Acts as the intermediary between the model and the view. It processes user input, triggers appropriate actions, and updates the view based on the model's data.
+
+**Authentication/Route Protection**
+
+- Changed from original authentication/session strategy to JSON Web Token within Secure httpOnly cookie to reduce storage needs.
+- Cookie is stored in the browser instead of session information being stored in the DB.
+- Upon logout, the cookie is destroyed.
+- Authentication middleware ensures that the routes are protected.
 
 ## Lessons Learned/Reinforced:
