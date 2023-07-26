@@ -10,7 +10,8 @@ GoalSense is a user-friendly web application designed to help individuals in the
 - Quickly analyze data visually with our easy to read calendar.
 - Personalize the app's appearance according to individual preferences.
 - Responsive design for seamless use across different devices.
-- Follow other users with the ability to 'like' and comment their public goals.
+- Ability to 'like' and comment on public goals of other users.
+- Follow other users to offer support and encouragement.
 - 'Feed' view based on followed users.
 
 Coming soon:
