@@ -5,7 +5,7 @@ import {
     updateUserProfile,
     getUserLoginEdit,
     updateUserLogin,
-    getUserProfile,
+    getUserDashboard,
     deleteUser
 } from '../controllers/userController.js';
 import { protect } from "../middleware/authMiddleware.js";
@@ -17,8 +17,8 @@ const router = express.Router();
 //Since linked from server js treat each path as:
 //user/:id, user/updateUserProfile, etc
 
-//Enables user to view user profile
-router.get("/:id", protect, getUserProfile);
+//Enables user to view user Dashboard
+router.get("/:id", protect, getUserDashboard);
 
 //Enables user to view edit user profile page
 router.get("/profileEdit/:id", protect, getUserProfileEdit);

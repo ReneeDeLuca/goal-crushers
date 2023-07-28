@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import Loader from '../components/Loader';
 import { useUpdateUserMutation } from '../slices/mainApiSlice';
 import { setCredentials } from '../slices/authSlice';
+import AddGoal from '../components/AddGoal';
 
 const ProfileScreen = () => {
   const [email, setEmail] = useState('');
@@ -48,6 +49,8 @@ const ProfileScreen = () => {
     }
   };
   return (
+    <>
+    <AddGoal />
     <FormContainer>
       <h1>Update Profile</h1>
 
@@ -101,6 +104,7 @@ const ProfileScreen = () => {
         </Col>
       </Row>
     </FormContainer>
+    </>
   );
 };
 

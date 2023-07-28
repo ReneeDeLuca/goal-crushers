@@ -18,14 +18,8 @@ const GoalSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
-  updatedAt: {
-    type: Date,
-    default: Date.now,
-    required: true,
-  },
-  public: {
+  isPublic: {
     type: Boolean,
-    default: false,
     required: true,
   },
   deleted: {
@@ -38,6 +32,13 @@ const GoalSchema = new mongoose.Schema({
     default: 0,
     required: true,
   },
+  endDate: {
+    type: Date,
+		required: true,
+  },
+},
+{
+  timestamps: true,
 });
 
 //MongoDB Collection named here - will give lowercase plural of name 

@@ -133,7 +133,7 @@ const updateUserLogin = asyncHandler(async (req, res) => {
 
 // @desc Get user profile
 // route GET /user/:id
-const getUserProfile = asyncHandler( async (req, res) => {
+const getUserDashboard = asyncHandler( async (req, res) => {
   try {
     //id parameter comes from the user routes
     //router.get("/:id", protect, getUserProfile);
@@ -175,6 +175,6 @@ export{
     updateUserProfile,
     getUserLoginEdit,
     updateUserLogin,
-    getUserProfile,
+    getUserDashboard,
     deleteUser
 }
