@@ -36,8 +36,12 @@ Backend:
 
 Frontend:
 
-- JavaScript: Programming language for implementing interactive functionality.
-- Tailwind CSS: Utility-first CSS framework for easy and consistent UI design.
+- React
+- React Bootstrap
+- React Router DOM
+- Vite
+- React Redux Toolkit
+- React Toastify
 
 ### Prerequisites
 
