@@ -1,59 +1,65 @@
-import { useSelector, useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { useLogoutMutation } from '../slices/mainApiSlice';
-import { logout } from '../slices/authSlice';
+import { useSelector } from "react-redux";
+import HamburgerMenu from "./HamburgerMenu";
 
-const Header = () => {
+
+export default function Header() {
+
   const { userInfo } = useSelector((state) => state.auth);
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
-  const [logoutApiCall] = useLogoutMutation();
-
-  const logoutHandler = async () => {
-    try {
-      await logoutApiCall().unwrap();
-      dispatch(logout());
-      navigate('/login');
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
   return (
-    <header>
-      <nav >
-        <ul>
-          <li><a href='/'>GoalSense</a></li>
-          <li className='ms-auto'>
-            {userInfo ? (
+    <>
+      { /* Navbar */}
+      <nav className="relative container mx-auto p-6">
+        { /* Flex container */}
+        <div className="flex items-center justify-between">
+          { /* Logo and Name */}
+        </div>
+        <div className="lg:flex lg:items-center lg:justify-between">
+          <div className="min-w-0 flex-1">
+            <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
+              GoalSense
+            </h2>
+            <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
+            </div>
+          </div>
+          <div className="mt-5 flex lg:ml-4 lg:mt-0">
+            {(!userInfo) ? (
               <>
-                <ul>
-                  <li id='username'>{userInfo.name}</li>
+                <span className="hidden sm:block">
+                  <button
+                    type="button"
+                    className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                  >
+                    Sign In
+                  </button>
+                </span>
 
-                  <li><a href='/profile'>     Dashboard</a></li>
-
-                  <li><a href='/profile'>Feed</a></li> 
-
-                  <li><a href='/profile'>Profile</a></li>
-
-                  <li><a href='/profile'>Settings</a></li> 
-
-                  <li onClick={logoutHandler}><a href='/login'>Logout</a></li>
-                </ul>
-                </>
-              ) : (
-                <>
-                  <li><a href='/login'>Sign In</a></li>
-                  <li><a href='/register'>Sign Up</a></li>
-                </>
-              )}
-          </li>
-        </ul>
-      </nav>
-    </header>
+                <span className="ml-3 hidden sm:block">
+                  <button
+                    type="button"
+                    className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
+                  >
+                    Sign Up
+                  </button>
+                </span>
+              </>
+            ) : (
+              <>
+                <div className="min-w-0 flex-1 inline-flex">
+                  <div>
+                    <img className="h-10 w-10 rounded-full ring-2 ring-white" src="/4900_8_04_catalyststuff.jpg" alt="" />
+                  </div>
+                  <span className="font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight">
+                    {userInfo.name}</span>
+                  <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
+                  </div>
+                </div>
+                <HamburgerMenu />
+              </>
+            )}
+          </div>
+        </div>
+      </nav >
+    </>
   );
-};
-
-export default Header;
+}

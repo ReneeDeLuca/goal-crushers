@@ -1,18 +1,18 @@
 import { Outlet } from 'react-router-dom';
-import HeaderTW from './components/HeadingTailwindUI'
-import {ToastContainer} from 'react-toastify';
+import Header from './components/Header'
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
 
   return (
     <>
-      <HeaderTW />
+      <Header />
       <ToastContainer />
-      <section className='my-2'>
+      <section className='flex min-h-full flex-1 flex-col justify-center px-6 py-2 lg:px-8'>
         <Outlet />
       </section>
-      
+
     </>
   );
 };
