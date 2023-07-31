@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Form, Button } from 'react-bootstrap';
 import FormContainer from '../components/FormContainer';
 import { toast } from 'react-toastify';
 import { useAddGoalMutation } from '../slices/goalSlice';
@@ -46,69 +45,66 @@ const AddGoal = () => {
       
     return (
         <>
-        <Button
+        <button
             type='button'
-            variant='primary'
             className='my-3'
             onClick={() => setShowAddGoal(true)}
         >
             Add Goal
-        </Button>
+        </button>
         <div> { showAddGoal ? 
         <FormContainer>
             <h1>Add Goal</h1>
 
-            <Form onSubmit={submitHandler}>
-                <Form.Group className='my-2' controlId='title'>
-                    <Form.Label>Goal Title</Form.Label>
-                    <Form.Control 
+            <form onSubmit={submitHandler}>
+                <div className='my-2 title'>
+                    <label>Goal Title</label>
+                    <input 
                         type='text'
                         placeholder='Enter goal title'
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         aria-describedby="titleHelpBlock"
-                    ></Form.Control>
-                    <Form.Text id="passwordHelpBlock" muted>
+                    ></input>
+                    <span>
                         Enter your goal title here. Be as specific as you like. For example: Play guitar for 30 minutes every day for 1 year or Cook at home today. 
-                    </Form.Text>
-                </Form.Group>
-                <Form.Group className='my-2' controlId='endDate'>
-                    <Form.Label>End Date</Form.Label>
-                    <Form.Control
+                    </span>
+                </div>
+                <div className='my-2 endDate'>
+                    <label>End Date</label>
+                    <input
                         type="date"
                         name="datepic"
                         placeholder="End Date"
                         value={endDate}
                         onChange={(e) => setEndDate(e.target.value)}
                     />
-                </Form.Group>
-                <Form.Group className='my-2' controlId='public'>
-                    <Form.Label>Make your goal private?</Form.Label>
-                    <Form.Check // prettier-ignore
+                </div>
+                <div className='my-2 isPublic'>
+                    <label>Make your goal private?</label>
+                    <input 
                         type="switch"
                         label="Make your goal private?"
                         aria-label='Make your goal private?'
                         onChange={togglePublic}
-                    ></Form.Check>
-                </Form.Group>
-                <Button
+                    ></input>
+                </div>
+                <button
                     type= 'submit'
-                    variant="primary"
                     className='mt-3'
                     disabled={isLoading}
                 >
                     {isLoading ? 'Loading…' : 'Submit'}
-                </Button>
+                </button>
                 {'   '}
-                <Button 
+                <button 
                     type='button' 
-                    variant='primary' 
                     className='mt-3'
                     onClick={() => setShowAddGoal(false)}
                 >
                     Cancel
-                </Button>
-            </Form>
+                </button>
+            </form>
 
         </FormContainer>
         : null } </div>
