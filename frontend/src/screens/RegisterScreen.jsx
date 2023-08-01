@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Form, Button, Row, Col } from 'react-bootstrap';
 import FormContainer from '../components/FormContainer';
-import Loader from '../components/Loader';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRegisterMutation } from '../slices/mainApiSlice';
@@ -17,7 +15,7 @@ const RegisterScreen = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [register, { isLoading }] = useRegisterMutation();
+  const [register] = useRegisterMutation();
 
   const { userInfo } = useSelector((state) => state.auth);
 
@@ -45,8 +43,8 @@ const RegisterScreen = () => {
   return (
     <FormContainer>
       <h1>Register</h1>
-      <Form onSubmit={submitHandler}>
-        <Form.Group className='my-2' controlId='name'>
+      <form onSubmit={submitHandler}>
+        {/* <Form.Group className='my-2' controlId='name'>
           <Form.Label>Name</Form.Label>
           <Form.Control
             type='name'
@@ -89,14 +87,14 @@ const RegisterScreen = () => {
           Register
         </Button>
 
-        {isLoading && <Loader />}
-      </Form>
+        {isLoading && <Loader />} */}
+      </form>
 
-      <Row className='py-3'>
+      {/* <Row className='py-3'>
         <Col>
           Already have an account? <Link to={`/login`}>Login</Link>
         </Col>
-      </Row>
+      </Row> */}
     </FormContainer>
   );
 };

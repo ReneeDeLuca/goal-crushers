@@ -1,10 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { Form, Button, Row, Col } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import FormContainer from '../components/FormContainer';
 import { toast } from 'react-toastify';
-import Loader from '../components/Loader';
 import { useUpdateUserMutation } from '../slices/mainApiSlice';
 import { setCredentials } from '../slices/authSlice';
 import AddGoal from '../components/AddGoal';
@@ -20,7 +17,7 @@ const ProfileScreen = () => {
 
   const { userInfo } = useSelector((state) => state.auth);
 
-  const [updateProfile, { isLoading }] = useUpdateUserMutation();
+  const [updateProfile, ] = useUpdateUserMutation();
 
   useEffect(() => {
     setName(userInfo.name);
@@ -51,7 +48,7 @@ const ProfileScreen = () => {
   return (
     <>
     <AddGoal />
-    <FormContainer>
+    {/* <FormContainer>
       <h1>Update Profile</h1>
 
       <Form onSubmit={submitHandler}>
@@ -103,7 +100,7 @@ const ProfileScreen = () => {
           <Link to={`/logout`}>Logout</Link>
         </Col>
       </Row>
-    </FormContainer>
+    </FormContainer> */}
     </>
   );
 };

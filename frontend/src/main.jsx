@@ -4,8 +4,7 @@ import App from './App.jsx'
 import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom'
 import store from './store';
 import { Provider } from 'react-redux';
-import 'bootstrap/dist/css/bootstrap.min.css'
-import './index.css'
+import './input.css'
 import HomeScreen from './screens/HomeScreen.jsx'
 import LoginScreen from './screens/LoginScreen.jsx'
 import RegisterScreen from './screens/RegisterScreen.jsx'
