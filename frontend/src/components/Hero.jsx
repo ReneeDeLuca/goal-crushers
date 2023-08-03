@@ -1,62 +1,29 @@
-import FormContainer from "./FormContainer";
-import { useSelector } from 'react-redux';
-import Dashboard from "./Dashboard";
-
 
 
 const Hero = () => {
-
-  const { userInfo } = useSelector((state) => state.auth);
   return (
-    <>
-    {(!userInfo) ? (
-    <FormContainer className="flex min-h-full flex-1 flex-col justify-center px-6 py-6">
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-6">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="my-4 text-center text-3xl font-bold leading-9 tracking-tight text-gray-900">
-            Welcome to GoalSense
-            </h2>
-            <div className="divide-y divide-slate-400">
-                <div className="py-1"></div>
-                <div className="py-1"></div>
-            </div>
-          <h3 className='text-center my-4 text-l font-bold leading-9 tracking-tight text-gray-600'>
+    <div className=' py-5'>
+      <section className='d-flex justify-content-center'>
+        <section className='p-5 d-flex flex-column align-items-center hero-card bg-light w-75'>
+          <h1 className='text-center mb-4'>Welcome to GoalSense</h1>
+          <p className='text-center mb-4'>
             Track your goals with a simple, easy to use interface.
-          </h3>
-          <div className="divide-y divide-slate-400">
-                <div className="py-1"></div>
-                <div className="py-1"></div>
+          </p>
+          <div className='d-flex'>
+            <a href='/login'>
+            <button className='me-3'>
+              Sign In
+            </button>
+            </a>
+            <a href='/register'>
+            <button className='me-3'>
+              Sign Up
+            </button>
+            </a>
           </div>
-          <>
-            <section className='sm:mx-auto sm:w-full sm:max-w-sm my-4 inline-flex items-center justify-center'>
-                <span className="hidden sm:block">
-                  <button
-                    type="button"
-                    className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                  >
-                    Sign In
-                  </button>
-                </span>
-
-                <span className="ml-3 hidden sm:block">
-                  <button
-                    type="button"
-                    className="inline-flex items-center rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50"
-                  >
-                    Sign Up
-                  </button>
-                </span>
-            </section>
-              </>
-        </div>
-      </div>
-    </FormContainer>
-    ) : (
-      <>
-      <Dashboard />
-      </>
-      )}
-    </> 
+        </section>
+      </section>
+    </div>
   );
 };
 
