@@ -57,21 +57,23 @@ const AddGoal = () => {
             <h1>Add Goal</h1>
 
             <form onSubmit={submitHandler}>
-                <div className='my-2 title'>
-                    <label>Goal Title</label>
+                <div className='my-4 title'>
+                    <label className='mb-2'>Enter Goal Title</label>
                     <input 
                         type='text'
-                        placeholder='Enter goal title'
+                        placeholder='Be as specific as you like.'
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         aria-describedby="titleHelpBlock"
-                    ></input>
+                    >
+                    </input>
                     <span>
-                        Enter your goal title here. Be as specific as you like. For example: Play guitar for 30 minutes every day for 1 year or Cook at home today. 
+                        Eg: Play guitar for 30 minutes every day for 1 year or Cook at home today. 
                     </span>
                 </div>
-                <div className='my-2 endDate'>
-                    <label>End Date</label>
+                <hr />
+                <div className='my-4 endDate'>
+                    <label className='mb-2'>Select an End Date</label>
                     <input
                         type="date"
                         name="datepic"
@@ -89,19 +91,23 @@ const AddGoal = () => {
                         onChange={togglePublic}
                     ></input>
                 </div>
-                <button
-                    type= 'submit'
-                    className='mt-3'
-                    disabled={isLoading}
-                >
+                <div className="mt-5 flex lg:ml-4 lg:mt-0">
+                    <span className=" mr-2 hidden sm:block">
+                    <button
+                        type="submit"
+                        className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        disabled={isLoading}
+                    >
                     {isLoading ? 'Loading…' : 'Submit'}
-                </button>
-                {'   '}
-                <button 
-                    type='button' 
-                    className='mt-3'
-                    onClick={() => setShowAddGoal(false)}
-                >
+                    </button>
+                    </span>
+                <span className="ml-2 hidden sm:block">
+                    <button
+                        type="button"
+                        className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        onClick={handleAddClick}
+                    >
+
                     Cancel
                 </button>
             </form>
