@@ -49,3 +49,80 @@
 .open .hamburger-bottom {
     transform: rotate(-45deg) translateY(6px) translate(-6px);
 }
+
+/* Calendar */
+
+.goal-container{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: center;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 800px;
+    padding: 0 20px;
+    border: 2px solid red;
+}
+
+.goal-info {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 766px;
+    padding-left: 29px;
+}
+
+.goal-meta-data {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 766px;
+    justify-content: space-between;
+}
+
+.calendar-graph{
+    table-layout: fixed;
+    width: 100%;
+    max-width: 726px;
+    border-collapse: separate;
+    border: 3px solid indigo;
+    border-radius: 5px;
+    text-align: start;
+  }
+
+thead .table-head-row {
+    height: 15px;
+}
+
+thead th .days {
+    table-layout: fixed;
+    width: 29px;
+  }
+.calendar-label{
+    width: 29px;
+    font-size: .25rem;
+    position: relative;
+    background-color: transparent;
+    margin-right: 2px;
+}
+.day-label {
+    vertical-align: top;
+    bottom: -4px;
+}
+.goal-cal-day {
+    width: 13px;
+    margin: 1px;
+    background-color: lightslategray;
+    border-radius: 1px;
+    border-collapse: separate;
+}
+
+tr {
+    height: 13px;
+    line-height: 11px ;
+}
+
+#calendar-chart {
+    display: flex;
+    flex-direction: row;
+}
