@@ -1,24 +1,8 @@
+import createCalendar from "./CreateCalendar";
+
 function Calendar() {
 
-    const createCalendar = () => {
-        for (let i = 0; i < 7; i++) {
-            let row = document.createElement('tr');
-            row.className = `index-${i}`;
-            document.getElementById('date-grid')[0].appendChild(row);
-            for (let j = 0; j < 53; j++) {
-                let cell = document.createElement('td');
-                if(j === 0 || j === 1){
-                    cell.className = `calendar-label index-${j}`;
-                    row.appendChild(cell);
-                    let label = document.createElement('span');
-                    label.className = 'sr-only';
-                } else {
-                cell.className = `goal-cal-day index-${j}`;
-                row.appendChild(cell);
-                }
-            }
-        }
-    }
+    
     const handleGoalUpdate = () => {
         console.log('update goal');
     }
@@ -168,7 +152,7 @@ function Calendar() {
                             </tr>
                         </thead>
                         <tbody className="date-grid">
-                            {createCalendar()}
+                            
                         </tbody>
                         
                     </table>
