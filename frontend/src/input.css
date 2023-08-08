@@ -49,3 +49,103 @@
 .open .hamburger-bottom {
     transform: rotate(-45deg) translateY(6px) translate(-6px);
 }
+
+/* Goal Container */
+
+#goal-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 auto;
+    width: 100%;
+    max-width: 800px;
+    padding: 0 20px;
+    border: 2px solid indigo;
+    border-radius: 5px;
+}
+
+.goal-info {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 766px;
+    padding-left: 29px;
+}
+
+/* Calendar */
+
+#calendar-chart {
+    display: flex;
+    flex-direction: row;
+    flex-basis: auto;
+    flex-shrink: 0;
+    max-height: 130px;
+    min-height: 130px;
+    min-width: fit-content;
+
+}
+
+.calendar-label{
+    table-layout: fixed;
+    width: 29px;
+    font-size: .25rem;
+    position: relative;
+    background-color: transparent;
+    margin-right: 2px; 
+    height: 15px;   
+}
+
+.days-of-week{
+    max-height: 130px;
+    margin-top: 6px;
+}
+
+thead .table-head-row {
+    height: 15px;
+    font-size: 11px;
+    line-height: 11px;
+    padding: 0 0 5px 0;
+}
+
+tbody tr .days {
+    table-layout: fixed;
+    width: 29px;
+    height: 11px;
+    font-size: 11px;
+    line-height: 11px;
+}
+
+tbody tr td .day-label{
+    bottom: -4px;
+}
+
+.calendar-graph{
+    table-layout: fixed;
+    width: 100%;
+    max-width: 726px;
+    border-collapse: separate;
+    text-align: start;
+  }
+
+tbody tr {
+    height: 11px;
+    font-size: .75rem;
+    line-height: .75rem;
+}
+
+tr .goal-cal-day {
+    table-layout: fixed;
+    max-width: 11px;
+    margin: 1px;
+    background-color: lavender;
+    border-radius: 3px;
+    
+}
+
+.goal-meta-data {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    max-width: 766px;
+    justify-content: space-between;
+}

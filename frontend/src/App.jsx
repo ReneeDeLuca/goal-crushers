@@ -9,7 +9,7 @@ const App = () => {
     <>
       <Header />
       <ToastContainer />
-      <section className='flex min-h-full flex-1 flex-col justify-center px-6 py-2 lg:px-8'>
+      <section className='flex flex-col justify-center px-6 py-2 lg:px-8'>
         <Outlet />
       </section>
 
