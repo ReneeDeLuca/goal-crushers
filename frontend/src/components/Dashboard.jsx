@@ -1,5 +1,5 @@
 import AddGoal from "./AddGoal"
-import Calendar from "./Calendar"
+import Goal from "./Goal"
 
 const Dashboard = () => {
     return (
@@ -9,7 +9,7 @@ const Dashboard = () => {
         </div>
         <AddGoal />
         
-        <Calendar />
+        <Goal />
         </>
     )
 }

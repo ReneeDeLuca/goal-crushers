@@ -51,47 +51,49 @@ export default function HamburgerMenu() {
             </span>
             {/* Hamburger Menu */}
             <div>
-                <ul id="menu" className="absolute flex-col items-end hidden self-end py-8 mt-10 space-y-2 font-bold sm:self-center right-6 px-8 drop-shadow-md origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-                    <li>
-                        {(!userInfo) ? (
-                            <a href="/login" className="text-gray-700 hover:text-darkGrayishBlue">Login</a>
-                        ) : (
-                            <>
-                                <li>
-                                    <span className="text-gray-700 hover:text-darkGrayishBlue">You are signed in as:</span>
-                                </li>
-                                <li>
-                                    <span className="text-gray-900 hover:text-darkGrayishBlue">{userInfo.email}</span>
-                                </li>
+                <>
+                {(!userInfo) ? (
+                    <ul id="menu" className="absolute flex-col items-end hidden self-end py-8 mt-10 space-y-2 font-bold sm:self-center right-6 px-8 drop-shadow-md origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">                        
+                            <li>
+                                <a href="/login" className="text-gray-700 hover:text-darkGrayishBlue">Login</a>
+                            </li>
+                    </ul>
+                ) : (
+                    <ul id="menu" className="absolute flex-col items-end hidden self-end py-8 mt-10 space-y-2 font-bold sm:self-center right-6 px-8 drop-shadow-md origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+                        <li>
+                            <span className="text-gray-700 hover:text-darkGrayishBlue">You are signed in as:</span>
+                        </li>
+                        <li>
+                            <span className="text-gray-900 hover:text-darkGrayishBlue">{userInfo.email}</span>
+                        </li>
 
-                                <li className="divide-y divide-slate-400">
-                                    <div className="py-1"></div>
-                                    <div className="py-1"></div>
-                                </li>
+                        <li className="divide-y divide-slate-400">
+                            <div className="py-1"></div>
+                            <div className="py-1"></div>
+                        </li>
 
-                                <li>
-                                    <a href="#" className="text-gray-700 hover:text-darkGrayishBlue">Dashboard</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="text-gray-700 hover:text-darkGrayishBlue">Feed</a>
-                                </li>
-                                <li>
-                                    <a href="/profile" className="text-gray-700 hover:text-darkGrayishBlue">Profile</a>
-                                </li>
-                                <li>
-                                    <a href="#" className="text-gray-700 hover:text-darkGrayishBlue">Settings</a>
-                                </li>
-                                <li className="divide-y divide-slate-400">
-                                    <div className="py-1"></div>
-                                    <div className="py-1"></div>
-                                </li>
-                                <li>
-                                    <span className="text-gray-700 hover:text-darkGrayishBlue cursor-pointer" onClick={logoutHandler}>Logout</span>
-                                </li>
-                            </>
-                        )}
-                    </li>
-                </ul>
+                        <li>
+                            <a href="#" className="text-gray-700 hover:text-darkGrayishBlue">Dashboard</a>
+                        </li>
+                        <li>
+                            <a href="#" className="text-gray-700 hover:text-darkGrayishBlue">Feed</a>
+                        </li>
+                        <li>
+                            <a href="/profile" className="text-gray-700 hover:text-darkGrayishBlue">Profile</a>
+                        </li>
+                        <li>
+                            <a href="#" className="text-gray-700 hover:text-darkGrayishBlue">Settings</a>
+                        </li>
+                        <li className="divide-y divide-slate-400">
+                            <div className="py-1"></div>
+                            <div className="py-1"></div>
+                        </li>
+                        <li>
+                            <span className="text-gray-700 hover:text-darkGrayishBlue cursor-pointer" onClick={logoutHandler}>Logout</span>
+                        </li>
+                    </ul>
+                    )}
+                </>
             </div>
         </>
     )
