@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { useUpdateUserMutation } from '../slices/mainApiSlice';
-import { setCredentials } from '../slices/authSlice';
+import { useUpdateProfileMutation } from '../slices/userApiSlice';
 import AddGoal from '../components/AddGoal';
 
 const ProfileScreen = () => {
@@ -17,7 +16,7 @@ const ProfileScreen = () => {
 
   const { userInfo } = useSelector((state) => state.auth);
 
-  const [updateProfile, ] = useUpdateUserMutation();
+  const [updateProfile, ] = useUpdateProfileMutation();
 
   useEffect(() => {
     setName(userInfo.name);

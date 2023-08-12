@@ -73,7 +73,7 @@ export default function HamburgerMenu() {
                         </li>
 
                         <li>
-                            <a href="#" className="text-gray-700 hover:text-darkGrayishBlue">Dashboard</a>
+                            <a href="/" className="text-gray-700 hover:text-darkGrayishBlue">Dashboard</a>
                         </li>
                         <li>
                             <a href="#" className="text-gray-700 hover:text-darkGrayishBlue">Feed</a>
@@ -82,7 +82,7 @@ export default function HamburgerMenu() {
                             <a href="/profile" className="text-gray-700 hover:text-darkGrayishBlue">Profile</a>
                         </li>
                         <li>
-                            <a href="#" className="text-gray-700 hover:text-darkGrayishBlue">Settings</a>
+                            <a href="/settings" className="text-gray-700 hover:text-darkGrayishBlue">Settings</a>
                         </li>
                         <li className="divide-y divide-slate-400">
                             <div className="py-1"></div>

@@ -15,7 +15,7 @@ const router = express.Router();
 
 //Goal Routes
 //Since linked from server js treat each path as:
-//goal/:id, goal/createGoal, goal/likeGoal/:id, goal/deleteGoal/:id
+//api/goal/:id, api/goal/, api/goal/likeGoal/:id, api/goal/deleteGoal/:id
 
 //Enables user to view single goal by id
 router.get("/:id", protect, getGoal);

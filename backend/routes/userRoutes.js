@@ -24,13 +24,13 @@ router.get("/:id", protect, getUserDashboard);
 router.get("/profileEdit/:id", protect, getUserProfileEdit);
 
 //Enables user to edit user profile w/ cloudinary for media uploads
-router.post("profile/:id", protect, upload.single("file"), updateUserProfile);
+router.put("profile/:id", protect, upload.single("file"), updateUserProfile);
 
 //Enables user to view edit user login page
 router.get("/loginEdit/:id", protect, getUserLoginEdit);
 
 //Enables user to edit user login
-router.post("/login/:id", protect, updateUserLogin);
+router.put("/login/:id", protect, updateUserLogin);
 
 //Enables user to delete user data. In controller, uses POST model to delete profile from MongoDB collection
 router.delete("/:id", protect, deleteUser);

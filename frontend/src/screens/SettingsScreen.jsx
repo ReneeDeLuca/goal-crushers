@@ -2,50 +2,58 @@ import { useState, useEffect } from 'react';
 import FormContainer from '../components/FormContainer';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { useRegisterMutation } from '../slices/mainApiSlice';
-import { setCredentials } from '../slices/authSlice';
 import { toast } from 'react-toastify';
+import { 
+    useUpdateLoginMutation
+} from '../slices/userApiSlice';
+import { setCredentials } from '../slices/authSlice';
 
-const RegisterScreen = () => {
-  const [name, setName] = useState('');
+
+const SettingsScreen = () => {
   const [email, setEmail] = useState('');
+  const [name, setName] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [register] = useRegisterMutation();
-
   const { userInfo } = useSelector((state) => state.auth);
 
+  const [updateSettings ] = useUpdateLoginMutation();
+
   useEffect(() => {
-    if (userInfo) {
-      navigate('/');
-    }
-  }, [navigate, userInfo]);
+    setName(userInfo.name);
+    setEmail(userInfo.email);
+  }, [userInfo.email, userInfo.name]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
-
     if (password !== confirmPassword) {
       toast.error('Passwords do not match');
     } else {
       try {
-        const res = await register({ name, email, password }).unwrap();
-        dispatch(setCredentials({ ...res }));
-        navigate('/');
+        const res = await updateSettings({
+          _id: userInfo._id,
+          name,
+          email,
+          password,
+        }).unwrap();
+        console.log(res);
+        dispatch(setCredentials(res));
+        navigate('/settings');
+        toast.success('Settings updated successfully');
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
     }
   };
   return (
-      <FormContainer className="flex min-h-full flex-1 flex-col justify-center px-6 py-6">
+    <FormContainer className="flex min-h-full flex-1 flex-col justify-center px-6 py-6">
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-6">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-4 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Register
+            Update Login Settings
           </h2>
         </div>
       </div>
@@ -125,20 +133,13 @@ const RegisterScreen = () => {
               type="submit"
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Register
+              Update
             </button>
           </div>
         </form>
-
-        <p className="mt-10 text-center text-sm text-gray-500">
-          Already have an account?{' '}
-          <a href="/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
-            Login
-          </a>
-        </p>
       </div>
     </FormContainer>
   );
 };
 
-export default RegisterScreen;
+export default SettingsScreen;
