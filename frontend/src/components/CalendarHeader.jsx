@@ -1,8 +1,8 @@
 import getDateArray from "./DateArray";
 
-const CalendarHeader = () => {
-  let start = new Date('2023-01-06');
-    let end = new Date('2023-10-31');
+const CalendarHeader = (goal) => {
+  let start = goal.createdAt
+    let end = goal.endDate
   //variable to hold array of dates
   const headerArray = getDateArray(start, end);
   

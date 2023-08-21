@@ -5,8 +5,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { 
     useUpdateLoginMutation
-} from '../slices/userApiSlice';
-import { setCredentials } from '../slices/authSlice';
+} from '../apiSlices/userApiSlice';
+import { setCredentials } from '../apiSlices/authSlice';
 
 
 const SettingsScreen = () => {
@@ -40,9 +40,9 @@ const SettingsScreen = () => {
           password,
         }).unwrap();
         console.log(res);
-        dispatch(setCredentials(res));
+        dispatch(setCredentials({...res}));
         navigate('/settings');
-        toast.success('Settings updated successfully');
+        toast.success('Login settings updated successfully');
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }

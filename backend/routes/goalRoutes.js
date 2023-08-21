@@ -1,5 +1,6 @@
 import express from "express";
-import { getGoal,
+import { getAllGoals,
+    getGoal,
     newGoal, 
     createGoal, 
     editGoal,
@@ -16,6 +17,9 @@ const router = express.Router();
 //Goal Routes
 //Since linked from server js treat each path as:
 //api/goal/:id, api/goal/, api/goal/likeGoal/:id, api/goal/deleteGoal/:id
+
+//Enables all goals to be fetched for API
+router.get("/", protect, getAllGoals);
 
 //Enables user to view single goal by id
 router.get("/:id", protect, getGoal);

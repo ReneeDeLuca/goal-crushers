@@ -1,57 +1,48 @@
-import { useState } from 'react';
+import { useState} from 'react';
 import { useNavigate } from 'react-router-dom';
-import FormContainer from '../components/FormContainer';
+import FormContainer from './FormContainer';
 import { toast } from 'react-toastify';
-import { useAddGoalMutation } from '../apiSlices/goalApiSlice';
-import { useSelector } from 'react-redux';
+import { useUpdateGoalMutation } from '../apiSlices/goalApiSlice';
 
-const AddGoal = () => {
-    const [endDate, setEndDate] = useState(new Date());
-    const [title, setTitle] = useState('');
-    const [isPublic, setIsPublic] = useState(false);
-    const [completionData, setCompletionData] = useState({});
+const EditGoal = ({goal}) => {
 
-    const { userInfo } = useSelector((state) => state.auth);
-    const user = userInfo._id;
-
-    const [showAddGoal, setShowAddGoal] = useState(false)
+    const [endDate, setEndDate] = useState(goal.endDate);
+    const [title, setTitle] = useState(goal.title);
+    const [isPublic, setIsPublic] = useState(goal.isPublic);
     
-    const handleAddClick = () => {
-        if(showAddGoal) {
-            document.getElementById('addGoalOutline').classList.remove('border-2');
+    const [showEditGoal, setShowEditGoal] = useState(false)
+
+    const handleEditClick = () => {
+        if(showEditGoal) {
+            document.getElementById('editGoalOutline').classList.remove('border-2');
         } else {
-            document.getElementById('addGoalOutline').classList.add('border-2');
+            document.getElementById('editGoalOutline').classList.add('border-2');
         }
-        setShowAddGoal(!showAddGoal)
+        setShowEditGoal(!showEditGoal)
     }
 
     const navigate = useNavigate();
 
-    const [addGoal, {isLoading}] = useAddGoalMutation();
+    const [updateGoal, {isLoading}] = useUpdateGoalMutation();
 
-    const onTitleChanged = (e) => setTitle(e.target.value);
-    const onEndDateChanged = (e) => setEndDate(e.target.value);
+    const onTitleChange = (e) => setTitle(e.target.value);
+    const onEndDateChange = (e) => setEndDate(e.target.value);
     
-    const canSave = [title, endDate, isPublic].every(Boolean) && !isLoading;
-    
-    const togglePublic = () => setIsPublic(!isPublic);
+    const togglePublic = () => setIsPublic(!isPublic); 
 
     const submitHandler = async () => {
-        if (canSave) {
           try {
-            const res = await addGoal({ title, endDate, isPublic, completionData, user }).unwrap();
+            const res = await updateGoal({ title, endDate, isPublic }).unwrap();
             console.log(res);
             setTitle('');
             setEndDate('');
             setIsPublic();
-            setCompletionData();
             navigate('/user/:id');
             toast.success('Goal added successfully');
           } catch (err) {
             toast.error(err?.data?.message || err.error);
           }
         }
-    };
       
     return (
         <>
@@ -60,24 +51,24 @@ const AddGoal = () => {
             <button
                 type="button"
                 className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                onClick={handleAddClick}
+                onClick={handleEditClick}
             >
-            Add Goal
+            Edit Goal
             </button>
         </span>
-        <div id='addGoalOutline' className='rounded-md border-indigo-600 mt-4'> { showAddGoal ? 
+        <div id='editGoalOutline' className='rounded-md border-indigo-600 mt-4'> { showEditGoal ? 
         <FormContainer className="flex min-h-full flex-col justify-center px-6 py-6">
             <h1 className='text-xl font-bold text-gray-600'>Add Goal</h1>
 
             <form onSubmit={submitHandler}>
                 <div className='my-4 title'>
-                    <label className='mb-2'>Enter a Goal Title</label>
+                    <label className='mb-2'>Update Goal Title</label>
                     <input 
                         className='block w-full rounded-md border-0 py-1.5 pl-5 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                         type='text'
                         placeholder='Be as specific as you like.'
                         value={title}
-                        onChange={onTitleChanged}
+                        onChange={onTitleChange}
                         aria-describedby="titleHelpBlock"
                     ></input>
                     <span className='text-xs text-gray-400'>
@@ -86,12 +77,12 @@ const AddGoal = () => {
                 </div>
                 <hr />
                 <div className='my-4 endDate'>
-                    <label className='mb-2'>End Date</label>
+                    <label className='mb-2'>Update End Date</label>
                     <input
                         className='block w-full rounded-md border-0 pt-0.5 pl-5 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 align-middle focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                         type="date"
                         value={endDate}
-                        onChange={onEndDateChanged}
+                        onChange={onEndDateChange}
                     />
                 </div>
                 <hr />
@@ -110,7 +101,6 @@ const AddGoal = () => {
                         type="submit"
                         className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                         disabled={isLoading}
-                        onSubmit={() => setCompletionData({ ...completionData, date: new Date().toISOString().slice(0, 10).replace(/-/g, '-'), value: 0 }, console.log(completionData))}
                     >
                     {isLoading ? 'Loading…' : 'Submit'}
                     </button>
@@ -119,7 +109,7 @@ const AddGoal = () => {
                     <button
                         type="button"
                         className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                        onClick={() => setShowAddGoal(false)}
+                        onClick={() => setShowEditGoal(false)}
                     >
                     Cancel
                     </button>
@@ -133,4 +123,4 @@ const AddGoal = () => {
         </>
     )};
 
-export default AddGoal;
+export default EditGoal;

@@ -1,6 +1,6 @@
 import express from "express";
 import upload from "../middleware/multer.js";
-import { 
+import { getAllUsers,
     getUserProfileEdit,
     updateUserProfile,
     getUserLoginEdit,
@@ -16,6 +16,9 @@ const router = express.Router();
 //User Routes
 //Since linked from server js treat each path as:
 //user/:id, user/updateUserProfile, etc
+
+//Enables fetch for API
+router.get("/", protect, getAllUsers);
 
 //Enables user to view user Dashboard
 router.get("/:id", protect, getUserDashboard);

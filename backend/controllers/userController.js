@@ -5,6 +5,18 @@ import express from "express";
 
 const router = express.Router()
 
+// @desc    Get all users for API
+// @route   GET /api/users
+const getAllUsers = asyncHandler(async (req, res) => {
+  try{
+    const users = await User.find({}).lean();
+    res.json(users);
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ message: 'Server Error' })
+  }
+});
+
 // @desc Get user profile edit page
 // route GET /user/profileEdit/:id
 // @access Private
@@ -170,7 +182,7 @@ const deleteUser = asyncHandler(async (req, res) => {
   }
 })
 
-export{
+export{ getAllUsers,
     getUserProfileEdit,
     updateUserProfile,
     getUserLoginEdit,

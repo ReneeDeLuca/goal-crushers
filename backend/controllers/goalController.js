@@ -4,6 +4,18 @@ import express from "express";
 
 const router = express.Router()
 
+//@desc  get all goals to load to api
+//@route GET /goal
+const getAllGoals = asyncHandler(async (req, res) => {
+  try {
+    const goals = await Goal.find({}).lean()
+    res.json(goals)
+  } catch (err) {
+    console.error(err)
+    res.status(500).json({ message: 'Server Error' })
+  }
+})
+
 // @desc    Show add page
 // @route   GET /goal/add
 const newGoal = asyncHandler( async (req, res) => {
@@ -32,14 +44,9 @@ const getGoal = asyncHandler( async (req, res) => {
     if (!goal) {
       return res.render('error/404')
     }
-
-    if (goal.user._id != req.user.id && goal.status == 'private') {
-      res.render('error/404')
-    } else {
-      res.render('goal/show', {
-        goal,
-      })
-    }
+    res.render('goal/:id', {
+      goal,
+    })
   } catch (err) {
     console.error(err)
     res.render('error/404')
@@ -169,7 +176,8 @@ const updateGoalData = asyncHandler(async (req, res) => {
   }
 })
 
-export { getGoal,
+export { getAllGoals,
+  getGoal,
   newGoal, 
   createGoal, 
   editGoal,

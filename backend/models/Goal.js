@@ -10,7 +10,6 @@ const GoalSchema = new mongoose.Schema({
       x : Date,
       value : Number,
     }],
-    default: [{x : Date.now, value : 1}],
     required: true,
   },
   user: {
@@ -22,16 +21,16 @@ const GoalSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
-  deleted: {
-    type: Boolean,
-    default: false,
-    required: true,
-  },
-  likes: {
-    type: Number,
-    default: 0,
-    required: true,
-  },
+  reactions: {
+    type: [{ 
+    thumbsUp: Number, 
+    bicep: Number, 
+    heart: Number, 
+    fire: Number, 
+    star: Number,
+    }],
+    required: true, 
+},
   endDate: {
     type: Date,
 		required: true,

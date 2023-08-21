@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useLogoutMutation } from '../slices/mainApiSlice';
-import { logout } from '../slices/authSlice';
+import { useLogoutMutation } from '../apiSlices/mainApiSlice';
+import { logout } from '../apiSlices/authSlice';
 
 
 export default function HamburgerMenu() {

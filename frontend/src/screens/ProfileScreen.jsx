@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
-import { useUpdateProfileMutation } from '../slices/userApiSlice';
+import { useUpdateProfileMutation } from '../apiSlices/userApiSlice';
 import AddGoal from '../components/AddGoal';
 
 const ProfileScreen = () => {

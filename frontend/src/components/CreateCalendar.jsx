@@ -1,15 +1,24 @@
 import CalendarHeader from "./CalendarHeader";
 import CalendarBody from "./CalendarBody";
 
-const CreateCalendar = () => {
+const CreateCalendar = (goal) => {
     
     return(
         <>
         <table className="calendar-graph">
             <caption className='sr-only'>Goal activity</caption>
-                <CalendarHeader />
+                <CalendarHeader
+                    key={goal._id}
+                    id={goal._id}
+                    createdAt={goal.createdAt}
+                    endDate={goal.endDate}
+                />
                 
-                <CalendarBody />
+                <CalendarBody 
+                    key={goal._id}
+                    id={goal._id}
+                    data={goal.completionData}
+                />
                 
         </table>
 
