@@ -18,9 +18,9 @@ const AddGoal = () => {
     
     const handleAddClick = () => {
         if(showAddGoal) {
-            document.getElementById('addGoalOutline').classList.remove('border-2');
+            document.getElementById('addGoalOutline').classList.remove('border-2 mt-4');
         } else {
-            document.getElementById('addGoalOutline').classList.add('border-2');
+            document.getElementById('addGoalOutline').classList.add('border-2 mt-4');
         }
         setShowAddGoal(!showAddGoal)
     }
@@ -65,7 +65,7 @@ const AddGoal = () => {
             Add Goal
             </button>
         </span>
-        <div id='addGoalOutline' className='rounded-md border-indigo-600 mt-4'> { showAddGoal ? 
+        <div id='addGoalOutline' className='rounded-md border-indigo-600'> { showAddGoal ? 
         <FormContainer className="flex min-h-full flex-col justify-center px-6 py-6">
             <h1 className='text-xl font-bold text-gray-600'>Add Goal</h1>
 
@@ -73,6 +73,7 @@ const AddGoal = () => {
                 <div className='my-4 title'>
                     <label className='mb-2'>Enter a Goal Title</label>
                     <input 
+                        name='title'
                         className='block w-full rounded-md border-0 py-1.5 pl-5 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                         type='text'
                         placeholder='Be as specific as you like.'
@@ -88,6 +89,7 @@ const AddGoal = () => {
                 <div className='my-4 endDate'>
                     <label className='mb-2'>End Date</label>
                     <input
+                        name='endDate'
                         className='block w-full rounded-md border-0 pt-0.5 pl-5 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 align-middle focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6'
                         type="date"
                         value={endDate}
@@ -98,6 +100,7 @@ const AddGoal = () => {
                 <div className='my-4 isPublic'>
                     <label className='mb-2 mr-4'>Make your goal private?</label>
                     <input 
+                        name='isPublic'
                         type="checkbox"
                         defaultChecked={isPublic}
                         aria-label='Make your goal private?'

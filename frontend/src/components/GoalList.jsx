@@ -1,5 +1,6 @@
 import Goal from "./Goal";
 import TimeAgo from "./TimeAgo";
+import AddGoal from "./AddGoal";
 import { Link } from "react-router-dom";
 import { useGetAllGoalsQuery } from '../apiSlices/goalApiSlice'
 import { useMemo } from "react";
@@ -23,7 +24,7 @@ const GoalList = () => {
 
     let RenderedGoal = ({goal}) => {
         return (
-            <li key={goal._id} className="list-group-item">
+            <li key={goal._id}>
                 <Goal 
                     key={goal._id}
                     id={goal._id}
@@ -56,8 +57,13 @@ const GoalList = () => {
 
     return (
         <section className="goalList">
-            <h2>Goals</h2>
-            <ul className="list-group">
+            <section className='flex flex-row min-w-full justify-evenly items-center'>
+                <h2 className="px-6 py-2 lg:px-8 text-2xl font-bold text-gray-800">Goals</h2>
+                <span>            
+                    <AddGoal />
+                </span>
+            </section>
+            <ul className="goal-list-group">
                 {content}
             </ul>
         </section>

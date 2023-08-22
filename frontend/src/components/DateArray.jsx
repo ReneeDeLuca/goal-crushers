@@ -28,7 +28,7 @@ const getDateArray = (start,end) => {
 
     //push data for each day to array as an object
     const dateArray = [];
-    for (let i = 0; i <= (timePeriod + 1); i++) {
+    for (let i = 0; i <= (timePeriod); i++) {
         dateArray.push({
             date: new Date(startDate),
             dayInd: startDate.getDay(),

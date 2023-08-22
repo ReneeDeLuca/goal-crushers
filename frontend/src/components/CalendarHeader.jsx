@@ -26,12 +26,15 @@ const CalendarHeader = (goal) => {
         if (currentMonth !== -1) {
           const monthSpan = countSundaysInMonth(currentMonth, dateObj.yearInd);
           header.push(
-            // <Tooltip key={`year-${currentYear}-month-${currentMonth}`} message={`${currentYear}-${monthsAbbr[currentMonth]}`}>
-            <th className = 'basis-auto' key={`year-${currentYear}-month-${currentMonth}`} colSpan={monthSpan}>
-              {monthsAbbr[currentMonth]}
-            </th>
-            // </Tooltip>
+            <tr>
+              <td className = 'months basis-auto' key={`year-${currentYear}-month-${currentMonth}`} >
+                {monthsAbbr[currentMonth]}
+              </td>
+            </tr>
           );
+          for (let i = 1; i < monthSpan; i++) {
+            header.push(<tr></tr>);
+          }
         }
         currentMonth = dateObj.monthInd;
         currentYear = dateObj.yearInd;
@@ -42,22 +45,27 @@ const CalendarHeader = (goal) => {
     if (currentMonth !== -1) {
       const monthSpan = countSundaysInMonth(currentMonth, headerArray[headerArray.length - 1].yearInd);
       header.push(
-        // <Tooltip key={`year-${currentYear}-month-${currentMonth}`} message={`${currentYear}-${monthsAbbr[currentMonth]}`}>
-        <th className = 'basis-auto' key={`year-${currentYear}-month-${currentMonth}`} colSpan={monthSpan}>
-          {monthsAbbr[currentMonth]}
-        </th>
-        // </Tooltip>
+        <tr>
+          <td className = 'months basis-auto' key={`year-${currentYear}-month-${currentMonth}`}>
+            {monthsAbbr[currentMonth]}
+          </td>
+        </tr>
       );
+      for (let i = 1; i < monthSpan; i++) {
+        header.push(<tr></tr>);
+      }
     }
 
     return header;
   };
   return (
-    <thead>
-      <tr className="table-head-row justify-between min-w-fit shrink-0">
+    <table>
+      <tbody>
+      <th className="table-head-row">
         {generateTableHeader()}
-      </tr>
-    </thead>
+      </th>
+      </tbody>
+    </table>
   );
 }
 

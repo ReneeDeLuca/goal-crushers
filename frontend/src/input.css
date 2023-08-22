@@ -56,20 +56,22 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin: 0 auto;
-    width: 100%;
-    max-width: 800px;
-    padding: 0 20px;
+    margin: auto 0;
+    width: 18rem;
+    height: fit-content;
+    padding: 1.5rem 0;
     border: 2px solid indigo;
-    border-radius: 5px;
+    border-radius: .25rem;
+    justify-content: space-between;
 }
 
 .goal-info {
     display: flex;
     flex-direction: row;
-    width: 100%;
-    max-width: 766px;
-    padding-left: 29px;
+    min-width: 100%;
+    max-width: 18rem;
+    justify-content: space-around;
+    padding: 0 1.5rem;
 }
 
 /* Calendar */
@@ -77,75 +79,93 @@
 #calendar-chart {
     display: flex;
     flex-direction: row;
-    flex-basis: auto;
-    flex-shrink: 0;
-    max-height: 130px;
-    min-height: 130px;
-    min-width: fit-content;
-
+    height: 100%;
 }
 
 .calendar-label{
-    table-layout: fixed;
-    width: 29px;
+    table-layout: fixed;;
     font-size: .25rem;
     position: relative;
     background-color: transparent;
-    margin-right: 2px; 
-    height: 15px;   
-}
-
-.days-of-week{
-    max-height: 130px;
-    margin-top: 6px;
+    margin-right: 2px;
+    margin-top: 1rem;    
 }
 
 thead .table-head-row {
-    height: 15px;
-    font-size: 11px;
-    line-height: 11px;
+    height: 1rem;
+    font-size: .75rem;
+    line-height: .75rem;
     padding: 0 0 5px 0;
 }
 
-tbody tr .days {
+tbody tr .months {
     table-layout: fixed;
-    width: 29px;
-    height: 11px;
-    font-size: 11px;
-    line-height: 11px;
+    height: 1rem;
+    font-size: 1rem;
+    line-height: 1rem;
 }
 
-tbody tr td .day-label{
+tbody tr td .month-label{
     bottom: -4px;
 }
 
 .calendar-graph{
     table-layout: fixed;
-    width: 100%;
-    max-width: 726px;
+    height: 100%;
     border-collapse: separate;
     text-align: start;
+    margin-left: .5rem;
   }
 
 tbody tr {
-    height: 11px;
-    font-size: .75rem;
-    line-height: .75rem;
+    height: 1rem;
+    font-size: 1rem;
+    line-height: 1rem;
 }
 
-tr .goal-cal-day {
+.day-of-week {
+    text-align: center;
+    font-size: .75rem;
+    line-height: .75rem;
+    font-weight: 900;
+    flex: none;
+    width: 1rem;
+    margin: 2px;
+}
+.goal-table-body{
     table-layout: fixed;
-    max-width: 11px;
-    margin: 1px;
+    width: 100%;
+    background-color: indigo;
+    border-radius: .25rem;
+}
+.goal-table-body tr {
+    height: 1rem;
+    font-size: .5rem;
+    line-height: .5rem;
+}
+
+tbody tr .goal-cal-day {
+    table-layout: fixed;
+    width: 1rem;
+    margin: 2px;
     background-color: lavender;
-    border-radius: 3px;
-    
+    border-radius: .5rem; 
 }
 
 .goal-meta-data {
     display: flex;
     flex-direction: row;
-    width: 100%;
-    max-width: 766px;
-    justify-content: space-between;
+    min-width: 100%;
+    max-width: 280px;
+    justify-content: space-around;
+}
+
+/* Goal List */
+
+.goal-list-group {
+    display: flex;
+    flex-direction: column;
+    flex-basis: auto;
+    flex-shrink: 0;
+    min-height: fit-content;
 }
