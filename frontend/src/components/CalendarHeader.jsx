@@ -19,51 +19,39 @@ const CalendarHeader = (goal) => {
     let header = [];
     let currentMonth = -1;
     let currentYear = headerArray[0].yearInd;
+    let currentDay
 
     headerArray.forEach((dateObj) => {
-      if (dateObj.dayInd === 0 && dateObj.monthInd !== currentMonth) {
-        // Render the month header when it's the first Sunday of the month
+      if (dateObj.dayInd === 0 && (dateObj.monthInd !== currentMonth || dateObj.yearInd !== currentYear)) {
+        // Render the month header when it's the first Sunday of a new month
         if (currentMonth !== -1) {
-          const monthSpan = countSundaysInMonth(currentMonth, dateObj.yearInd);
+          const monthSpan = countSundaysInMonth(currentMonth, currentYear);
           header.push(
-            <tr>
-              <td className = 'months basis-auto' key={`year-${currentYear}-month-${currentMonth}`} >
+            <tr key={`year-${currentYear}-month-${currentMonth}-day-${currentDay}`}>
+              <td className="months basis-auto" key={`${monthsAbbr[currentMonth]}`}>
                 {monthsAbbr[currentMonth]}
               </td>
             </tr>
           );
           for (let i = 1; i < monthSpan; i++) {
-            header.push(<tr></tr>);
+            header.push(<tr key={`year-${currentYear}-month-${currentMonth}-sunday-${i+1}`}></tr>);
           }
         }
+        currentDay = dateObj.day;
         currentMonth = dateObj.monthInd;
         currentYear = dateObj.yearInd;
-      }
+      }      
     });
-
-    // Add the last month's header after the loop finishes
-    if (currentMonth !== -1) {
-      const monthSpan = countSundaysInMonth(currentMonth, headerArray[headerArray.length - 1].yearInd);
-      header.push(
-        <tr>
-          <td className = 'months basis-auto' key={`year-${currentYear}-month-${currentMonth}`}>
-            {monthsAbbr[currentMonth]}
-          </td>
-        </tr>
-      );
-      for (let i = 1; i < monthSpan; i++) {
-        header.push(<tr></tr>);
-      }
-    }
 
     return header;
   };
+
   return (
     <table>
+      <thead className="table-head-row">
+      </thead>
       <tbody>
-      <th className="table-head-row">
         {generateTableHeader()}
-      </th>
       </tbody>
     </table>
   );

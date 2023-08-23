@@ -1,5 +1,6 @@
 import getDateArray from "./DateArray"
 import Tooltip from "./Tooltip"
+import format from "date-fns/format";
 
 const CalendarBody = (goal) => {
     let start = goal.createdAt
@@ -27,8 +28,8 @@ const CalendarBody = (goal) => {
       return (
         <tr className='goal-week-row' key={`week-${index}`}>
           {week.map((dateObj) => (
-            <td className= 'goal-cal-day' key={`day-${dateObj.date.toISOString()}`}>
-              {<Tooltip />}
+            <td className= 'goal-cal-day' key={`day-${format(new Date(dateObj.date), 'PP')}`}>
+              {<Tooltip message={`${format(new Date(dateObj.date), 'PP')}`}/>}
             </td>
           ))}
         </tr>

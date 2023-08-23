@@ -18,9 +18,9 @@ const AddGoal = () => {
     
     const handleAddClick = () => {
         if(showAddGoal) {
-            document.getElementById('addGoalOutline').classList.remove('border-2 mt-4');
+            document.getElementById('addGoalOutline').classList.remove('addClick');
         } else {
-            document.getElementById('addGoalOutline').classList.add('border-2 mt-4');
+            document.getElementById('addGoalOutline').classList.add('addClick');
         }
         setShowAddGoal(!showAddGoal)
     }

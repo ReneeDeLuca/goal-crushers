@@ -7,7 +7,9 @@ const getDateArray = (start,end) => {
     startDate = new Date((startDateMil + startDateOffset));
 
     // get first day of the week for start date, Sunday is the first day of the week
-    let weekStart = startDate => startDate.getDay() === 0 ? startDate : new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() - startDate.getDay());
+    function weekStart(startDate) {
+        return startDate.getDay() === 0 ? startDate : new Date(startDate.getFullYear(), startDate.getMonth(), startDate.getDate() - startDate.getDay());
+    }
 
     // get end date in local time
     let endDate = new Date(end)
@@ -16,7 +18,9 @@ const getDateArray = (start,end) => {
     endDate = new Date((endDateMil + endDateOffset));
 
     // get last day of the week for end date, Saturday is the last day of the week
-    let weekEnd = endDate => endDate.getDay() === 0 ? endDate : new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() + (6 - endDate.getDay()));
+    function weekEnd(endDate) {
+        return endDate.getDay() === 0 ? endDate : new Date(endDate.getFullYear(), endDate.getMonth(), endDate.getDate() + (6 - endDate.getDay()));
+    }
 
     //to push to array, start at weekStart and add 1 day until we reach weekEnd
     startDate = weekStart(startDate);

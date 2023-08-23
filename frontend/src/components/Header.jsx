@@ -24,7 +24,7 @@ export default function Header() {
             <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
             </div>
           </div>
-          <div className="mt-5 flex lg:ml-4 lg:mt-0">
+          <div className="mt-5 flex mx-4 lg:ml-4 lg:mt-0">
             {(!userInfo) ? (
               <>
                 <span className="hidden sm:block">
@@ -52,10 +52,10 @@ export default function Header() {
             ) : (
               <>
                 <div className="min-w-0 flex-1 inline-flex">
-                  <div>
+                  <div className='mr-2'>
                     <img className="h-10 w-10 rounded-full ring-2 ring-white" src="/4900_8_04_catalyststuff.jpg" alt="" />
                   </div>
-                  <span className="font-bold leading-7 text-gray-900 sm:truncate sm:tracking-tight">
+                  <span className="font-bold mx-2 leading-7 text-gray-900 sm:truncate sm:tracking-tight">
                     {userInfo.name}</span>
                   <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
                   </div>

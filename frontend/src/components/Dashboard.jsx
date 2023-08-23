@@ -9,7 +9,7 @@ const Dashboard = () => {
     return (
         <>
         <div className='flex flex-col justify-center items-center'>
-            <h1 className='text-3xl font-bold text-gray-900'>{`${userInfo.name}'s Dashboard`}</h1>
+            <h1 className='text-3xl underline font-bold text-gray-900'>{`${userInfo.name}'s Goal Dashboard`}</h1>
         </div>
         <section className='flex flex-col flex-1 mt-10 mx-auto md:flex-row items-start'>
             <GoalList />
