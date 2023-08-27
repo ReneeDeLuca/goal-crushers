@@ -30,12 +30,17 @@ export const goalApiSlice = apiSlice.injectEndpoints({
             invalidatesTags: ['Goal']
         }),
         updateGoalData: builder.mutation({
-            query: (data) => ({
-                url: `${GOAL_URL}/progress/:id`,
-                method: "PUT",
-                body: data,
+            query: ({id, date }) => ({
+                url: `${GOAL_URL}/:${id}`,
+                method: 'PUT',
+                body: {id, date},
+                transformResponse: (response) => response.data,
+                transformErrorResponse: (response) => response.status,
             }),
-        }),
+            // Invalidates all queries that subscribe to this Goal `id` only.
+            // In this case, `getGoalById` will be re-run. `getAllGoals` *might*  rerun, if this id was under its results.
+            invalidatesTags: (result, error, { id }) => [{ type: 'Goal', id }],
+          }),
         updateGoal: builder.mutation({
             query: (data) => ({
               url: `${GOAL_URL}/edit/:id`,
@@ -54,6 +59,7 @@ export const goalApiSlice = apiSlice.injectEndpoints({
                 url: `${GOAL_URL}/:${id}`,
                 method: "DELETE",
             }),
+            invalidatesTags: ['Goal'],
         }),
     })
 })

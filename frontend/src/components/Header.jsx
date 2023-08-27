@@ -14,17 +14,14 @@ export default function Header() {
       <nav className="relative container mx-auto p-6">
         { /* Flex container */}
         <div className="flex items-center justify-between">
-          { /* Logo and Name */}
-        </div>
-        <div className="lg:flex lg:items-center lg:justify-between">
-          <div className="min-w-0 flex-1">
+          <div className="min-w-0 basis-1/2">
             <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
               GoalSense
             </h2>
-            <div className="mt-1 flex flex-col sm:mt-0 sm:flex-row sm:flex-wrap sm:space-x-6">
+            <div className="md:mt-1 flex md:flex-col mt-0 flex-row flex-wrap space-x-6">
             </div>
           </div>
-          <div className="mt-5 flex mx-4 lg:ml-4 lg:mt-0">
+          <div className="my-auto basis-1/2 flex mx-4 lg:ml-4 lg:mt-0">
             {(!userInfo) ? (
               <>
                 <span className="hidden sm:block">
@@ -51,7 +48,7 @@ export default function Header() {
               </>
             ) : (
               <>
-                <div className="min-w-0 flex-1 inline-flex">
+                <div className="min-w-0 md:justify-end md:flex-1 inline-flex">
                   <div className='mr-2'>
                     <img className="h-10 w-10 rounded-full ring-2 ring-white" src="/4900_8_04_catalyststuff.jpg" alt="" />
                   </div>
