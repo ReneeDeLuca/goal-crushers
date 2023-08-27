@@ -5,12 +5,8 @@ const GoalSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  completionData: {
-    type: [{
-      x : Date,
-      value : Number,
-    }],
-    required: true,
+  datesCompleted: {
+    type: [String],
   },
   user: {
     type: mongoose.Schema.Types.ObjectId,
@@ -21,20 +17,18 @@ const GoalSchema = new mongoose.Schema({
     type: Boolean,
     required: true,
   },
-  reactions: {
-    type: [{ 
+  reactions: { 
     thumbsUp: Number, 
     bicep: Number, 
     heart: Number, 
     fire: Number, 
     star: Number,
-    }],
-    required: true, 
-},
+  },
   endDate: {
     type: Date,
 		required: true,
   },
+  comments: [{ body: String, date: Date, user: String }],
 },
 {
   timestamps: true,

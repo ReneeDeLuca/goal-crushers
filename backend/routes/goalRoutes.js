@@ -39,8 +39,8 @@ router.put('/edit/:id', protect, updateGoal);
 //Enables user to like goal. In controller, uses Goal model to update likes by 1
 router.put("/likes/:id", protect, likeGoal);
 
-//Enables user to update completion data. In controller, uses Goal model to update completion data
-router.put("progress/:id", protect, updateGoalData)
+//Enables user to update dates completed. In controller, uses Goal model to update dates completed
+router.put("/:id", protect, updateGoalData)
 
 //Enables user to delete goal. In controller, uses Goal model to delete post from MongoDB collection
 router.delete("/:id", protect, deleteGoal);
