@@ -21,7 +21,7 @@ const GoalList = () => {
 
   let RenderedGoal = ({ goal }) => {
     return (
-      <li className="mb-8 md:mx-10" key={goal._id}>
+      <div className="col-span-1 mb-8 md:mx-10" key={goal._id}>
         <Goal
           key={goal._id}
           id={goal._id}
@@ -33,7 +33,7 @@ const GoalList = () => {
           datesCompleted={goal.datesCompleted}
           user={goal.user}
         />
-      </li>
+      </div>
     );
   };
 
@@ -56,9 +56,9 @@ const GoalList = () => {
           <AddGoal />
         </span>
       </section>
-      <ul className="goal-list-group md:columns-2 lg:columns-3 md:flex-row">
+      <section className="goal-list-group grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
         {content}
-      </ul>
+      </section>
     </section>
   );
 };

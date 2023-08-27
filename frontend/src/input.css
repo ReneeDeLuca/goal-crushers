@@ -157,7 +157,13 @@ tbody tr .goal-cal-day {
     background-color: lavender;
     border-radius: .5rem; 
 }
-
+tbody tr .goal-cal-completed-day {
+    table-layout: fixed;
+    width: 1rem;
+    margin: 2px;
+    background-color: indigo;
+    border-radius: .5rem; 
+}
 .goal-meta-data {
     display: flex;
     flex-direction: row;
@@ -169,9 +175,6 @@ tbody tr .goal-cal-day {
 /* Goal List */
 
 .goal-list-group {
-    display: flex;
-    flex-direction: column;
-    flex-basis: auto;
-    flex-shrink: 0;
+    display: grid;
     min-height: fit-content;
 }

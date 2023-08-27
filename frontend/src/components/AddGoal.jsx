@@ -105,6 +105,7 @@ const AddGoal = () => {
                     id="endDate"
                     className="block w-full rounded-md border-0 pt-0.5 pl-5 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 align-middle focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     type="date"
+                    min={`${new Date()}`}
                     value={endDate}
                     onChange={onEndDateChanged}
                   />
@@ -123,7 +124,7 @@ const AddGoal = () => {
                   ></input>
                 </div>
                 <div className="mt-5 flex lg:ml-4 lg:mt-0">
-                  <span className=" mr-2 hidden sm:block">
+                  <span className=" mr-2 sm:block">
                     <button
                       type="button"
                       id="submit"
@@ -134,7 +135,7 @@ const AddGoal = () => {
                       {isLoading ? "Loading…" : "Submit"}
                     </button>
                   </span>
-                  <span className="ml-2 hidden sm:block">
+                  <span className="ml-2 sm:block">
                     <button
                       type="button"
                       id="cancel"
