@@ -3,12 +3,25 @@ const USER_URL = "/api/users";
 
 export const userApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-        getUser: builder.mutation({
+            //queries
+        getAllUsers: builder.query({
             query: () => ({
-                url: `${USER_URL}/:id`,
-                method: "GET",
+                url: `${USER_URL}/`,
+                transformResponse: (response) => response.data,
+                transformErrorResponse: (response) => response.status,
+                providesTags: (result, error, id) => [{ type: 'User', id }],
+            
             }),
         }),
+        getUserById: builder.query({
+            query: (id) => ({
+                url: `${USER_URL}/:${id}`,
+                transformResponse: (response) => response.data,
+                transformErrorResponse: (response) => response.status,
+                providesTags: (result, error, id) => [{ type: 'User', id }],
+            }),
+        }),
+            //mutations
         updateLogin: builder.mutation({
             query: (data) => ({
                 url: `${USER_URL}/login/:id`,
@@ -24,16 +37,18 @@ export const userApiSlice = apiSlice.injectEndpoints({
             }),
         }),
         deleteUser: builder.mutation({
-            query: (data) => ({
-              url: `${USER_URL}/:id`,
+            query: (id) => ({
+              url: `${USER_URL}/:${id}`,
               method: 'DELETE',
-              body: data,
+              body: id,
             }),
         }),
     })
 })
 
 export const { 
+    useGetAllUsersQuery,
+    useGetUserByIdQuery,
     useUpdateLoginMutation,
     useUpdateProfileMutation,
     useDeleteUserMutation, 

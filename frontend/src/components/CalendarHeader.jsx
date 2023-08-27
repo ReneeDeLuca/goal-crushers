@@ -1,8 +1,8 @@
 import getDateArray from "./DateArray";
 
-const CalendarHeader = () => {
-  let start = new Date('2023-01-06');
-    let end = new Date('2023-10-31');
+const CalendarHeader = (goal) => {
+  let start = goal.createdAt
+    let end = goal.endDate
   //variable to hold array of dates
   const headerArray = getDateArray(start, end);
   
@@ -19,45 +19,41 @@ const CalendarHeader = () => {
     let header = [];
     let currentMonth = -1;
     let currentYear = headerArray[0].yearInd;
+    let currentDay
 
     headerArray.forEach((dateObj) => {
-      if (dateObj.dayInd === 0 && dateObj.monthInd !== currentMonth) {
-        // Render the month header when it's the first Sunday of the month
+      if (dateObj.dayInd === 0 && (dateObj.monthInd !== currentMonth || dateObj.yearInd !== currentYear)) {
+        // Render the month header when it's the first Sunday of a new month
         if (currentMonth !== -1) {
-          const monthSpan = countSundaysInMonth(currentMonth, dateObj.yearInd);
+          const monthSpan = countSundaysInMonth(currentMonth, currentYear);
           header.push(
-            // <Tooltip key={`year-${currentYear}-month-${currentMonth}`} message={`${currentYear}-${monthsAbbr[currentMonth]}`}>
-            <th className = 'basis-auto' key={`year-${currentYear}-month-${currentMonth}`} colSpan={monthSpan}>
-              {monthsAbbr[currentMonth]}
-            </th>
-            // </Tooltip>
+            <tr key={`year-${currentYear}-month-${currentMonth}-day-${currentDay}`}>
+              <td className="months basis-auto" key={`${monthsAbbr[currentMonth]}`}>
+                {monthsAbbr[currentMonth]}
+              </td>
+            </tr>
           );
+          for (let i = 1; i < monthSpan; i++) {
+            header.push(<tr key={`year-${currentYear}-month-${currentMonth}-sunday-${i+1}`}></tr>);
+          }
         }
+        currentDay = dateObj.day;
         currentMonth = dateObj.monthInd;
         currentYear = dateObj.yearInd;
-      }
+      }      
     });
-
-    // Add the last month's header after the loop finishes
-    if (currentMonth !== -1) {
-      const monthSpan = countSundaysInMonth(currentMonth, headerArray[headerArray.length - 1].yearInd);
-      header.push(
-        // <Tooltip key={`year-${currentYear}-month-${currentMonth}`} message={`${currentYear}-${monthsAbbr[currentMonth]}`}>
-        <th className = 'basis-auto' key={`year-${currentYear}-month-${currentMonth}`} colSpan={monthSpan}>
-          {monthsAbbr[currentMonth]}
-        </th>
-        // </Tooltip>
-      );
-    }
 
     return header;
   };
+
   return (
-    <thead>
-      <tr className="table-head-row justify-between min-w-fit shrink-0">
+    <table>
+      <thead className="table-head-row">
+      </thead>
+      <tbody>
         {generateTableHeader()}
-      </tr>
-    </thead>
+      </tbody>
+    </table>
   );
 }
 

@@ -1,42 +1,43 @@
 import getDateArray from "./DateArray"
+import Tooltip from "./Tooltip"
+import format from "date-fns/format";
 
-
-const CalendarBody = () => {
-    let start = new Date('2023-01-06');
-    let end = new Date('2023-10-31');
+const CalendarBody = (goal) => {
+    let start = goal.createdAt
+    let end = goal.endDate
     // Variable to hold array of date objects
-    const bodyArray = getDateArray(start,end);
-
-    let days = [[], [], [], [], [], [], []]; // One array for each day of the week (Sunday = 0, Monday = 1, ..., Saturday = 6)
+    const dateArray = getDateArray(start,end);
     
-    // Helper function to group dates by day of the week index
-  const groupDatesByDay = () => {
-    bodyArray.forEach((dateObj) => {
-      const dayIndex = dateObj.dayInd;
-      days[dayIndex].push(dateObj);
-    });
-    return days;
-  };
-  //returns an array of arrays, each array is a day of the week, each array contains date objects for that day of the week
-  
-  // Generate the table body JSX with one row for each day of the week
+    // Helper function to group dates by week index
+    const groupDatesByWeek = () => {
+      const weeks = [];
+      dateArray.forEach((dateObj) => {
+        const weekIndex = dateObj.weekInd;
+        if (!weeks[weekIndex]) {
+          weeks[weekIndex] = [];
+        }
+        weeks[weekIndex].push(dateObj);
+      });
+      return weeks;
+    };
+
+  // Generate the table body JSX with one row for each week
   const generateTableBody = () => {
-    const days = groupDatesByDay();
-    return days.map((day, index) => {
+    const weeks = groupDatesByWeek();
+    return weeks.map((week, index) => {
       return (
-        <tr key={`day-${index}`}>
-          {day.map((dateObj) => (
-            <td className= 'goal-cal-day' key={`${dateObj.date}`}>
-              <span className="sr-only">
-                {`${dateObj.monthInd + 1}-${dateObj.day}-${dateObj.yearInd}`}
-              </span>
+        <tr className='goal-week-row' key={`week-${index}`}>
+          {week.map((dateObj) => (
+            <td className= 'goal-cal-day' key={`day-${format(new Date(dateObj.date), 'PP')}`}>
+              {<Tooltip message={`${format(new Date(dateObj.date), 'PP')}`}/>}
             </td>
           ))}
         </tr>
       );
     });
   };
-  return <tbody>{generateTableBody()}</tbody>
-}
+
+  return <tbody className="goal-table-body">{generateTableBody()}</tbody>;
+};
 
 export default CalendarBody;

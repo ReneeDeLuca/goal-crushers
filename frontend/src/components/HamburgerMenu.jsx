@@ -1,8 +1,8 @@
 import { useState } from "react";
 import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useLogoutMutation } from '../slices/mainApiSlice';
-import { logout } from '../slices/authSlice';
+import { useLogoutMutation } from '../apiSlices/mainApiSlice';
+import { logout } from '../apiSlices/authSlice';
 
 
 export default function HamburgerMenu() {
@@ -40,7 +40,7 @@ export default function HamburgerMenu() {
 
     return (
         <>
-            <span className="ml-3">
+            <span className="m-auto">
                 {/* Hamburger Icon */}
                 <button id="menu-btn" className="block hamburger items-center rounded-md bg-indigo-600 px-6 py-4 font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600" onClick={handleHamburgerClick}
                 >

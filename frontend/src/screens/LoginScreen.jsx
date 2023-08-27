@@ -2,8 +2,8 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import FormContainer from '../components/FormContainer';
 import { useDispatch, useSelector } from 'react-redux';
-import { useLoginMutation } from '../slices/mainApiSlice';
-import { setCredentials } from '../slices/authSlice';
+import { useLoginMutation } from '../apiSlices/mainApiSlice';
+import { setCredentials } from '../apiSlices/authSlice';
 import { toast } from 'react-toastify';
 
 

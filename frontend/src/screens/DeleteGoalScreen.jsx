@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import Goal from '../components/Goal';
 import FormContainer from '../components/FormContainer';
 import { toast } from 'react-toastify';
-import { useDeleteGoalMutation } from '../slices/goalSlice';
+import { useDeleteGoalMutation } from '../apiSlices/goalApiSlice';
 import { useNavigate } from 'react-router-dom';
 
 const DeleteGoalScreen = () => {
@@ -37,7 +37,7 @@ const DeleteGoalScreen = () => {
         e.preventDefault();
         setLoading(true);
           try {
-            const res = await deleteGoal({req.id}).unwrap();
+            const res = await deleteGoal({}).unwrap();
             console.log(res);
             navigate('/user/:id');
             toast.success('Goal deleted successfully');
