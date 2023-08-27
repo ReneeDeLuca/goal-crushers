@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import CalendarHeader from "./CalendarHeader";
 import CreateCalendar from "./CreateCalendar";
 import TimeAgo from "./TimeAgo";
@@ -6,7 +7,11 @@ import format from "date-fns/format";
 import UpdateGoalDataButton from "./UpdateGoalButton";
 
 const Goal = ({ goal }) => {
-  const formatEndDate = format(new Date(goal.endDate), "P");
+  let endDate = String(goal.endDate).slice(0, 11);
+  let endDateTime = String(goal.createdAt).slice(11, -1);
+  endDate = endDate + endDateTime;
+  endDate = new Date(endDate);
+  let formatEndDate = format(endDate, "PP");
 
   return (
     <section id="goal-container" className="md:max-h-[30rem]">
@@ -54,21 +59,21 @@ const Goal = ({ goal }) => {
         <div className="min-w-full">
           <ul className="flex-col min-w-full justify-around p-2">
             <li className="flex flex-row basis-1/2 mb-1">
-              <span className="text-xs text-gray-600 text-start basis-1/4">
+              <span className="text-xs text-gray-600 text-start basis-1/5">
                 Created:{" "}
               </span>
               {<TimeAgo timestamp={goal.createdAt} />}
-              <span className="text-xs text-gray-600 text-end pr-2 basis-1/2">
-                {goal.isPublic ? `Public` : `Private`}
+              <span className="text-xs text-gray-600 text-end pr-2 basis-2/5">
+                {goal.isPublic ? `Public: ✅` : `Public: ❌`}
               </span>
             </li>
             <li className="flex flex-row basis-1/2 mt-1">
-              <span className="text-xs text-gray-600 basis-1/4 text-start">
+              <span className="text-xs text-gray-600 basis-1/5 text-start">
                 Ends on:{" "}
               </span>
-              <span className="text-xs text-gray-800 basis-1/4 text-start">{`${formatEndDate}`}</span>
+              <span className="text-xs text-gray-800 basis-2/5 text-start">{`${formatEndDate}`}</span>
               <a
-                className="text-xs text-gray-600 basis-1/2 text-end pr-2"
+                className="text-xs text-gray-600 basis-2/5 text-end pr-2"
                 href="/deleteGoal"
               >
                 Delete Goal?
