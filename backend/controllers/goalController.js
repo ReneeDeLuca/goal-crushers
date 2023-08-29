@@ -6,6 +6,7 @@ const router = express.Router()
 
 //@desc  get all goals to load to api
 //@route GET /goal
+// link to goalApiSlice -> getAllGoals
 const getAllGoals = asyncHandler(async (req, res) => {
   try {
     const goals = await Goal.find({}).lean()
@@ -16,14 +17,26 @@ const getAllGoals = asyncHandler(async (req, res) => {
   }
 })
 
-// @desc    Show add page
-// @route   GET /goal/add
-const newGoal = asyncHandler( async (req, res) => {
-  res.render('goal/add')
+// @desc    get goal by id
+// @route   GET /goal/:id
+// link to goalApiSlice -> getGoalById
+const getGoal = asyncHandler( async (req, res) => {
+  try {
+    const goalId = req.params.id;
+    const goal = await Goal.findById(goalId.slice(1)).lean();
+    if (!goal) {
+      return res.render('error/404')
+    }
+    res.json(goal)
+  } catch (err) {
+    console.error(err)
+    res.render('error/404')
+  }
 })
 
 // @desc    Process add form
 // @route   POST /goal
+// link to goalApiSlice -> addGoal
 const createGoal = asyncHandler( async (req, res) => {
   try {
     req.body.user = req.user.id
@@ -35,46 +48,23 @@ const createGoal = asyncHandler( async (req, res) => {
   }
 })
 
-// @desc    get goal by id
-// @route   GET /goal/:id
-const getGoal = asyncHandler( async (req, res) => {
+// @desc   update goal progress
+// @route  PUT api/goal/:id
+// link to goalApiSlice -> updateGoalData
+
+const updateGoalData = asyncHandler(async (req, res) => {
   try {
-    let goal = await Goal.findById(req.params.id).populate('user').lean()
+    const date = req.body.date;
+    const goalId = req.body.id;
+    const goal = await Goal.findById(goalId);
+    const added = goal.datesCompleted.addToSet(date);
+    await goal.save();
 
-    if (!goal) {
-      return res.render('error/404')
-    }
-    res.render('goal/:id', {
-      goal,
-    })
+    res.status(200).json({message: "Goal Progress Updated"})
+    console.log("Goal Progress Updated");
+
   } catch (err) {
-    console.error(err)
-    res.render('error/404')
-  }
-})
-
-// @desc    Show edit page
-// @route   GET /goal/edit/:id
-const editGoal = asyncHandler(async (req, res) => {
-  try {
-    const goal = await Goal.findOne({
-      _id: req.params.id,
-    }).lean()
-
-    if (!goal) {
-      return res.render('error/404')
-    }
-
-    if (goal.user != req.user.id) {
-      res.redirect('/dashboard')
-    } else {
-      res.render('goal/edit', {
-        goal,
-      })
-    }
-  } catch (err) {
-    console.error(err)
-    return res.render('error/500')
+    console.log(err);
   }
 })
 
@@ -82,43 +72,24 @@ const editGoal = asyncHandler(async (req, res) => {
 // @route   PUT /goal/edit/:id
 const updateGoal = asyncHandler(async (req, res) => {
   try {
-    let goal = await Goal.findById(req.params.id).lean()
+    const goalId = req.params.id;
+    let goal = await Goal.findById(goalId.slice(1)).lean()
 
     if (!goal) {
       return res.render('error/404')
     }
 
-    if (goal.user != req.user.id) {
+    if (goal.user != req.user._id) {
       res.redirect('/')
     } else {
-      goal = await Goal.findOneAndUpdate({ _id: req.params.id }, req.body, {
+      goal = await Goal.findOneAndUpdate({ _id: goalId.slice(1) }, req.body, {
         new: true,
         runValidators: true,
       })
 
-      res.redirect('/')
-    }
-  } catch (err) {
-    console.error(err)
-    return res.render('error/500')
-  }
-})
+      res.status(200).json({message: "Goal Updated"})
+    console.log("Goal Updated");
 
-// @desc    Delete goal
-// @route   DELETE /goal/:id
-const deleteGoal = asyncHandler(async (req, res) => {
-  try {
-    let goal = await Goal.findById(req.params.id).lean()
-
-    if (!goal) {
-      return res.render('error/404')
-    }
-
-    if (goal.user != req.user.id) {
-      res.redirect('/')
-    } else {
-      await Goal.remove({ _id: req.params.id })
-      res.redirect('/')
     }
   } catch (err) {
     console.error(err)
@@ -141,32 +112,32 @@ const likeGoal = asyncHandler(async (req, res) => {
   } catch (err) {
     console.log(err);
   }
-})
+});
 
-// @desc   update goal progress
-// @route  PUT api/goal/:id
-
-const updateGoalData = asyncHandler(async (req, res) => {
+// @desc    Delete goal
+// @route   DELETE /goal/:id
+// link to goalApiSlice -> deleteGoal
+const deleteGoal = asyncHandler(async (req, res) => {
   try {
-    const date = req.body.date;
-    const goalId = req.body.id;
-    const goal = await Goal.findById(goalId);
-    const added = goal.datesCompleted.addToSet(date);
-    await goal.save();
-
-    res.status(200).json({message: "Goal Progress Updated"})
-    console.log("Goal Progress Updated");
-
+    const goalId = req.params.id;
+    let goal = await Goal.findById(goalId.slice(1)).lean()
+    
+    if (!goal) {
+      return res.render('error/404')
+    }
+      await Goal.deleteOne({ _id: goalId.slice(1) })
+      res.status(200).json({message: "Goal Deleted"})
+      console.log("Goal Deleted");
+      
   } catch (err) {
-    console.log(err);
+    console.error(err)
+    return res.render('error/500')
   }
 })
 
 export { getAllGoals,
   getGoal,
-  newGoal, 
   createGoal, 
-  editGoal,
   updateGoal,
   likeGoal, 
   updateGoalData,

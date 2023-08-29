@@ -1,9 +1,7 @@
 import express from "express";
 import { getAllGoals,
     getGoal,
-    newGoal, 
     createGoal, 
-    editGoal,
     updateGoal,
     likeGoal, 
     updateGoalData,
@@ -24,14 +22,8 @@ router.get("/", protect, getAllGoals);
 //Enables user to view single goal by id
 router.get("/:id", protect, getGoal);
 
-//Enables user to view add goal page
-router.get('/add', protect, newGoal);
-
 //Enables user to create goal 
 router.post('/', protect, createGoal);
-
-//Enables user to view edit goal page
-router.get('/edit/:id', protect, editGoal);
 
 //Enables user to edit goal 
 router.put('/edit/:id', protect, updateGoal);

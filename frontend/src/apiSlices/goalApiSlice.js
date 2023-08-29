@@ -3,13 +3,25 @@ const GOAL_URL = "/api/goal";
 
 export const goalApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-            //queries
+            //queries - return data for caching
         getAllGoals: builder.query({
             query: () => ({
                 url: `${GOAL_URL}/`,
+                // Provides a list of `Posts` by `id`.
                 transformResponse: (response) => response.data,
                 transformErrorResponse: (response) => response.status,
-                providesTags: (result, error, id) => [{type: "Goal", id}],
+                // If any mutation is executed that `invalidate`s any of these tags, this query will re-run to be always up-to-date.
+                // The `LIST` id is a "virtual id" we just made up to be able to invalidate this query specifically if a new `Goal` element was added.            
+                providesTags: (result) =>
+                // is result available?
+                result
+                  ? // successful query
+                    [
+                      ...result.map(({ id }) => ({ type: 'Goal', id })),
+                      { type: 'Goal', id: 'LIST' },
+                    ]
+                  : // an error occurred, but we still want to refetch this query when `{ type: 'Goal', id: 'LIST' }` is invalidated
+                    [{ type: 'Goal', id: 'LIST' }],
             }),
         }),
         getGoalById: builder.query({
@@ -20,14 +32,16 @@ export const goalApiSlice = apiSlice.injectEndpoints({
                 providesTags: (result, error, id) => [{type: "Goal", id}],
             }),
         }),
-            //mutations
+            //mutations - send updates to the server
         addGoal: builder.mutation({
             query: (data) => ({
                 url: `${GOAL_URL}/`,
                 method: "POST",
                 body: data,
             }),
-            invalidatesTags: ['Goal']
+            // Invalidates all Goal-type queries providing the `LIST` id - after all, depending of the sort order,
+            // that newly created post could show up in any lists.
+      invalidatesTags: [{ type: 'Goal', id: 'LIST' }],
         }),
         updateGoalData: builder.mutation({
             query: ({id, date }) => ({
@@ -42,24 +56,37 @@ export const goalApiSlice = apiSlice.injectEndpoints({
             invalidatesTags: (result, error, { id }) => [{ type: 'Goal', id }],
           }),
         updateGoal: builder.mutation({
-            query: (data) => ({
-              url: `${GOAL_URL}/edit/:id`,
+            query: ({id, title, endDate, isPublic}) => ({
+              url: `${GOAL_URL}/edit/:${id}`,
               method: 'PUT',
-              body: data,
+              body: {id, title, endDate, isPublic},
+              transformResponse: (response) => response.data,
+            transformErrorResponse: (response) => response.status,
             }),
+            invalidatesTags: (result, error, { id }) => [{ type: 'Goal', id }],
         }),
-        likeGoal: builder.mutation({
-            query: (id) => ({
-                url: `${GOAL_URL}/likes/:${id}`,
+        reactionAdded: builder.mutation({
+            query: ({id, data}) => ({
+                url: `${GOAL_URL}/:${id}`,
                 method: "PUT",
+                body: data,
+                transformResponse: (response) => response.data,
+                transformErrorResponse: (response) => response.status,
             }),
+            invalidatesTags: (result, error, { id }) => [{ type: 'Goal', id }],
         }),
+        
         deleteGoal: builder.mutation({
             query: (id) => ({
                 url: `${GOAL_URL}/:${id}`,
                 method: "DELETE",
+                body: id,
+                transformResponse: (response) => response.data,
+                transformErrorResponse: (response) => response.status,
             }),
-            invalidatesTags: ['Goal'],
+            // Invalidates all queries that subscribe to this Post `id` only.
+            invalidatesTags: (result, error, id) => [{ type: 'Goal', id }],
+    
         }),
     })
 })
@@ -70,6 +97,6 @@ export const {
     useAddGoalMutation,
     useUpdateGoalDataMutation,
     useUpdateGoalMutation,
-    useLikeGoalMutation,
+    useReactionAddedMutation,
     useDeleteGoalMutation, 
 } = goalApiSlice;

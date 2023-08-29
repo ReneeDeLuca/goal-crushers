@@ -8,10 +8,10 @@ import usersReducer from './slices/userSlice';
 
 const store = configureStore({
   reducer: {
-    [apiSlice.reducerPath]: apiSlice.reducer,
     auth: authReducer,
     goals: goalsReducer,
     users: usersReducer,
+    [apiSlice.reducerPath]: apiSlice.reducer,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(apiSlice.middleware),
