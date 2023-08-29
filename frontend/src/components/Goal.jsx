@@ -16,8 +16,8 @@ const Goal = ({ goal }) => {
   return (
     <section id="goal-container" className="md:max-h-[30rem]">
       <section className="goal-info">
-        <div className="basis-1/2 pt-8 items-baseline">
-          <Link to={`/goal/${goal._id}`}>
+        <div className="basis-1/2 text-center pt-8 items-baseline">
+          <Link to={`/goal/:${goal._id}`}>
             <h2 className="text-xl underline align-bottom items-start font-bold text-gray-600">{`${goal.title}`}</h2>
           </Link>
         </div>

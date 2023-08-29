@@ -4,6 +4,7 @@ import FormContainer from "../components/FormContainer";
 import { toast } from "react-toastify";
 import { useAddGoalMutation } from "../apiSlices/goalApiSlice";
 import { useSelector } from "react-redux";
+import { format } from "date-fns";
 
 const AddGoal = () => {
   // Add Goal Button Show/Hide
@@ -25,9 +26,16 @@ const AddGoal = () => {
   };
 
   // Add Goal Form
-  const [endDate, setEndDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(format(new Date(), "PPPP"));
   const [title, setTitle] = useState("");
   const [isPublic, setIsPublic] = useState(true);
+  const [reactions, setReactions] = useState({
+    thumbsUp: 0,
+    bicep: 0,
+    heart: 0,
+    fire: 0,
+    star: 0,
+  });
 
   const { userInfo } = useSelector((state) => state.auth);
   const user = userInfo._id;
@@ -46,11 +54,18 @@ const AddGoal = () => {
   const submitHandler = async () => {
     if (canSave) {
       try {
-        const res = await addGoal({ title, endDate, isPublic, user }).unwrap();
+        const res = await addGoal({
+          title,
+          endDate,
+          isPublic,
+          reactions,
+          user,
+        }).unwrap();
         console.log(res);
         setTitle("");
         setEndDate("");
         setIsPublic();
+        setReactions();
         navigate("/");
         toast.success("Goal added successfully");
       } catch (err) {

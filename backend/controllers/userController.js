@@ -145,14 +145,14 @@ const updateUserLogin = asyncHandler(async (req, res) => {
 
 // @desc Get user profile
 // route GET /user/:id
-const getUserDashboard = asyncHandler( async (req, res) => {
+const getUser = asyncHandler( async (req, res) => {
   try {
-    //id parameter comes from the user routes
-    //router.get("/:id", protect, getUserProfile);
-    //example: http://localhost:2121/user/631a7f59a3e56acfc7da286f
-    //id === 631a7f59a3e56acfc7da286f
-    const user = await User.findById(req.params.id);
-    res.render("profile.ejs", { user: user });
+    const userId = req.params.id;
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.render('error/404')
+    }
+    res.json(user)
   } catch (err) {
     console.log(err);
   }
@@ -187,6 +187,6 @@ export{ getAllUsers,
     updateUserProfile,
     getUserLoginEdit,
     updateUserLogin,
-    getUserDashboard,
+    getUser,
     deleteUser
 }

@@ -5,7 +5,7 @@ import { getAllUsers,
     updateUserProfile,
     getUserLoginEdit,
     updateUserLogin,
-    getUserDashboard,
+    getUser,
     deleteUser
 } from '../controllers/userController.js';
 import { protect } from "../middleware/authMiddleware.js";
@@ -21,7 +21,7 @@ const router = express.Router();
 router.get("/", protect, getAllUsers);
 
 //Enables user to view user Dashboard
-router.get("/:id", protect, getUserDashboard);
+router.get("/:id", protect, getUser);
 
 //Enables user to view edit user profile page
 router.get("/profileEdit/:id", protect, getUserProfileEdit);

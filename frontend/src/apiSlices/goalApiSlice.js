@@ -3,7 +3,7 @@ const GOAL_URL = "/api/goal";
 
 export const goalApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
-            //queries
+            //queries - return data for caching
         getAllGoals: builder.query({
             query: () => ({
                 url: `${GOAL_URL}/`,
@@ -20,7 +20,7 @@ export const goalApiSlice = apiSlice.injectEndpoints({
                 providesTags: (result, error, id) => [{type: "Goal", id}],
             }),
         }),
-            //mutations
+            //mutations - send updates to the server
         addGoal: builder.mutation({
             query: (data) => ({
                 url: `${GOAL_URL}/`,
@@ -42,18 +42,26 @@ export const goalApiSlice = apiSlice.injectEndpoints({
             invalidatesTags: (result, error, { id }) => [{ type: 'Goal', id }],
           }),
         updateGoal: builder.mutation({
-            query: (data) => ({
-              url: `${GOAL_URL}/edit/:id`,
+            query: ({id, title, endDate, isPublic}) => ({
+              url: `${GOAL_URL}/edit/:${id}`,
               method: 'PUT',
-              body: data,
+              body: {id, title, endDate, isPublic},
+              transformResponse: (response) => response.data,
+            transformErrorResponse: (response) => response.status,
             }),
+            invalidatesTags: (result, error, { id }) => [{ type: 'Goal', id }],
         }),
-        likeGoal: builder.mutation({
-            query: (id) => ({
-                url: `${GOAL_URL}/likes/:${id}`,
+        reactionAdded: builder.mutation({
+            query: ({id, data}) => ({
+                url: `${GOAL_URL}/:${id}`,
                 method: "PUT",
+                body: data,
+                transformResponse: (response) => response.data,
+                transformErrorResponse: (response) => response.status,
             }),
+            invalidatesTags: (result, error, { id }) => [{ type: 'Goal', id }],
         }),
+        
         deleteGoal: builder.mutation({
             query: (id) => ({
                 url: `${GOAL_URL}/:${id}`,
@@ -70,6 +78,6 @@ export const {
     useAddGoalMutation,
     useUpdateGoalDataMutation,
     useUpdateGoalMutation,
-    useLikeGoalMutation,
+    useReactionAddedMutation,
     useDeleteGoalMutation, 
 } = goalApiSlice;

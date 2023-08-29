@@ -39,42 +39,15 @@ const createGoal = asyncHandler( async (req, res) => {
 // @route   GET /goal/:id
 const getGoal = asyncHandler( async (req, res) => {
   try {
-    let goal = await Goal.findById(req.params.id).populate('user').lean()
-
+    const goalId = req.params.id;
+    const goal = await Goal.findById(goalId.slice(1)).lean();
     if (!goal) {
       return res.render('error/404')
     }
-    res.render('goal/:id', {
-      goal,
-    })
+    res.json(goal)
   } catch (err) {
     console.error(err)
     res.render('error/404')
-  }
-})
-
-// @desc    Show edit page
-// @route   GET /goal/edit/:id
-const editGoal = asyncHandler(async (req, res) => {
-  try {
-    const goal = await Goal.findOne({
-      _id: req.params.id,
-    }).lean()
-
-    if (!goal) {
-      return res.render('error/404')
-    }
-
-    if (goal.user != req.user.id) {
-      res.redirect('/dashboard')
-    } else {
-      res.render('goal/edit', {
-        goal,
-      })
-    }
-  } catch (err) {
-    console.error(err)
-    return res.render('error/500')
   }
 })
 
@@ -82,7 +55,8 @@ const editGoal = asyncHandler(async (req, res) => {
 // @route   PUT /goal/edit/:id
 const updateGoal = asyncHandler(async (req, res) => {
   try {
-    let goal = await Goal.findById(req.params.id).lean()
+    const goalId = req.params.id;
+    let goal = await Goal.findById(goalId.slice(1)).lean()
 
     if (!goal) {
       return res.render('error/404')
@@ -91,12 +65,14 @@ const updateGoal = asyncHandler(async (req, res) => {
     if (goal.user != req.user.id) {
       res.redirect('/')
     } else {
-      goal = await Goal.findOneAndUpdate({ _id: req.params.id }, req.body, {
+      goal = await Goal.findOneAndUpdate({ _id: goalId.slice(1) }, req.body, {
         new: true,
         runValidators: true,
       })
 
-      res.redirect('/')
+      res.status(200).json({message: "Goal Updated"})
+    console.log("Goal Updated");
+
     }
   } catch (err) {
     console.error(err)
@@ -108,17 +84,21 @@ const updateGoal = asyncHandler(async (req, res) => {
 // @route   DELETE /goal/:id
 const deleteGoal = asyncHandler(async (req, res) => {
   try {
-    let goal = await Goal.findById(req.params.id).lean()
+    const goalId = req.params.id;
+    let goal = await Goal.findById(goalId.slice(1)).lean()
 
     if (!goal) {
       return res.render('error/404')
     }
 
-    if (goal.user != req.user.id) {
+    if (goal.user != goalId.slice(0,1)) {
       res.redirect('/')
     } else {
-      await Goal.remove({ _id: req.params.id })
+      await Goal.remove({ _id: goalId.slice(1) })
+      res.status(200).json({message: "Goal Deleted"})
+      console.log("Goal Deleted");
       res.redirect('/')
+      
     }
   } catch (err) {
     console.error(err)
@@ -166,7 +146,6 @@ export { getAllGoals,
   getGoal,
   newGoal, 
   createGoal, 
-  editGoal,
   updateGoal,
   likeGoal, 
   updateGoalData,
