@@ -4,9 +4,7 @@ import SingleGoalBanner from "../components/SingleGoalBanner";
 
 const SingleGoalScreen = () => {
   let goalId = useParams();
-  console.log(goalId);
   goalId = goalId.id.slice(1);
-  console.log(goalId);
 
   return (
     <>

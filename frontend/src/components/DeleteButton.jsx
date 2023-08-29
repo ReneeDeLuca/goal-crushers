@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import FormContainer from "./FormContainer";
 import { toast } from "react-toastify";
 import { useDeleteGoalMutation } from "../apiSlices/goalApiSlice";
+import { Navigate } from "react-router-dom";
 
 const DeleteGoal = ({ goal }) => {
   // Delete Goal Button Show/Hide
@@ -28,15 +28,13 @@ const DeleteGoal = ({ goal }) => {
 
   const id = goal._id;
 
-  const navigate = useNavigate();
-
   const [deleteGoal, { isLoading }] = useDeleteGoalMutation();
 
   const submitHandler = async () => {
+    <Navigate to="/" />;
     try {
       const res = await deleteGoal(id).unwrap();
       console.log(res);
-      navigate(`/`);
       toast.success("Goal deleted successfully");
     } catch (err) {
       toast.error(err?.data?.message || err.error);

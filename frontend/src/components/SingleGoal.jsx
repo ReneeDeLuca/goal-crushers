@@ -16,7 +16,6 @@ const SingleGoal = ({ goalId }) => {
     isError,
     error,
   } = useGetGoalByIdQuery(goalId);
-  console.log(goal);
 
   let content;
 

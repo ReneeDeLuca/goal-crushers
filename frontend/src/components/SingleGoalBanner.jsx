@@ -15,7 +15,6 @@ const SingleGoalBanner = ({ goalId }) => {
     isError,
     error,
   } = useGetGoalByIdQuery(goalId);
-  console.log(goal);
 
   const { userInfo } = useSelector((state) => state.auth);
   const user = userInfo._id;
@@ -53,9 +52,9 @@ const SingleGoalBanner = ({ goalId }) => {
   }
 
   return (
-    <container className="relative container mx-auto p-4">
+    <section className="relative container mx-auto p-4">
       <section className="flex items-start">{content}</section>
-    </container>
+    </section>
   );
 };
 
