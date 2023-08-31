@@ -10,6 +10,7 @@ export const goalApiSlice = apiSlice.injectEndpoints({
                 // Provides a list of `Posts` by `id`.
                 transformResponse: (response) => response.data,
                 transformErrorResponse: (response) => response.status,
+            }),
                 // If any mutation is executed that `invalidate`s any of these tags, this query will re-run to be always up-to-date.
                 // The `LIST` id is a "virtual id" we just made up to be able to invalidate this query specifically if a new `Goal` element was added.            
                 providesTags: (result) =>
@@ -22,15 +23,15 @@ export const goalApiSlice = apiSlice.injectEndpoints({
                     ]
                   : // an error occurred, but we still want to refetch this query when `{ type: 'Goal', id: 'LIST' }` is invalidated
                     [{ type: 'Goal', id: 'LIST' }],
-            }),
+            
         }),
         getGoalById: builder.query({
             query: (id) => ({
                 url: `${GOAL_URL}/:${id}`,
                 transformResponse: (response) => response.data,
                 transformErrorResponse: (response) => response.status,
-                providesTags: (result, error, id) => [{type: "Goal", id}],
             }),
+            providesTags: (result, error, id) => [{type: "Goal", id}],
         }),
             //mutations - send updates to the server
         addGoal: builder.mutation({
@@ -39,9 +40,7 @@ export const goalApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
                 body: data,
             }),
-            // Invalidates all Goal-type queries providing the `LIST` id - after all, depending of the sort order,
-            // that newly created post could show up in any lists.
-      invalidatesTags: [{ type: 'Goal', id: 'LIST' }],
+            invalidatesTags: (result, error, { id }) => [{ type: 'Goal', id }],
         }),
         updateGoalData: builder.mutation({
             query: ({id, date }) => ({
@@ -85,7 +84,7 @@ export const goalApiSlice = apiSlice.injectEndpoints({
                 transformErrorResponse: (response) => response.status,
             }),
             // Invalidates all queries that subscribe to this Post `id` only.
-            invalidatesTags: (result, error, id) => [{ type: 'Goal', id }],
+            invalidatesTags: ['Goal'],
     
         }),
     })

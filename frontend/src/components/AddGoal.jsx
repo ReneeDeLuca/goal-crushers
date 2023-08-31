@@ -3,6 +3,7 @@ import FormContainer from "../components/FormContainer";
 import { toast } from "react-toastify";
 import { useAddGoalMutation } from "../apiSlices/goalApiSlice";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const AddGoal = () => {
   // Add Goal Button Show/Hide
@@ -24,6 +25,7 @@ const AddGoal = () => {
   };
 
   // Add Goal Form
+
   const [endDate, setEndDate] = useState(new Date());
   const [title, setTitle] = useState("");
   const [isPublic, setIsPublic] = useState(true);
@@ -59,9 +61,16 @@ const AddGoal = () => {
         }).unwrap();
         console.log(res);
         setTitle("");
-        setEndDate("");
-        setIsPublic();
-        setReactions();
+        setEndDate(new Date());
+        setIsPublic(true);
+        setReactions({
+          thumbsUp: 0,
+          bicep: 0,
+          heart: 0,
+          fire: 0,
+          star: 0,
+        });
+        cancelAddGoal();
         toast.success("Goal added successfully");
       } catch (err) {
         toast.error(err?.data?.message || err.error);
@@ -135,15 +144,17 @@ const AddGoal = () => {
                 </div>
                 <div className="mt-5 flex lg:ml-4 lg:mt-0">
                   <span className=" mr-2 sm:block">
-                    <button
-                      type="button"
-                      id="submit"
-                      className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                      disabled={isLoading || !canSave}
-                      onClick={submitHandler}
-                    >
-                      {isLoading ? "Loading…" : "Submit"}
-                    </button>
+                    <Link to="/">
+                      <button
+                        type="button"
+                        id="submit"
+                        className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        disabled={isLoading || !canSave}
+                        onClick={submitHandler}
+                      >
+                        {isLoading ? "Loading…" : "Submit"}
+                      </button>
+                    </Link>
                   </span>
                   <span className="ml-2 sm:block">
                     <button

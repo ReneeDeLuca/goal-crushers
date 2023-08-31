@@ -53,7 +53,7 @@ const SingleGoalBanner = ({ goalId }) => {
 
   return (
     <section className="relative container mx-auto p-4">
-      <section className="flex items-start">{content}</section>
+      <section className="flex justify-center items-start">{content}</section>
     </section>
   );
 };

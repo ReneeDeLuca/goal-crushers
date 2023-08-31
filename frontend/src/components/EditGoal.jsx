@@ -56,7 +56,7 @@ const EditGoal = ({ goal }) => {
 
   return (
     <>
-      <section className="flex max-w-sm min-h-full flex-col px-2 py-2">
+      <section className="flex min-h-full flex-col px-2 py-2">
         <span className="flex justify-end">
           <button
             type="button"

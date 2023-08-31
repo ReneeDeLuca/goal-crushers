@@ -70,11 +70,20 @@ const GoalList = () => {
       .classList.add("disabled");
   } else if (isSuccess) {
     if (sortedGoals.length === 0) {
-      content = <NoGoalsMessage />;
+      content = (
+        <section className="goal-list-group grid-cols-1">
+          <NoGoalsMessage />;
+        </section>
+      );
     } else {
-      content = sortedGoals.map((goal) => (
-        <RenderedGoal key={goal._id} goal={goal} />
-      ));
+      content = (
+        <section className="goal-list-group grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+          {sortedGoals.map((goal) => (
+            <RenderedGoal key={goal._id} goal={goal} />
+          ))}
+          ;
+        </section>
+      );
     }
   } else if (isError) {
     toast.error(error?.data?.message || error.error);
@@ -82,14 +91,13 @@ const GoalList = () => {
 
   return (
     <section className="goalList">
-      <section className="flex flex-row min-w-full mb-6 justify-evenly md:justify-start items-center">
+      <section className="flex flex-row min-w-full mb-6 justify-evenly items-center">
         <span>
           <AddGoal />
         </span>
       </section>
-      <section className="goal-list-group grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-        {content}
-      </section>
+
+      {content}
     </section>
   );
 };
