@@ -7,7 +7,7 @@ export const goalApiSlice = apiSlice.injectEndpoints({
         getAllGoals: builder.query({
             query: () => ({
                 url: `${GOAL_URL}/`,
-                // Provides a list of `Posts` by `id`.
+                // Provides a list of `Goals` by `id`.
                 transformResponse: (response) => response.data,
                 transformErrorResponse: (response) => response.status,
             }),
@@ -83,9 +83,7 @@ export const goalApiSlice = apiSlice.injectEndpoints({
                 transformResponse: (response) => response.data,
                 transformErrorResponse: (response) => response.status,
             }),
-            // Invalidates all queries that subscribe to this Post `id` only.
             invalidatesTags: ['Goal'],
-    
         }),
     })
 })
