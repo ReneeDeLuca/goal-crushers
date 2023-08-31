@@ -3,7 +3,7 @@ import { useState } from "react";
 import FormContainer from "./FormContainer";
 import { toast } from "react-toastify";
 import { useDeleteGoalMutation } from "../apiSlices/goalApiSlice";
-import { Navigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const DeleteGoal = ({ goal }) => {
   // Delete Goal Button Show/Hide
@@ -31,7 +31,6 @@ const DeleteGoal = ({ goal }) => {
   const [deleteGoal, { isLoading }] = useDeleteGoalMutation();
 
   const submitHandler = async () => {
-    <Navigate to="/" />;
     try {
       const res = await deleteGoal(id).unwrap();
       console.log(res);
@@ -43,7 +42,7 @@ const DeleteGoal = ({ goal }) => {
 
   return (
     <>
-      <section className="flex max-w-sm min-h-full flex-col px2 py-2">
+      <section className="flex min-h-full flex-col px2 py-2">
         <span className="justify-start">
           <button
             type="button"
@@ -62,15 +61,17 @@ const DeleteGoal = ({ goal }) => {
               </h1>
               <div className="mt-5 flex lg:ml-4 lg:mt-0">
                 <span className=" mr-2 sm:block">
-                  <button
-                    type="submit"
-                    id="submit"
-                    className="inline-flex items-center rounded-md bg-red-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                    disabled={isLoading}
-                    onClick={submitHandler}
-                  >
-                    {isLoading ? "Loading…" : "Yes, delete this goal"}
-                  </button>
+                  <Link to="/">
+                    <button
+                      type="submit"
+                      id="submit"
+                      className="inline-flex items-center rounded-md bg-red-800 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                      disabled={isLoading}
+                      onClick={submitHandler}
+                    >
+                      {isLoading ? "Loading…" : "Yes, delete this goal"}
+                    </button>
+                  </Link>
                 </span>
                 <span className="ml-2 sm:block">
                   <button
