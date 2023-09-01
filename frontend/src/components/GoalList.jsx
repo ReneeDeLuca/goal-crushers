@@ -6,7 +6,7 @@ import { useGetAllGoalsQuery } from "../apiSlices/goalApiSlice";
 import { useMemo } from "react";
 import { toast } from "react-toastify";
 
-const GoalList = () => {
+const GoalList = ({ userInfo }) => {
   const {
     data: goals = [],
     isLoading,
@@ -15,12 +15,13 @@ const GoalList = () => {
     isError,
     error,
   } = useGetAllGoalsQuery();
+  const userId = userInfo._id;
 
   const sortedGoals = useMemo(() => {
-    const sortedGoals = goals.slice();
+    const sortedGoals = goals.filter((goal) => goal.user === userId).slice();
     sortedGoals.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
     return sortedGoals;
-  }, [goals]);
+  }, [goals, userId]);
 
   let RenderedGoal = ({ goal }) => {
     return (
@@ -72,18 +73,23 @@ const GoalList = () => {
     if (sortedGoals.length === 0) {
       content = (
         <section className="goal-list-group grid-cols-1">
-          <NoGoalsMessage />;
+          <NoGoalsMessage />
         </section>
       );
-    } else {
+    } else if (sortedGoals.length === 1) {
       content = (
-        <section className="goal-list-group grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+        <section className="goal-list-group grid-cols-1">
           {sortedGoals.map((goal) => (
             <RenderedGoal key={goal._id} goal={goal} />
           ))}
-          ;
         </section>
       );
+    } else {
+      <section className="goal-list-group grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+        {sortedGoals.map((goal) => (
+          <RenderedGoal key={goal._id} goal={goal} />
+        ))}
+      </section>;
     }
   } else if (isError) {
     toast.error(error?.data?.message || error.error);

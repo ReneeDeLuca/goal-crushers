@@ -10,7 +10,7 @@ const Dashboard = () => {
         <h1 className="text-3xl underline font-bold text-gray-900">{`${userInfo.name}'s Goal Dashboard`}</h1>
       </div>
       <section className="flex flex-col flex-1 mt-10 mx-auto md:flex-row items-start">
-        <GoalList />
+        <GoalList userInfo={userInfo} />
       </section>
     </>
   );

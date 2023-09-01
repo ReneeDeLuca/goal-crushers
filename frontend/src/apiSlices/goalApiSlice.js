@@ -65,10 +65,10 @@ export const goalApiSlice = apiSlice.injectEndpoints({
             invalidatesTags: (result, error, { id }) => [{ type: 'Goal', id }],
         }),
         reactionAdded: builder.mutation({
-            query: ({id, data}) => ({
-                url: `${GOAL_URL}/:${id}`,
+            query: ({id, reaction}) => ({
+                url: `${GOAL_URL}/reactions/:${id}`,
                 method: "PUT",
-                body: data,
+                body: {reaction},
                 transformResponse: (response) => response.data,
                 transformErrorResponse: (response) => response.status,
             }),

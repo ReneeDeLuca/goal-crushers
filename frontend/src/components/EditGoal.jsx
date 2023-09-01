@@ -44,9 +44,9 @@ const EditGoal = ({ goal }) => {
     try {
       const res = await updateGoal({ id, title, endDate, isPublic }).unwrap();
       console.log(res);
-      setTitle("");
-      setEndDate("");
-      setIsPublic();
+      setTitle(goal.title);
+      setEndDate(goal.endDate);
+      setIsPublic(goal.isPublic);
       navigate(`/goal/:${goal._id}`);
       toast.success("Goal updated successfully");
     } catch (err) {

@@ -24,9 +24,6 @@ const getGoal = asyncHandler( async (req, res) => {
   try {
     const goalId = req.params.id;
     const goal = await Goal.findById(goalId.slice(1)).lean();
-    if (!goal) {
-      return res.render('error/404')
-    }
     res.json(goal)
   } catch (err) {
     console.error(err)
@@ -88,22 +85,28 @@ const updateGoal = asyncHandler(async (req, res) => {
   }
 })
 
-// @desc    Likes goal
-// @route   PUT /goal/likes/:id
-const likeGoal = asyncHandler(async (req, res) => {
-  try {
-    await Goal.findOneAndUpdate(
-      { _id: req.params.id },
-      {
-        $inc: { likes: 1 },
-      }
-    );
-    console.log("Likes +1");
-    res.redirect(`/goal/${req.params.id}`);
+// @desc   update goal reactions
+// @route  PUT api/goal/reactions/:id
+// link to goalApiSlice -> reactionAdded
+
+const reactionAdded = asyncHandler(async (req, res) => {
+  try{
+    const reaction = req.body.reaction;
+    console.log(reaction);
+    const goalId = req.params.id
+    console.log(goalId);
+    const goal = await Goal.findOneAndUpdate(
+      {_id: goalId.slice(1)},
+      {$inc: {[reaction]: 1}},
+      {new: true}
+    )
+    await goal.save();
+      res.json({goal, message: "Goal Updated"})
+      console.log("Goal Updated");
   } catch (err) {
     console.log(err);
   }
-});
+})
 
 // @desc    Delete goal
 // @route   DELETE /goal/:id
@@ -114,7 +117,7 @@ const deleteGoal = asyncHandler(async (req, res) => {
     let goal = await Goal.findById(goalId.slice(1)).lean()
     
     if (!goal) {
-      return res.render('error/404')
+      return res.status(404).json({ message: 'Goal not found' })
     }
       await Goal.deleteOne({ _id: goalId.slice(1) })
       res.json({message: "Goal Deleted"})
@@ -130,7 +133,7 @@ export { getAllGoals,
   getGoal,
   createGoal, 
   updateGoal,
-  likeGoal, 
+  reactionAdded, 
   updateGoalData,
   deleteGoal
 }

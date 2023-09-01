@@ -26,19 +26,19 @@ const AddGoal = () => {
 
   // Add Goal Form
 
+  const { userInfo } = useSelector((state) => state.auth);
+  const user = userInfo._id;
+  const name = userInfo.name;
+
   const [endDate, setEndDate] = useState(new Date());
   const [title, setTitle] = useState("");
   const [isPublic, setIsPublic] = useState(true);
-  const [reactions, setReactions] = useState({
-    thumbsUp: 0,
-    bicep: 0,
-    heart: 0,
-    fire: 0,
-    star: 0,
-  });
-
-  const { userInfo } = useSelector((state) => state.auth);
-  const user = userInfo._id;
+  const [userName, setUserName] = useState(name);
+  const [thumbsUp, setThumbsUp] = useState(0);
+  const [bicep, setBicep] = useState(0);
+  const [heart, setHeart] = useState(0);
+  const [fire, setFire] = useState(0);
+  const [star, setStar] = useState(0);
 
   const [addGoal, { isLoading }] = useAddGoalMutation();
 
@@ -56,20 +56,24 @@ const AddGoal = () => {
           title,
           endDate,
           isPublic,
-          reactions,
           user,
+          userName,
+          thumbsUp,
+          bicep,
+          heart,
+          fire,
+          star,
         }).unwrap();
         console.log(res);
         setTitle("");
         setEndDate(new Date());
         setIsPublic(true);
-        setReactions({
-          thumbsUp: 0,
-          bicep: 0,
-          heart: 0,
-          fire: 0,
-          star: 0,
-        });
+        setUserName(name);
+        setThumbsUp(0);
+        setBicep(0);
+        setHeart(0);
+        setFire(0);
+        setStar(0);
         cancelAddGoal();
         toast.success("Goal added successfully");
       } catch (err) {

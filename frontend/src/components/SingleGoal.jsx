@@ -5,7 +5,6 @@ import CreateCalendar from "./CreateCalendar";
 import CalendarHeader from "./CalendarHeader";
 import TimeAgo from "./TimeAgo";
 import format from "date-fns/format";
-//import { useGetUserByIdQuery } from "../apiSlices/userApiSlice";
 
 const SingleGoal = ({ goalId }) => {
   const {
@@ -32,9 +31,9 @@ const SingleGoal = ({ goalId }) => {
           <div className="basis-1/2 text-center pt-8 items-baseline">
             <h2 className="text-xl underline align-bottom items-start font-bold text-gray-600">{`${goal.title}`}</h2>
           </div>
-          {/* <div className="basis-1/2 text-end py-4 my-auto justify-end">
-            <h3 className="text-lg text-gray-600">{`Created by: ${user.name}`}</h3>
-          </div> */}
+          <div className="basis-1/2 text-end py-4 my-auto justify-end">
+            <h3 className="text-lg text-gray-600">{`Created by: ${goal.userName}`}</h3>
+          </div>
         </section>
         <section
           id="calendar-chart"
