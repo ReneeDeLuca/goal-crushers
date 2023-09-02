@@ -7,6 +7,7 @@ const router = express.Router()
 
 // @desc    Get all users for API
 // @route   GET /api/users
+//linked to userApiSlice -> getAllUsers
 const getAllUsers = asyncHandler(async (req, res) => {
   try{
     const users = await User.find({}).lean();
@@ -17,37 +18,22 @@ const getAllUsers = asyncHandler(async (req, res) => {
   }
 });
 
-// @desc Get user profile edit page
-// route GET /user/profileEdit/:id
-// @access Private
-const getUserProfileEdit = asyncHandler(async (req, res) => {
-    try {
-      const user = await User.findOne({
-        _id: req.user._id,
-      })
-  
-      if (!user) {
-        res.status(404);
-        throw new Error('User not found');
-      }
-  
-      if (user.id != req.user._id) {
-        res.status(500);
-        throw new Error('User not authorized');
-      } else {
-        res.status(201).json({
-          _id: user._id,
-          name: user.name,
-          email: user.email,
-          image: user.image,
-          aboutMe: user.aboutMe,
-        })
-      }
-    } catch (err) {
-      res.status(err.status || 500);
-      throw new Error(err.message || 'Server Error');
+// @desc Get user profile
+// route GET /user/:id
+// link to userApiSlice -> getUserById
+const getUser = asyncHandler( async (req, res) => {
+  try {
+    const userId = req.params.id;
+    const user = await User.findById(userId.slice(1)).lean();
+    if (!user) {
+      return res.status(404).json({ message: 'User not found' })
     }
-  })
+    res.json(user)
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 
 // @desc update user profile
 // route PUT /user/profile/:id
@@ -143,39 +129,23 @@ const updateUserLogin = asyncHandler(async (req, res) => {
     res.status(200).json({message: 'Update User Login'})
 });
 
-// @desc Get user profile
-// route GET /user/:id
-const getUser = asyncHandler( async (req, res) => {
-  try {
-    const userId = req.params.id;
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.render('error/404')
-    }
-    res.json(user)
-  } catch (err) {
-    console.log(err);
-  }
-});
+
 
 // @desc    Delete user
 // @route   DELETE user/:id
 const deleteUser = asyncHandler(async (req, res) => {
   try {
-    let user = await User.findById(req.params.id).lean()
+    const userId = req.params.id;
+    let user = await User.findById(userId.slice(1)).lean()
 
     if (!user) {
-      return res.render('error/404')
+      return res.status(404).json({ message: 'User not found' })
     }
-
-    if (user.id != req.user.id) {
-      res.redirect('/dashboard')
-    } else {
       // Delete image from cloudinary
       await cloudinary.uploader.destroy(goal.cloudinaryId);
-      await User.remove({ _id: req.params.id })
-      res.redirect('/')
-    }
+      await User.deleteOne({ _id: userId.slice(1)})
+      res.json({ message: 'User Deleted' })
+      console.log("User Deleted");
   } catch (err) {
     console.error(err)
     return res.render('error/500')
@@ -183,7 +153,6 @@ const deleteUser = asyncHandler(async (req, res) => {
 })
 
 export{ getAllUsers,
-    getUserProfileEdit,
     updateUserProfile,
     getUserLoginEdit,
     updateUserLogin,

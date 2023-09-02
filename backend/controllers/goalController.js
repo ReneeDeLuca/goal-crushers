@@ -27,7 +27,6 @@ const getGoal = asyncHandler( async (req, res) => {
     res.json(goal)
   } catch (err) {
     console.error(err)
-    res.render('error/404')
   }
 })
 

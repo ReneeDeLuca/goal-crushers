@@ -1,7 +1,6 @@
 import express from "express";
 import upload from "../middleware/multer.js";
 import { getAllUsers,
-    getUserProfileEdit,
     updateUserProfile,
     getUserLoginEdit,
     updateUserLogin,
@@ -22,9 +21,6 @@ router.get("/", protect, getAllUsers);
 
 //Enables user to view user Dashboard
 router.get("/:id", protect, getUser);
-
-//Enables user to view edit user profile page
-router.get("/profileEdit/:id", protect, getUserProfileEdit);
 
 //Enables user to edit user profile w/ cloudinary for media uploads
 router.put("profile/:id", protect, upload.single("file"), updateUserProfile);
