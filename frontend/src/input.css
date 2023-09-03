@@ -179,3 +179,12 @@ tbody tr .goal-cal-completed-day {
     display: grid;
     min-height: fit-content;
 }
+
+/* Profile */
+
+#profile-banner {
+    display: grid;
+    justify-items: center;
+    align-items: center;
+    justify-content: space-around;
+}
