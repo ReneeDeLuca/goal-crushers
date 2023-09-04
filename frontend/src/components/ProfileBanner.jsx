@@ -1,6 +1,7 @@
 /* eslint-disable react/prop-types */
 import { useGetUserByIdQuery } from "../apiSlices/userApiSlice";
 import { toast } from "react-toastify";
+import { format } from "date-fns";
 
 const ProfileBanner = ({ userId }) => {
   const {
@@ -12,7 +13,12 @@ const ProfileBanner = ({ userId }) => {
     error,
   } = useGetUserByIdQuery(userId);
 
+  console.log(user.createdAt);
+
   let content;
+
+  const userCreated = new Date(user.createdAt);
+  const dateJoined = format(userCreated, "MMMM yyyy");
 
   const RenderAvatar = () => {
     if (user.image) {
@@ -39,29 +45,41 @@ const ProfileBanner = ({ userId }) => {
   } else if (user && isSuccess) {
     content = (
       <>
-        <section className="grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-          <span className="col-span-1">
-            <RenderAvatar />
-          </span>
-        </section>
-        <section className="grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-          <span className="col-span-1">
-            <span className="font-bold text-lg mx-2 text-gray-800">
-              {user.name}
-            </span>
-          </span>
-        </section>
-        <section className="grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-          <span className="col-span-1">
-            {/* <span className="text-md mx-2 text-gray-800">{user.aboutMe}</span> */}
-            <span className="text-md mx-2 text-gray-800">
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Doloremque voluptas optio soluta doloribus! Accusantium
-              dignissimos voluptate voluptatibus, ad deleniti repudiandae
-              quaerat adipisci! Error laboriosam ratione aspernatur nulla rem
-              natus labore?
-            </span>
-          </span>
+        <section>
+          <section
+            id="profile-banner"
+            className="grid-flow-row-dense grid-cols-2 grid-row-2 lg: grid-row-1 md:grid-cols-4"
+          >
+            <div className="profile-banner-item col-span-1 justify-start">
+              <div className="flex flex-col pl-6 items-start">
+                <span className="font-bold text-lg mx-2 my-4 text-gray-800">
+                  {user.name}
+                </span>
+                <span className="text-sm mx-2 mt-4 italic text-gray-600">
+                  Crushing goals since:
+                </span>
+                <span className="text-sm mx-2 italic text-gray-600">
+                  {dateJoined}
+                </span>
+              </div>
+            </div>
+            <div className="profile-banner-item col-span-1 justify-center">
+              <RenderAvatar />
+            </div>
+            <div className="flex flex-col profile-banner-item col-span-2 justify-center">
+              {/* <span className="text-md mx-2 text-gray-800">{user.aboutMe}</span> */}
+              <p className="text-md mx-2 text-gray-800">
+                <span className="font-bold text-indigo-800 text-left">
+                  About me:
+                </span>{" "}
+                Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Doloremque voluptas optio soluta doloribus! Accusantium
+                dignissimos voluptate voluptatibus, ad deleniti repudiandae
+                quaerat adipisci! Error laboriosam ratione aspernatur nulla rem
+                natus labore?
+              </p>
+            </div>
+          </section>
         </section>
       </>
     );

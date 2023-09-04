@@ -184,7 +184,16 @@ tbody tr .goal-cal-completed-day {
 
 #profile-banner {
     display: grid;
-    justify-items: center;
+    min-height: fit-content;
+}
+
+.profile-banner-item {
+    display: flex;
+    flex-direction: row;
     align-items: center;
-    justify-content: space-around;
+    min-width: 100%;
+    max-width: 30rem;
+    margin: 0 auto;
+    padding-bottom: 1.5rem;
+    
 }

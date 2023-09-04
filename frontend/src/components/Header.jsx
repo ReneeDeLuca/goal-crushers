@@ -10,7 +10,7 @@ export default function Header() {
       {/* Navbar */}
       <nav className="relative container mx-auto p-6">
         {/* Flex container */}
-        <div className="flex items-center justify-between">
+        <div className="flex items-center overflow-x-auto min-w-[450px] justify-between">
           <div className="min-w-0 basis-1/2">
             <Link to="/">
               <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
