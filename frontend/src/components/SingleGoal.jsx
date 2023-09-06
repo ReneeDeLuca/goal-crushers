@@ -27,7 +27,7 @@ const SingleGoal = ({ goalId }) => {
     let formatEndDate = format(endDate, "PP");
 
     return (
-      <section id="goal-container" className="md:max-h-[30rem]">
+      <section id="single-goal-container" className="md:max-h-[30rem]">
         <section className="goal-info text-center">
           <div className="basis-1/2 text-center pt-8 items-baseline">
             <h2 className="text-xl underline align-bottom items-start font-bold text-gray-600">{`${goal.title}`}</h2>
@@ -111,7 +111,7 @@ const SingleGoal = ({ goalId }) => {
   }
 
   return (
-    <section className="singleGoal mx-auto">
+    <section className="container singleGoal mx-auto">
       <section className="grid-cols-1">{content}</section>
     </section>
   );

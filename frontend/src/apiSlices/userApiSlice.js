@@ -55,6 +55,26 @@ export const userApiSlice = apiSlice.injectEndpoints({
             }),
             invalidatesTags: (result, error, { id }) => [{ type: 'User', id }],
         }),
+        followUser: builder.mutation({
+            query: ({userId, followId, followName }) => ({
+                url: `${USER_URL}/follow/:${userId}`,
+                method: 'PUT',
+                body: {userId, followId, followName},
+                transformResponse: (response) => response.data,
+                transformErrorResponse: (response) => response.status,
+            }),
+            invalidatesTags: ['User'],
+          }),
+          unfollowUser: builder.mutation({
+            query: ({userId, followId, followName}) => ({
+                url: `${USER_URL}/unfollow/:${userId}`,
+                method: 'PUT',
+                body: {userId, followId, followName},
+                transformResponse: (response) => response.data,
+                transformErrorResponse: (response) => response.status,
+            }),
+            invalidatesTags: ['User'],
+          }),
         deleteUser: builder.mutation({
             query: (id) => ({
               url: `${USER_URL}/:${id}`,
@@ -73,5 +93,7 @@ export const {
     useGetUserByIdQuery,
     useUpdateLoginMutation,
     useUpdateProfileMutation,
+    useFollowUserMutation,
+    useUnfollowUserMutation,
     useDeleteUserMutation, 
 } = userApiSlice;

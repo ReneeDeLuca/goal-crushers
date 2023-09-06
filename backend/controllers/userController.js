@@ -129,6 +129,47 @@ const updateUserLogin = asyncHandler(async (req, res) => {
     res.status(200).json({message: 'Update User Login'})
 });
 
+//@desc follow user
+// @route PUT /user/follow/:id
+// link to userApiSlice -> followUser
+
+const followUser = asyncHandler(async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const followId = req.body.followId;
+    const followName = req.body.followName;
+    const user = await User.findById(userId);
+    const followed = user.favorites.addToSet(followId);
+    await user.save();
+
+    res.status(200).json({message: `${followName} followed!`})
+    console.log(`${followName} followed!`);
+
+  } catch (err) {
+    console.log(err);
+  }
+})
+
+//@desc unfollow user
+// @route PUT /user/unfollow/:id
+// link to userApiSlice -> unfollowUser
+
+const unfollowUser = asyncHandler(async (req, res) => {
+  try {
+    const userId = req.body.userId;
+    const followId = req.body.followId;
+    const followName = req.body.followName;
+    const user = await User.findById(userId);
+    const unfollowed = user.favorites.remove(followId);
+    await user.save();
+
+    res.status(200).json({message: `${followName} unfollowed!`})
+    console.log(`${followName} unfollowed!`);
+
+  } catch (err) {
+    console.log(err);
+  }
+})
 
 
 // @desc    Delete user
@@ -157,5 +198,7 @@ export{ getAllUsers,
     getUserLoginEdit,
     updateUserLogin,
     getUser,
+    followUser,
+    unfollowUser,
     deleteUser
 }
