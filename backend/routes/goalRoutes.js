@@ -3,7 +3,7 @@ import { getAllGoals,
     getGoal,
     createGoal, 
     updateGoal,
-    likeGoal, 
+    reactionAdded, 
     updateGoalData,
     deleteGoal
 } from '../controllers/goalController.js';
@@ -28,8 +28,8 @@ router.post('/', protect, createGoal);
 //Enables user to edit goal 
 router.put('/edit/:id', protect, updateGoal);
 
-//Enables user to like goal. In controller, uses Goal model to update likes by 1
-router.put("/likes/:id", protect, likeGoal);
+//Enables user to add a goal reaction. In controller, uses Goal model to update reactions object in db
+router.put("/reactions/:id", protect, reactionAdded);
 
 //Enables user to update dates completed. In controller, uses Goal model to update dates completed
 router.put("/:id", protect, updateGoalData)

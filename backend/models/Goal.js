@@ -13,17 +13,34 @@ const GoalSchema = new mongoose.Schema({
     ref: "User",
     required: true,
   },
+  userName : {
+    type: String,
+    required: true,
+  },
   isPublic: {
     type: Boolean,
     required: true,
   },
-  reactions: { 
-    thumbsUp: Number, 
-    bicep: Number, 
-    heart: Number, 
-    fire: Number, 
-    star: Number,
-  },
+  thumbsUp: { 
+    type: Number,
+    required: true,
+  }, 
+  bicep: { 
+    type: Number,
+    required: true,
+  },  
+  heart: { 
+    type: Number,
+    required: true,
+  },  
+  fire: { 
+    type: Number,
+    required: true,
+  },  
+  star: { 
+    type: Number,
+    required: true,
+  }, 
   endDate: {
     type: Date,
 		required: true,

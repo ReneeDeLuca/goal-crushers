@@ -27,7 +27,7 @@ const router = createBrowserRouter(
       <Route path="/register" element={<RegisterScreen />} />
       {/*Private Routes*/}
       <Route path="" element={<PrivateRoute />}>
-        <Route path="profile:id" element={<ProfileScreen />} />
+        <Route path="profile/:id" element={<ProfileScreen />} />
         <Route path="/settings" element={<SettingsScreen />} />
         <Route path="/deleteUser:id" element={<DeleteUserScreen />} />
         <Route path="/goal/:id" element={<SingleGoalScreen />} />
@@ -41,6 +41,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     <React.StrictMode>
       <RouterProvider router={router} />
     </React.StrictMode>
-    ,
   </Provider>
 );

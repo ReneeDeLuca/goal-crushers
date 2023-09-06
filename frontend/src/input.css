@@ -71,6 +71,18 @@
     justify-content: space-between;
 }
 
+#single-goal-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: auto;
+    width: 18rem;
+    height: fit-content;
+    border: 2px solid indigo;
+    border-radius: .25rem;
+    justify-content: space-between;
+}
+
 .goal-info {
     display: flex;
     flex-direction: column;
@@ -178,4 +190,23 @@ tbody tr .goal-cal-completed-day {
 .goal-list-group {
     display: grid;
     min-height: fit-content;
+    justify-items: center;
+}
+
+/* Profile */
+
+#profile-banner {
+    display: grid;
+    min-height: fit-content;
+}
+
+.profile-banner-item {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    min-width: 100%;
+    max-width: 30rem;
+    margin: 0 auto;
+    padding-bottom: 1.5rem;
+    
 }

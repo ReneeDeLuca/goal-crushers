@@ -1,11 +1,12 @@
 import express from "express";
 import upload from "../middleware/multer.js";
 import { getAllUsers,
-    getUserProfileEdit,
     updateUserProfile,
     getUserLoginEdit,
     updateUserLogin,
     getUser,
+    followUser,
+    unfollowUser,
     deleteUser
 } from '../controllers/userController.js';
 import { protect } from "../middleware/authMiddleware.js";
@@ -23,9 +24,6 @@ router.get("/", protect, getAllUsers);
 //Enables user to view user Dashboard
 router.get("/:id", protect, getUser);
 
-//Enables user to view edit user profile page
-router.get("/profileEdit/:id", protect, getUserProfileEdit);
-
 //Enables user to edit user profile w/ cloudinary for media uploads
 router.put("profile/:id", protect, upload.single("file"), updateUserProfile);
 
@@ -34,6 +32,12 @@ router.get("/loginEdit/:id", protect, getUserLoginEdit);
 
 //Enables user to edit user login
 router.put("/login/:id", protect, updateUserLogin);
+
+//Enables user to follow another user
+router.put("/follow/:id", protect, followUser);
+
+//Enables user to unfollow another user
+router.put("/unfollow/:id", protect, unfollowUser);
 
 //Enables user to delete user data. In controller, uses POST model to delete profile from MongoDB collection
 router.delete("/:id", protect, deleteUser);

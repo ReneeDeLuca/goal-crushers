@@ -1,12 +1,11 @@
 /* eslint-disable react/prop-types */
-import Goal from "./Goal";
-import AddGoal from "./AddGoal";
+import ProfileGoal from "./ProfileGoal";
 import FormContainer from "./FormContainer";
 import { useGetAllGoalsQuery } from "../apiSlices/goalApiSlice";
 import { useMemo } from "react";
 import { toast } from "react-toastify";
 
-const GoalList = ({ userInfo }) => {
+const ProfileGoalList = ({ user }) => {
   const {
     data: goals = [],
     isLoading,
@@ -15,18 +14,22 @@ const GoalList = ({ userInfo }) => {
     isError,
     error,
   } = useGetAllGoalsQuery();
-  const userId = userInfo._id;
 
   const sortedGoals = useMemo(() => {
-    const sortedGoals = goals.filter((goal) => goal.user === userId).slice();
+    const sortedGoals = goals.filter((goal) => goal.user === user._id).slice();
     sortedGoals.sort((a, b) => b.createdAt.localeCompare(a.createdAt));
     return sortedGoals;
-  }, [goals, userId]);
+  }, [goals, user]);
+
+  const publicGoals = useMemo(() => {
+    const publicGoals = sortedGoals.filter((goal) => goal.isPublic === true);
+    return publicGoals;
+  }, [sortedGoals]);
 
   let RenderedGoal = ({ goal }) => {
     return (
       <div className="col-span-1 mb-8 md:mx-10" key={goal._id}>
-        <Goal
+        <ProfileGoal
           key={goal._id}
           id={goal._id}
           goal={goal}
@@ -48,12 +51,8 @@ const GoalList = ({ userInfo }) => {
           <div className="col-span-1 mb-8 md:mx-10">
             <div className="flex flex-col justify-center items-center">
               <h1 className="text-2xl text-center font-bold text-gray-800">
-                You have no goals yet!
+                {user.name} has no goals yet.
               </h1>
-              <h2>
-                Click <span className="bold text-indigo-600">Add Goal</span>{" "}
-                above to start tracking your goals.
-              </h2>
             </div>
           </div>
         </FormContainer>
@@ -76,30 +75,28 @@ const GoalList = ({ userInfo }) => {
           <NoGoalsMessage />
         </section>
       );
-    } else if (sortedGoals.length === 1) {
+    } else if (publicGoals.length === 1) {
       content = (
         <section className="goal-list-group grid-cols-1">
-          {sortedGoals.map((goal) => (
+          {publicGoals.map((goal) => (
             <RenderedGoal key={goal._id} goal={goal} />
           ))}
         </section>
       );
-    } else if (sortedGoals.length === 2) {
+    } else if (publicGoals.length === 2) {
       content = (
         <section className="goal-list-group grid-cols-1 md:grid-cols-2">
-          {sortedGoals.map((goal) => (
+          {publicGoals.map((goal) => (
             <RenderedGoal key={goal._id} goal={goal} />
           ))}
         </section>
       );
     } else {
-      content = (
-        <section className="goal-list-group grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
-          {sortedGoals.map((goal) => (
-            <RenderedGoal key={goal._id} goal={goal} />
-          ))}
-        </section>
-      );
+      <section className="goal-list-group grid-cols-1 md:grid-cols-2 xl:grid-cols-3">
+        {publicGoals.map((goal) => (
+          <RenderedGoal key={goal._id} goal={goal} />
+        ))}
+      </section>;
     }
   } else if (isError) {
     toast.error(error?.data?.message || error.error);
@@ -107,15 +104,10 @@ const GoalList = ({ userInfo }) => {
 
   return (
     <section className="goalList">
-      <section className="flex flex-row min-w-full mb-6 justify-evenly items-center">
-        <span>
-          <AddGoal />
-        </span>
-      </section>
-
+      <section className="flex flex-row min-w-full mb-6 justify-evenly items-center"></section>
       {content}
     </section>
   );
 };
 
-export default GoalList;
+export default ProfileGoalList;

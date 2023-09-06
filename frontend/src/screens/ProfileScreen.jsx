@@ -1,107 +1,65 @@
-import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
-import { useUpdateProfileMutation } from '../apiSlices/userApiSlice';
-import AddGoal from '../components/AddGoal';
+import { useParams } from "react-router-dom";
+import ProfileBanner from "../components/ProfileBanner";
+import ProfileGoalList from "../components/ProfileGoalList";
+import { Link } from "react-router-dom";
+import { useGetUserByIdQuery } from "../apiSlices/userApiSlice";
+import { toast } from "react-toastify";
 
 const ProfileScreen = () => {
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  let userId = useParams();
+  userId = userId.id.slice(1);
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const {
+    data: user,
+    isSuccess,
+    isLoading,
+    isFetching,
+    isError,
+    error,
+  } = useGetUserByIdQuery(userId);
 
-  const { userInfo } = useSelector((state) => state.auth);
+  let content;
 
-  const [updateProfile, ] = useUpdateProfileMutation();
+  if (isLoading || isFetching) {
+    content = <div className="loader">Loading...</div>;
+  } else if (!user) {
+    content = (
+      <>
+        <h1>user not found</h1>
+        <Link to="/">Return to Dashboard</Link>
+      </>
+    );
+  } else if (isSuccess) {
+    content = (
+      <>
+        <section className="flex flex-col flex-1 mt-4 mx-auto md:flex-row items-start">
+          <ProfileBanner
+            key={user._id}
+            id={user._id}
+            user={user}
+            createdAt={user.createdAt}
+            name={user.name}
+          />
+        </section>
+        <div className="flex flex-col justify-center items-center">
+          <h1 className="text-2xl underline font-bold text-gray-900">{`${user.name}'s Goals`}</h1>
+        </div>
+        <section className="container mx-auto mt-10">
+          <ProfileGoalList
+            key={user._id}
+            id={user._id}
+            user={user}
+            createdAt={user.createdAt}
+            name={user.name}
+          />
+        </section>
+      </>
+    );
+  } else if (isError) {
+    toast.error(error?.data?.message || error.error);
+  }
 
-  useEffect(() => {
-    setName(userInfo.name);
-    setEmail(userInfo.email);
-  }, [userInfo.email, userInfo.name]);
-
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      toast.error('Passwords do not match');
-    } else {
-      try {
-        const res = await updateProfile({
-          _id: userInfo._id,
-          name,
-          email,
-          password,
-        }).unwrap();
-        console.log(res);
-        dispatch(setCredentials(res));
-        navigate('/profile');
-        toast.success('Profile updated successfully');
-      } catch (err) {
-        toast.error(err?.data?.message || err.error);
-      }
-    }
-  };
-  return (
-    <>
-    <AddGoal />
-    {/* <FormContainer>
-      <h1>Update Profile</h1>
-
-      <Form onSubmit={submitHandler}>
-        <Form.Group className='my-2' controlId='name'>
-          <Form.Label>Name</Form.Label>
-          <Form.Control
-            type='name'
-            placeholder='Enter name'
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group className='my-2' controlId='email'>
-          <Form.Label>Email Address</Form.Label>
-          <Form.Control
-            type='email'
-            placeholder='Enter email'
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-        <Form.Group className='my-2' controlId='password'>
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type='password'
-            placeholder='Enter password'
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-
-        <Form.Group className='my-2' controlId='confirmPassword'>
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            type='password'
-            placeholder='Confirm password'
-            value={confirmPassword}
-            onChange={(e) => setConfirmPassword(e.target.value)}
-          ></Form.Control>
-        </Form.Group>
-
-        {isLoading && <Loader />}
-        <Button type='submit' variant='primary' className='mt-3'>
-          Update
-        </Button>
-      </Form>
-      <Row className='py-3'>
-        <Col>
-          <Link to={`/logout`}>Logout</Link>
-        </Col>
-      </Row>
-    </FormContainer> */}
-    </>
-  );
+  return <section className="container mx-auto p-4">{content}</section>;
 };
 
 export default ProfileScreen;

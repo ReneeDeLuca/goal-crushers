@@ -7,7 +7,8 @@ import express from "express";
 const router = express.Router()
 
 // @desc    User profile
-// @route   GET /profile/:id
+// @route   GET api/profile/:id
+
 const getProfile = asyncHandler( async (req, res) => {
     try {
       const profile = await User.find({

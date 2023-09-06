@@ -9,7 +9,10 @@ const TimeAgo = ({ timestamp }) => {
   }
 
   return (
-    <span className="text-xs text-gray-800 italic basis-2/5" title={timestamp}>
+    <span
+      className="text-xs text-gray-800 text-end basis-1/3 italic"
+      title={timestamp}
+    >
       {timeAgo}
     </span>
   );
