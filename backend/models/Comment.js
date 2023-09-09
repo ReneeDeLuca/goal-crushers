@@ -1,23 +1,15 @@
 import mongoose from "mongoose";
 
 const CommentSchema = new mongoose.Schema({
-  comment: {
+  text: {
     type: String,
     required: true,
   },
-  user: {
+  commentUser: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
-  },
-  deleted: {
-    type: Boolean,
-    default: false,
-  },
-  goalID: {
+  goalId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Goal",
   },
@@ -25,6 +17,13 @@ const CommentSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
+  likes: {
+    type: Number,
+    default: 0,
+  },
+},
+{
+  timestamps: true,
 });
 
 //MongoDB Collection named here - will give lowercase plural of name 

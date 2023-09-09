@@ -210,3 +210,17 @@ tbody tr .goal-cal-completed-day {
     padding-bottom: 1.5rem;
     
 }
+
+/* Comments */
+
+.comment-container{
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    width: 18rem;
+    height: 7rem;
+    padding: 1rem;
+    border: 2px solid indigo;
+    border-radius: .25rem;
+    justify-content: space-evenly;
+}

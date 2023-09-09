@@ -7,21 +7,21 @@ import TimeAgo from "./TimeAgo";
 import format from "date-fns/format";
 import { Link } from "react-router-dom";
 
-const SingleGoal = ({ goalId }) => {
+const SingleGoal = ({ goal }) => {
   const {
-    data: goal,
+    data: goalData,
     isSuccess,
     isLoading,
     isFetching,
     isError,
     error,
-  } = useGetGoalByIdQuery(goalId);
+  } = useGetGoalByIdQuery(goal._id);
 
   let content;
 
-  let RenderedGoal = ({ goal }) => {
-    let endDate = String(goal.endDate).slice(0, 11);
-    let endDateTime = String(goal.createdAt).slice(11, -1);
+  let RenderedGoal = ({ goalData }) => {
+    let endDate = String(goalData.endDate).slice(0, 11);
+    let endDateTime = String(goalData.createdAt).slice(11, -1);
     endDate = endDate + endDateTime;
     endDate = new Date(endDate);
     let formatEndDate = format(endDate, "PP");
@@ -30,7 +30,7 @@ const SingleGoal = ({ goalId }) => {
       <section id="single-goal-container" className="md:max-h-[30rem]">
         <section className="goal-info text-center">
           <div className="basis-1/2 text-center pt-8 items-baseline">
-            <h2 className="text-xl underline align-bottom items-start font-bold text-gray-600">{`${goal.title}`}</h2>
+            <h2 className="text-xl underline align-bottom items-start font-bold text-gray-600">{`${goalData.title}`}</h2>
           </div>
           <div className="flex flex-column basis-1/2 text-end py-4 my-auto justify-end">
             <span></span>
@@ -42,19 +42,19 @@ const SingleGoal = ({ goalId }) => {
         >
           <div className="calendar-label mr-6 ml-4 basis-1/5">
             <CalendarHeader
-              key={goal._id}
-              id={goal._id}
-              createdAt={goal.createdAt}
-              endDate={goal.endDate}
+              key={goalData.title}
+              id={goalData._id}
+              createdAt={goalData.createdAt}
+              endDate={goalData.endDate}
             />
           </div>
           <div className="basis-3/5">
             <CreateCalendar
-              key={goal._id}
-              id={goal._id}
-              createdAt={goal.createdAt}
-              endDate={goal.endDate}
-              datesCompleted={goal.datesCompleted}
+              key={goalData.endDate}
+              id={goalData._id}
+              createdAt={goalData.createdAt}
+              endDate={goalData.endDate}
+              datesCompleted={goalData.datesCompleted}
             />
           </div>
           <div>
@@ -69,10 +69,10 @@ const SingleGoal = ({ goalId }) => {
                   Created by:
                 </span>
                 <Link
-                  to={`/profile/:${goal.user}`}
+                  to={`/profile/:${goalData.user}`}
                   className="text-xs underline bold text-indigo-600 basis-1/3 text-start"
-                >{`${goal.userName}`}</Link>
-                <TimeAgo timestamp={goal.createdAt} />
+                >{`${goalData.userName}`}</Link>
+                <TimeAgo timestamp={goalData.createdAt} />
               </li>
               <li className="flex flex-row basis-1/2 mt-1">
                 <span className="text-xs text-gray-600 basis-1/3 text-start">
@@ -80,7 +80,7 @@ const SingleGoal = ({ goalId }) => {
                 </span>
                 <span className="text-xs text-gray-800 basis-1/3 text-start">{`${formatEndDate}`}</span>
                 <span className="text-xs text-gray-600 text-end basis-1/3">
-                  {goal.isPublic ? `Public: ✅` : `Public: ❌`}
+                  {goalData.isPublic ? `Public: ✅` : `Public: ❌`}
                 </span>
               </li>
             </ul>
@@ -95,15 +95,15 @@ const SingleGoal = ({ goalId }) => {
   } else if (isSuccess) {
     content = (
       <RenderedGoal
-        key={goal._id}
-        id={goal._id}
-        goal={goal}
-        title={goal.title}
-        createdAt={goal.createdAt}
-        endDate={goal.endDate}
-        isPublic={goal.isPublic}
-        datesCompleted={goal.datesCompleted}
-        user={goal.user}
+        key={goalData._id}
+        id={goalData._id}
+        goalData={goalData}
+        title={goalData.title}
+        createdAt={goalData.createdAt}
+        endDate={goalData.endDate}
+        isPublic={goalData.isPublic}
+        datesCompleted={goalData.datesCompleted}
+        user={goalData.user}
       />
     );
   } else if (isError) {

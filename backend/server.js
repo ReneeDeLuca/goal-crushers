@@ -9,6 +9,7 @@ import userRoutes from './routes/userRoutes.js';
 import goalRoutes from './routes/goalRoutes.js';
 import mainRoutes from './routes/mainRoutes.js';
 import profileRoutes from './routes/profileRoutes.js';
+import commentRoutes from './routes/commentRoutes.js';
 
 connectDB();
 const app = express();
@@ -22,6 +23,7 @@ app.use('/api/main', mainRoutes);
 app.use('/api/users', userRoutes);
 app.use('/api/goal', goalRoutes);
 app.use('/api/profile', profileRoutes);
+app.use('/api/comment', commentRoutes);
 
 
 
