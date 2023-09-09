@@ -1,5 +1,5 @@
 import {apiSlice} from './apiSlice';
-const COMMENT_URL = "api/comment";
+const COMMENT_URL = "/api/comment";
 
 export const commentApiSlice = apiSlice.injectEndpoints({
     endpoints: (builder) => ({
@@ -24,19 +24,38 @@ export const commentApiSlice = apiSlice.injectEndpoints({
                 : // an error occurred, but we still want to refetch this query when `{ type: 'Comment', id: 'LIST' }` is invalidated
                 [{ type: 'Comment', id: 'LIST' }], 
         }),
+        getCommentById: builder.query({
+            query: (id) => ({
+                url: `${COMMENT_URL}/:${id}`,
+                transformResponse: (response) => response.data,
+                transformErrorResponse: (response) => response.status,
+            }),
+            providesTags: (result, error, id) => [{type: "Comment", id}],
+        }),
+        //mutations - send updates to the server
         addComment: builder.mutation({
-            query: (data) => ({
+            query: ({text, commentUser, goalId, goalUser}) => ({
                 url: `${COMMENT_URL}/`,
                 method: "POST",
-                body: data,
+                body: {text, commentUser, goalId, goalUser},
+            }),
+            invalidatesTags: (result, error, { id }) => [{ type: 'Comment', id }],
+        }),
+        addLike: builder.mutation({
+            query: (commentId) => ({
+                url: `${COMMENT_URL}/:${commentId}`,
+                method: "PUT",
+                body: commentId,
+                transformResponse: (response) => response.data,
+                transformErrorResponse: (response) => response.status,
             }),
             invalidatesTags: (result, error, { id }) => [{ type: 'Comment', id }],
         }),
         deleteComment: builder.mutation({
-            query: (id) => ({
-                url: `${COMMENT_URL}/:${id}`,
+            query: (commentId) => ({
+                url: `${COMMENT_URL}/:${commentId}`,
                 method: "DELETE",
-                body: id,
+                body: commentId,
                 transformResponse: (response) => response.data,
                 transformErrorResponse: (response) => response.status,
             }),
@@ -47,6 +66,8 @@ export const commentApiSlice = apiSlice.injectEndpoints({
 
 export const {
     useGetAllCommentsQuery,
+    useGetCommentByIdQuery,
     useAddCommentMutation,
+    useAddLikeMutation,
     useDeleteCommentMutation,
 } = commentApiSlice;

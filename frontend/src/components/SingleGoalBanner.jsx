@@ -6,15 +6,15 @@ import { useGetGoalByIdQuery } from "../apiSlices/goalApiSlice";
 import { useSelector } from "react-redux";
 import { toast } from "react-toastify";
 
-const SingleGoalBanner = ({ goalId }) => {
+const SingleGoalBanner = ({ goal }) => {
   const {
-    data: goal,
+    data: goalData,
     isSuccess,
     isLoading,
     isFetching,
     isError,
     error,
-  } = useGetGoalByIdQuery(goalId);
+  } = useGetGoalByIdQuery(goal._id);
 
   const { userInfo } = useSelector((state) => state.auth);
   const user = userInfo._id;
@@ -23,28 +23,28 @@ const SingleGoalBanner = ({ goalId }) => {
 
   if (isLoading || isFetching) {
     content = <div className="loader">Loading...</div>;
-  } else if (goal.user === user && isSuccess) {
+  } else if (goalData.user === user && isSuccess) {
     content = (
       <>
         <span className="pr-2 basis-1/2">
           <EditGoal
-            goal={goal}
-            key={goal._id}
-            id={goal._id}
-            title={goal.title}
-            endDate={goal.endDate}
-            isPublic={goal.isPublic}
+            goal={goalData}
+            key={goalData._id}
+            id={goalData._id}
+            title={goalData.title}
+            endDate={goalData.endDate}
+            isPublic={goalData.isPublic}
           />
         </span>
         <span className="pl-2 basis-1/2">
-          <DeleteButton goal={goal} />
+          <DeleteButton goal={goalData} />
         </span>
       </>
     );
   } else if (isSuccess) {
     content = (
       <>
-        <ReactionButtons goal={goal} reactions={goal.reactions} />
+        <ReactionButtons goal={goalData} reactions={goalData.reactions} />
       </>
     );
   } else if (isError) {

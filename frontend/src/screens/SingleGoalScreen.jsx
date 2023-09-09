@@ -4,7 +4,10 @@ import SingleGoalBanner from "../components/SingleGoalBanner";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
 import { useGetGoalByIdQuery } from "../apiSlices/goalApiSlice";
+import { useGetAllCommentsQuery } from "../apiSlices/commentApiSlice";
 import { Navigate } from "react-router-dom";
+import CommentList from "../components/CommentList";
+// import AddComment from "../components/AddComment";
 
 const SingleGoalScreen = () => {
   let goalId = useParams();
@@ -21,6 +24,10 @@ const SingleGoalScreen = () => {
     error,
   } = useGetGoalByIdQuery(goalId);
 
+  const { data: comments } = useGetAllCommentsQuery();
+
+  console.log(comments);
+
   let content;
 
   if (isLoading || isFetching) {
@@ -28,8 +35,50 @@ const SingleGoalScreen = () => {
   } else if (goal.user === user && isSuccess) {
     content = (
       <>
-        <SingleGoalBanner goalId={goalId} />
-        <SingleGoal goalId={goalId} />
+        <SingleGoalBanner
+          key={goal._id}
+          id={goal._id}
+          goal={goal}
+          title={goal.title}
+          createdAt={goal.createdAt}
+          endDate={goal.endDate}
+          isPublic={goal.isPublic}
+          datesCompleted={goal.datesCompleted}
+          user={goal.user}
+        />
+        <SingleGoal
+          key={goal._id}
+          id={goal._id}
+          goal={goal}
+          title={goal.title}
+          createdAt={goal.createdAt}
+          endDate={goal.endDate}
+          isPublic={goal.isPublic}
+          datesCompleted={goal.datesCompleted}
+          user={goal.user}
+        />
+        <CommentList
+          key={goal._id}
+          id={goal._id}
+          goal={goal}
+          title={goal.title}
+          createdAt={goal.createdAt}
+          endDate={goal.endDate}
+          isPublic={goal.isPublic}
+          datesCompleted={goal.datesCompleted}
+          user={goal.user}
+        />
+        {/* <AddComment
+          key={goal._id}
+          id={goal._id}
+          goal={goal}
+          title={goal.title}
+          createdAt={goal.createdAt}
+          endDate={goal.endDate}
+          isPublic={goal.isPublic}
+          datesCompleted={goal.datesCompleted}
+          user={goal.user}
+        /> */}
       </>
     );
   } else if (isSuccess && !goal.isPublic) {
@@ -38,8 +87,50 @@ const SingleGoalScreen = () => {
   } else if (isSuccess && goal.isPublic) {
     content = (
       <>
-        <SingleGoalBanner goalId={goalId} />
-        <SingleGoal goalId={goalId} />
+        <SingleGoalBanner
+          key={goal._id}
+          id={goal._id}
+          goal={goal}
+          title={goal.title}
+          createdAt={goal.createdAt}
+          endDate={goal.endDate}
+          isPublic={goal.isPublic}
+          datesCompleted={goal.datesCompleted}
+          user={goal.user}
+        />
+        <SingleGoal
+          key={goal._id}
+          id={goal._id}
+          goal={goal}
+          title={goal.title}
+          createdAt={goal.createdAt}
+          endDate={goal.endDate}
+          isPublic={goal.isPublic}
+          datesCompleted={goal.datesCompleted}
+          user={goal.user}
+        />
+        <CommentList
+          key={goal._id}
+          id={goal._id}
+          goal={goal}
+          title={goal.title}
+          createdAt={goal.createdAt}
+          endDate={goal.endDate}
+          isPublic={goal.isPublic}
+          datesCompleted={goal.datesCompleted}
+          user={goal.user}
+        />
+        {/* <AddComment
+          key={goal._id}
+          id={goal._id}
+          goal={goal}
+          title={goal.title}
+          createdAt={goal.createdAt}
+          endDate={goal.endDate}
+          isPublic={goal.isPublic}
+          datesCompleted={goal.datesCompleted}
+          user={goal.user}
+        /> */}
       </>
     );
   } else if (isError) {
