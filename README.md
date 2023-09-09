@@ -1,6 +1,6 @@
-# GoalSense - A Web App for Tracking Goals and Habits
+# Serial Crusher - A Web App for Tracking Goals and Habits
 
-GoalSense is a full-stack web application designed to help individuals in the neurodivergent community track their goals and habits effortlessly. The user interface is designed with a low perceptual load to ensure ease of use and reduce cognitive strain.
+Serial Crusher is a full-stack web application designed to help individuals in the neurodivergent community track their goals and habits effortlessly. The user interface is designed with a low perceptual load to ensure ease of use and reduce cognitive strain.
 
 ## Features
 
@@ -9,8 +9,8 @@ GoalSense is a full-stack web application designed to help individuals in the ne
 - Track progress through an intuitive and clutter-free interface.
 - Quickly analyze data visually with our easy to read calendar.
 - Responsive design for seamless use across different devices.
-- Ability to 'like' and comment on public goals of other users.
-- Feed gives a quick view of the progress of users with automatic status updates.
+- Ability to add reactions and comment on public goals of other users.
+- Feed gives a quick view of the activity of users with automatic status updates, including new users, new public goals, progress updates, and comments.
 
 Coming soon:
 
@@ -39,10 +39,11 @@ Frontend:
 
 - React: Creat user interfaces out of individual pieces called components for streamlined building.
 - React Router: Reduces serve requests with client side routing.
-- React Toastify: Alerts and notifications handler for UI.
+- React Toastify: Alerts and notifications handler for the UI.
 - React Redux Toolkit: State management toolset to enable predictable, consistent behavior.
 - Tailwind CSS: A utility-first CSS framework with a mobile first approach.
 - Vite: leverages the availability of native ES modules in the browser.
+- date-fns: Provides a comprehensive, yet simple and consistent toolset for manipulating Javascript dates in the browser and Node.js.
 
 ### Prerequisites
 
@@ -54,9 +55,9 @@ Frontend:
 
 **MVC Architecture**
 
-GoalSense follows the MVC architecture to ensure a clear separation of concerns and maintainable code:
+Serial Crusher follows the MVC architecture to ensure a clear separation of concerns and maintainable code:
 
-- Model: Responsible for managing the data and business logic. It interacts with the database to store and retrieve goal and habit information.
+- Model: Responsible for managing the data and business logic. It interacts with the database to store and retrieve goal, user, comment, and status information.
 - View: Handles the presentation and user interface. The views are designed with low perceptual load to support users in the neurodivergent community.
 - Controller: Acts as the intermediary between the model and the view. It processes user input, triggers appropriate actions, and updates the view based on the model's data.
 
@@ -70,5 +71,9 @@ GoalSense follows the MVC architecture to ensure a clear separation of concerns 
 **Tailwind CSS**
 
 - Changed from React Bootstrap to Tailwind CSS for more customization options. Used in conjunction with Vanilla CSS to achieve the desired look of the UI. Bootstrap was too opinionated for the look I am building.
+
+**date-fns**
+
+- Added to frontend stack to help with creating timestamp-based components, such as TimeAgo. Formatting with date-fns helped make code cleaner and more readable when created the calendar component as well.
 
 ## Lessons Learned/Reinforced:
