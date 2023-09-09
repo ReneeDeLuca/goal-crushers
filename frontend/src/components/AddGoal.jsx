@@ -4,6 +4,7 @@ import { toast } from "react-toastify";
 import { useAddGoalMutation } from "../apiSlices/goalApiSlice";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
+import { useAddStatusMutation } from "../apiSlices/statusApiSlice";
 
 const AddGoal = () => {
   // Add Goal Button Show/Hide
@@ -41,6 +42,7 @@ const AddGoal = () => {
   const [star, setStar] = useState(0);
 
   const [addGoal, { isLoading }] = useAddGoalMutation();
+  const [addStatus] = useAddStatusMutation();
 
   const onTitleChanged = (e) => setTitle(e.target.value);
   const onEndDateChanged = (e) => setEndDate(e.target.value);
@@ -63,6 +65,13 @@ const AddGoal = () => {
           heart,
           fire,
           star,
+        }).unwrap();
+        await addStatus({
+          userId: user,
+          userName: userName,
+          goalId: res._id,
+          goalTitle: title,
+          statusType: "new goal",
         }).unwrap();
         console.log(res);
         setTitle("");

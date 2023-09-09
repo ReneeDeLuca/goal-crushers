@@ -1,7 +1,7 @@
-const mongoose = require("mongoose");
+import mongoose from "mongoose";
 
 const StatusSchema = new mongoose.Schema({
-  status: {
+  statusType: {
     type: String,
     required: true,
   },
@@ -9,19 +9,26 @@ const StatusSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
   },
-  createdAt: {
-    type: Date,
-    default: Date.now,
+  userName: {
+    type: String,
+    required: true,
   },
-  likes: {
-    type: Number,
-    default: 0,
+  goalTitle: {
+    type: String,
   },
-  deleted: {
-    type: Boolean,
-    default: false,
-  }
-});
+  goalId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Goal",
+  },
+  goalUser: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
+  goalUserName: {
+    type: String,
+  },
+},
+{ timestamps: true});
 
 //MongoDB Collection named here - will give lowercase plural of name 
 const Status = mongoose.model("Status", StatusSchema);

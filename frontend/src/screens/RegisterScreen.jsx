@@ -1,27 +1,29 @@
-import { useState, useEffect } from 'react';
-import FormContainer from '../components/FormContainer';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { useRegisterMutation } from '../apiSlices/mainApiSlice';
-import { setCredentials } from '../apiSlices/authSlice';
-import { toast } from 'react-toastify';
+import { useState, useEffect } from "react";
+import FormContainer from "../components/FormContainer";
+import { useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { useRegisterMutation } from "../apiSlices/mainApiSlice";
+import { setCredentials } from "../apiSlices/authSlice";
+import { toast } from "react-toastify";
+import { useAddStatusMutation } from "../apiSlices/statusApiSlice";
 
 const RegisterScreen = () => {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [register] = useRegisterMutation();
+  const [addStatus] = useAddStatusMutation();
 
   const { userInfo } = useSelector((state) => state.auth);
 
   useEffect(() => {
     if (userInfo) {
-      navigate('/');
+      navigate("/");
     }
   }, [navigate, userInfo]);
 
@@ -29,19 +31,24 @@ const RegisterScreen = () => {
     e.preventDefault();
 
     if (password !== confirmPassword) {
-      toast.error('Passwords do not match');
+      toast.error("Passwords do not match");
     } else {
       try {
         const res = await register({ name, email, password }).unwrap();
         dispatch(setCredentials({ ...res }));
-        navigate('/');
+        await addStatus({
+          userId: res._id,
+          userName: res.name,
+          statusType: "new user",
+        }).unwrap();
+        navigate("/");
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
     }
   };
   return (
-      <FormContainer className="flex min-h-full flex-1 flex-col justify-center px-6 py-6">
+    <FormContainer className="flex min-h-full flex-1 flex-col justify-center px-6 py-6">
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-6">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-4 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
@@ -52,7 +59,10 @@ const RegisterScreen = () => {
       <div className="mt-2 sm:mx-auto sm:w-full sm:max-w-sm">
         <form className="space-y-6" action="#" onSubmit={submitHandler}>
           <div>
-            <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
+            <label
+              htmlFor="name"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >
               Name
             </label>
             <div className="mt-2">
@@ -68,7 +78,10 @@ const RegisterScreen = () => {
             </div>
           </div>
           <div>
-            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium leading-6 text-gray-900"
+            >
               Email address
             </label>
             <div className="mt-2">
@@ -86,7 +99,10 @@ const RegisterScreen = () => {
           </div>
           <div>
             <div className="flex items-center justify-between">
-              <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 Password
               </label>
             </div>
@@ -104,7 +120,10 @@ const RegisterScreen = () => {
           </div>
           <div>
             <div className="flex items-center justify-between">
-              <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+              <label
+                htmlFor="password"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
                 Confirm Password
               </label>
             </div>
@@ -131,8 +150,11 @@ const RegisterScreen = () => {
         </form>
 
         <p className="mt-10 text-center text-sm text-gray-500">
-          Already have an account?{' '}
-          <a href="/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+          Already have an account?{" "}
+          <a
+            href="/login"
+            className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+          >
             Login
           </a>
         </p>

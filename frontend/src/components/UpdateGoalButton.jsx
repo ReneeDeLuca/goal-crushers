@@ -1,15 +1,14 @@
 /* eslint-disable react/prop-types */
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { useUpdateGoalDataMutation } from "../apiSlices/goalApiSlice";
 import { toast } from "react-toastify";
+import { useAddStatusMutation } from "../apiSlices/statusApiSlice";
 
 const UpdateGoalDataButton = ({ goal }) => {
   const [updateGoalData, { isLoading }] = useUpdateGoalDataMutation();
+  const [addStatus] = useAddStatusMutation();
 
   const [datesCompleted, setDatesCompleted] = useState(goal.datesCompleted);
-
-  const navigate = useNavigate();
 
   const onDateUpdated = () =>
     setDatesCompleted([...datesCompleted, Date.now()]);
@@ -26,7 +25,16 @@ const UpdateGoalDataButton = ({ goal }) => {
         id: goal._id,
         date: new Date().toLocaleDateString("en", dateOptions),
       }).unwrap();
-      navigate("/");
+      if (goal.isPublic) {
+        await addStatus({
+          user: goal.user,
+          userName: goal.userName,
+          goalId: goal._id,
+          goalTitle: goal.title,
+          statusType: "goal progress",
+        }).unwrap();
+      }
+      setDatesCompleted(goal.datesCompleted);
       toast.success("Goal updated successfully");
       onDateUpdated();
     } catch (err) {

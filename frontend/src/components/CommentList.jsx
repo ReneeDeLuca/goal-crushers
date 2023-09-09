@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 
 const CommentList = ({ goal }) => {
   const {
-    data: comments,
+    data: comments = [],
     isLoading,
     isSuccess,
     isError,

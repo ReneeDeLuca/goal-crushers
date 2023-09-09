@@ -18,6 +18,7 @@ import PrivateRoute from "./components/PrivateRoute";
 import SettingsScreen from "./screens/SettingsScreen.jsx";
 import DeleteUserScreen from "./screens/DeleteUserScreen.jsx";
 import SingleGoalScreen from "./screens/SingleGoalScreen.jsx";
+import FeedScreen from "./screens/FeedScreen.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -31,6 +32,7 @@ const router = createBrowserRouter(
         <Route path="/settings" element={<SettingsScreen />} />
         <Route path="/deleteUser:id" element={<DeleteUserScreen />} />
         <Route path="/goal/:id" element={<SingleGoalScreen />} />
+        <Route path="/feed" element={<FeedScreen />} />
       </Route>
     </Route>
   )

@@ -4,6 +4,7 @@ import FormContainer from "../components/FormContainer";
 import { toast } from "react-toastify";
 import { useAddCommentMutation } from "../apiSlices/commentApiSlice";
 import { useSelector } from "react-redux";
+import { useAddStatusMutation } from "../apiSlices/statusApiSlice";
 // import { Link } from "react-router-dom";
 
 const AddComment = ({ goal }) => {
@@ -12,7 +13,9 @@ const AddComment = ({ goal }) => {
   const [showAddComment, setShowAddComment] = useState(false);
 
   const goalUser = goal.user;
+  const goalUserName = goal.userName;
   const goalId = goal._id;
+  const goalTitle = goal.title;
 
   const handleAddClick = () => {
     if (showAddComment) {
@@ -32,9 +35,11 @@ const AddComment = ({ goal }) => {
 
   const { userInfo } = useSelector((state) => state.auth);
   const commentUser = userInfo._id;
+  const commentUserName = userInfo.name;
   const [text, setText] = useState("");
 
   const [addComment, { isLoading }] = useAddCommentMutation();
+  const [addStatus] = useAddStatusMutation();
 
   const onTextChanged = (e) => setText(e.target.value);
 
@@ -47,6 +52,15 @@ const AddComment = ({ goal }) => {
         goalUser,
       }).unwrap();
       console.log(res);
+      await addStatus({
+        user: commentUser,
+        userName: commentUserName,
+        goalId: goalId,
+        goalTitle: goalTitle,
+        goalUser: goalUser,
+        goalUserName: goalUserName,
+        statusType: "comment",
+      }).unwrap();
       setText("");
       cancelAddComment();
       toast.success("Comment added successfully");

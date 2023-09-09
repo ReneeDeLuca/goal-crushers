@@ -8,7 +8,7 @@ const App = () => {
     <>
       <Header />
       <ToastContainer />
-      <section className="relative container overflow-x-auto min-w-[450px] mx-auto justify-center px-6 py-2 lg:px-8">
+      <section className="relative container overflow-auto min-w-[450px] mx-auto justify-center py-2">
         <Outlet />
       </section>
     </>
