@@ -38,6 +38,13 @@ export default function HamburgerMenu({ userId }) {
 
   const [userLogout] = useLogoutMutation();
 
+  const linkClickHandler = () => {
+    document.getElementById("menu-btn").classList.remove("open");
+    document.getElementById("menu").classList.remove("flex");
+    document.getElementById("menu").classList.add("hidden");
+    setHamburgerOpen(false);
+  };
+
   const logoutClickedHandler = async () => {
     try {
       await userLogout().unwrap();
@@ -80,14 +87,24 @@ export default function HamburgerMenu({ userId }) {
           <div className="py-1"></div>
         </li>
 
-        <li>
+        <li onClick={linkClickHandler}>
           <Link to="/" className="text-gray-700 hover:text-darkGrayishBlue">
-            Dashboard
+            <button
+              onClick={linkClickHandler}
+              className="text-gray-700 hover:text-darkGrayishBlue"
+            >
+              Dashboard
+            </button>
           </Link>
         </li>
-        <li>
+        <li onClick={linkClickHandler}>
           <Link to="/feed" className="text-gray-700 hover:text-darkGrayishBlue">
-            Feed
+            <button
+              onClick={linkClickHandler}
+              className="text-gray-700 hover:text-darkGrayishBlue"
+            >
+              Feed
+            </button>
           </Link>
         </li>
         <li>
@@ -95,7 +112,12 @@ export default function HamburgerMenu({ userId }) {
             to={`/profile/:${user._id}`}
             className="text-gray-700 hover:text-darkGrayishBlue"
           >
-            Your Profile
+            <button
+              onClick={linkClickHandler}
+              className="text-gray-700 hover:text-darkGrayishBlue"
+            >
+              Your Profile
+            </button>
           </Link>
         </li>
         <li>
@@ -103,7 +125,12 @@ export default function HamburgerMenu({ userId }) {
             to="/settings"
             className="text-gray-700 hover:text-darkGrayishBlue"
           >
-            Settings
+            <button
+              onClick={linkClickHandler}
+              className="text-gray-700 hover:text-darkGrayishBlue"
+            >
+              Settings
+            </button>
           </Link>
         </li>
         <li className="divide-y divide-slate-400">
