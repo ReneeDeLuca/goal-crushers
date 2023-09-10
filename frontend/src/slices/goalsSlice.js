@@ -26,6 +26,13 @@ const goalsSlice = createSlice({
         }
       }
     },
+    goalDataUpdated(state, action) {
+      const { _id, completionData } = action.payload
+      const existingGoal = state.goals.find(goal => goal._id === _id)
+      if (existingGoal) {
+        existingGoal.completionData = completionData
+      }
+    },
     goalUpdated(state, action) {
       const { _id, title, endDate, isPublic } = action.payload
       const existingGoal = state.goals.find(goal => goal._id === _id)
@@ -45,7 +52,7 @@ const goalsSlice = createSlice({
   }
 })
 
-export const { goalAdded, goalUpdated, reactionAdded } = goalsSlice.actions
+export const { goalAdded, goalDataUpdated,goalUpdated, reactionAdded } = goalsSlice.actions
 
 export default goalsSlice.reducer
 
