@@ -21,7 +21,7 @@ const UpdateGoalDataButton = ({ goal }) => {
         month: "short",
         day: "numeric",
       };
-      await updateGoalData({
+      const res = await updateGoalData({
         id: goal._id,
         date: new Date().toLocaleDateString("en", dateOptions),
       }).unwrap();
@@ -34,7 +34,8 @@ const UpdateGoalDataButton = ({ goal }) => {
           statusType: "goal progress",
         }).unwrap();
       }
-      setDatesCompleted(goal.datesCompleted);
+      console.log(res);
+      setDatesCompleted([...datesCompleted, res.date]);
       toast.success("Goal updated successfully");
       onDateUpdated();
     } catch (err) {

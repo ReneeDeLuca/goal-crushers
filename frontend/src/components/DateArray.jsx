@@ -40,10 +40,11 @@ const getDateArray = (start, end) => {
   //to push to array, start at weekStart and add 1 day until we reach weekEnd
   startDate = weekStart(startDate);
   endDate = weekEnd(endDate);
+  const lengthOfDateArray = differenceInCalendarDays(endDate, startDate);
 
   //push data for each day to array as an object
   const dateArray = [];
-  for (let i = 0; i <= timePeriod; i++) {
+  for (let i = 0; i <= lengthOfDateArray; i++) {
     dateArray.push({
       date: new Date(startDate),
       dayInd: startDate.getDay(),
