@@ -5,7 +5,6 @@ const CalendarHeader = (goal) => {
   let end = goal.endDate;
   //variable to hold array of dates
   const headerArray = getDateArray(start, end);
-  console.log(headerArray);
 
   // Helper function to count the number of Sundays in a given month
   const countSundaysInMonth = (monthIndex, yearIndex) => {

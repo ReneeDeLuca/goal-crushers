@@ -1,13 +1,13 @@
 import express from "express";
-import upload from "../middleware/multer.js";
 import { getAllUsers,
-    updateUserProfile,
-    getUserLoginEdit,
+    updateUserImage,
+    updateUserAboutMe,
     updateUserLogin,
     getUser,
     followUser,
     unfollowUser,
-    deleteUser
+    deleteUserImage,
+    deleteUser,
 } from '../controllers/userController.js';
 import { protect } from "../middleware/authMiddleware.js";
 
@@ -16,7 +16,7 @@ const router = express.Router();
 
 //User Routes
 //Since linked from server js treat each path as:
-//user/:id, user/updateUserProfile, etc
+//user/:id, user/profile/:id, etc
 
 //Enables fetch for API
 router.get("/", protect, getAllUsers);
@@ -24,11 +24,14 @@ router.get("/", protect, getAllUsers);
 //Enables user to view user Dashboard
 router.get("/:id", protect, getUser);
 
-//Enables user to edit user profile w/ cloudinary for media uploads
-router.put("profile/:id", protect, upload.single("file"), updateUserProfile);
+//Enables user to delete user image from cloudinary
+router.post("/tempimage/:public_id", protect, deleteUserImage);
 
-//Enables user to view edit user login page
-router.get("/loginEdit/:id", protect, getUserLoginEdit);
+//Enables user to edit user profile image w/ cloudinary response for media uploads
+router.put("/image/:id", protect, updateUserImage);
+
+//Enables user to edit user about me
+router.put("/aboutme/:id", protect, updateUserAboutMe);
 
 //Enables user to edit user login
 router.put("/login/:id", protect, updateUserLogin);

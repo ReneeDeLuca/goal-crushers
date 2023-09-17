@@ -35,7 +35,7 @@ export const userApiSlice = apiSlice.injectEndpoints({
             //mutations
         updateLogin: builder.mutation({
             query: (data) => ({
-                url: `${USER_URL}/login/:id`,
+                url: `${USER_URL}/login/:${data.id}`,
                 method: "PUT",
                 body: data,
                 transformResponse: (response) => response.data,
@@ -45,11 +45,32 @@ export const userApiSlice = apiSlice.injectEndpoints({
             // In this case, `getUserById` will be re-run. `getAllUsers` *might*  rerun, if this id was under its results.
             invalidatesTags: (result, error, { id }) => [{ type: 'User', id }],
         }),
-        updateProfile: builder.mutation({
-            query: (data) => ({
-                url: `${USER_URL}/profile/:id`,
+        updateUserImage: builder.mutation({
+            query: ({userId, image, url}) => ({
+                url: `${USER_URL}/image/:${userId}`,
                 method: "PUT",
-                body: data,
+                body: {userId, image, url},
+                transformResponse: (response) => response.data,
+            transformErrorResponse: (response) => response.status,
+            }),
+            invalidatesTags: (result, error, { id }) => [{ type: 'User', id }],
+        }),
+        deleteUserImage: builder.mutation({
+            query: (public_id) => ({
+                url: `${USER_URL}/tempimage/:${public_id}`,
+                method: "POST",
+                body: public_id,
+                transformResponse: (response) => response.data,
+            transformErrorResponse: (response) => response.status,
+            }),
+            invalidatesTags: (result, error, { id }) => [{ type: 'User', id }],
+        }),
+
+        updateUserAboutMe: builder.mutation({
+            query: ({id, aboutMe}) => ({
+                url: `${USER_URL}/aboutme/:${id}`,
+                method: "PUT",
+                body: {id, aboutMe},
                 transformResponse: (response) => response.data,
             transformErrorResponse: (response) => response.status,
             }),
@@ -92,8 +113,10 @@ export const {
     useGetAllUsersQuery,
     useGetUserByIdQuery,
     useUpdateLoginMutation,
-    useUpdateProfileMutation,
+    useUpdateUserAboutMeMutation,
+    useUpdateUserImageMutation,
     useFollowUserMutation,
     useUnfollowUserMutation,
+    useDeleteUserImageMutation,
     useDeleteUserMutation, 
 } = userApiSlice;

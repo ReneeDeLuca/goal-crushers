@@ -122,7 +122,7 @@ export default function HamburgerMenu({ userId }) {
         </li>
         <li>
           <Link
-            to="/settings"
+            to={`/settings/:${user._id}`}
             className="text-gray-700 hover:text-darkGrayishBlue"
           >
             <button

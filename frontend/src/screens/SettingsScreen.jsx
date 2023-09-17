@@ -1,145 +1,60 @@
-import { useState, useEffect } from 'react';
-import FormContainer from '../components/FormContainer';
-import { useNavigate } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
-import { 
-    useUpdateLoginMutation
-} from '../apiSlices/userApiSlice';
-import { setCredentials } from '../apiSlices/authSlice';
-
+import { useParams } from "react-router-dom";
+import { useGetUserByIdQuery } from "../apiSlices/userApiSlice";
+import ProfileBanner from "../components/ProfileBanner";
+import AboutMeForm from "../components/AboutMeForm";
+import UpdateLoginForm from "../components/UpdateLoginForm";
+import ImageInputWidget from "../components/ImageInputWidget";
+import { toast } from "react-toastify";
 
 const SettingsScreen = () => {
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  let userId = useParams();
+  userId = userId.id.slice(1);
 
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+  const {
+    data: user,
+    isSuccess,
+    isLoading,
+    isFetching,
+    isError,
+    error,
+  } = useGetUserByIdQuery(userId);
 
-  const { userInfo } = useSelector((state) => state.auth);
+  let content;
 
-  const [updateSettings ] = useUpdateLoginMutation();
-
-  useEffect(() => {
-    setName(userInfo.name);
-    setEmail(userInfo.email);
-  }, [userInfo.email, userInfo.name]);
-
-  const submitHandler = async (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      toast.error('Passwords do not match');
-    } else {
-      try {
-        const res = await updateSettings({
-          _id: userInfo._id,
-          name,
-          email,
-          password,
-        }).unwrap();
-        console.log(res);
-        dispatch(setCredentials({...res}));
-        navigate('/settings');
-        toast.success('Login settings updated successfully');
-      } catch (err) {
-        toast.error(err?.data?.message || err.error);
-      }
-    }
-  };
-  return (
-    <FormContainer className="flex min-h-full flex-1 flex-col justify-center px-6 py-6">
-      <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-6">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-4 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Update Login Settings
-          </h2>
-        </div>
-      </div>
-      <div className="mt-2 sm:mx-auto sm:w-full sm:max-w-sm">
-        <form className="space-y-6" action="#" onSubmit={submitHandler}>
-          <div>
-            <label htmlFor="name" className="block text-sm font-medium leading-6 text-gray-900">
-              Name
-            </label>
-            <div className="mt-2">
-              <input
-                id="name"
-                name="name"
-                type="name"
-                value={name}
-                onChange={(e) => setName(e.target.value)}
-                required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+  if (isLoading || isFetching) {
+    content = <div className="loader">Loading...</div>;
+  } else if (isSuccess) {
+    content = (
+      <>
+        <ProfileBanner
+          key={user._id}
+          id={user._id}
+          user={user}
+          createdAt={user.createdAt}
+          name={user.name}
+        />
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-4 mx-auto">
+          <UpdateLoginForm />
+          <section className="col-span-1 lg:col-span-2">
+            <section className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+              <AboutMeForm
+                key={`aboutme/:${user._id}`}
+                id={user._id}
+                user={user}
+                aboutMe={user.aboutMe}
+                image={user.image}
               />
-            </div>
-          </div>
-          <div>
-            <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
-              Email address
-            </label>
-            <div className="mt-2">
-              <input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div>
-            <div className="flex items-center justify-between">
-              <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                Password
-              </label>
-            </div>
-            <div className="mt-2">
-              <input
-                id="password"
-                name="password"
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div>
-            <div className="flex items-center justify-between">
-              <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
-                Confirm Password
-              </label>
-            </div>
-            <div className="mt-2">
-              <input
-                id="confirmPassword"
-                name="confirmPassword"
-                type="password"
-                value={confirmPassword}
-                onChange={(e) => setConfirmPassword(e.target.value)}
-                required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-              />
-            </div>
-          </div>
-          <div>
-            <button
-              type="submit"
-              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-            >
-              Update
-            </button>
-          </div>
-        </form>
-      </div>
-    </FormContainer>
-  );
+              <ImageInputWidget />
+            </section>
+          </section>
+        </section>
+      </>
+    );
+  } else if (isError) {
+    toast.error(error?.data?.message || error.error);
+  }
+
+  return <div className="container mx-auto">{content}</div>;
 };
 
 export default SettingsScreen;
