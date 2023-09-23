@@ -46,10 +46,10 @@ export const userApiSlice = apiSlice.injectEndpoints({
             invalidatesTags: (result, error, { id }) => [{ type: 'User', id }],
         }),
         updateUserImage: builder.mutation({
-            query: ({userId, image, url}) => ({
+            query: ({userId, imageUrl, userImage}) => ({
                 url: `${USER_URL}/image/:${userId}`,
                 method: "PUT",
-                body: {userId, image, url},
+                body: {userId, imageUrl, userImage},
                 transformResponse: (response) => response.data,
             transformErrorResponse: (response) => response.status,
             }),

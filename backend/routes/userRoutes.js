@@ -27,7 +27,7 @@ router.get("/:id", protect, getUser);
 //Enables user to delete user image from cloudinary
 router.post("/tempimage/:public_id", protect, deleteUserImage);
 
-//Enables user to edit user profile image w/ cloudinary response for media uploads
+//Enables user to edit user profile image w/ cloudinary info
 router.put("/image/:id", protect, updateUserImage);
 
 //Enables user to edit user about me

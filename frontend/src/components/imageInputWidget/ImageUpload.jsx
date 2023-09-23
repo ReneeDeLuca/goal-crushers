@@ -1,17 +1,25 @@
 /* eslint-disable react/prop-types */
-import { openUploadWidget } from "../../utils/CloudinaryService";
+import { useEffect, useRef } from "react";
 
-const ImageUpload = (props) => {
-  const uploadImageWidget = () => {
-    console.log(props);
-    let myUploadWidget = openUploadWidget({
-      cloudName: props.cloud_name,
-      uploadPreset: props.upload_preset,
+const UploadWidget = (props) => {
+  const cloud_name = props.cloud_name;
+  const upload_preset = props.upload_preset;
+  const userId = props.userId;
+
+  const cloudinaryRef = useRef();
+  const widgetRef = useRef();
+  useEffect(() => {
+    cloudinaryRef.current = window.cloudinary;
+    widgetRef.current = cloudinaryRef.current.createUploadWidget({
+      cloudName: cloud_name,
+      uploadPreset: upload_preset,
       multiple: false,
-      tags: ["user_image"],
+      tags: [userId],
       sources: ["local", "camera"],
       cropping: true,
       croppingAspectRatio: 1,
+      showCompletedButton: true,
+      singleUploadAutoClose: false,
       maxFileSize: 5000000,
       clientAllowedFormats: ["png", "jpeg", "jpg"],
       styles: {
@@ -36,22 +44,32 @@ const ImageUpload = (props) => {
         },
       },
       function(error, result) {
-        if (!error && result.event === "success") {
-          props.onImageUpload(result.info.public_id);
+        if (result.event === "success") {
+          const res = {
+            publicId: result.public_id,
+            secureUrl: result.secure_url,
+            userId: result.tags[0],
+            strResult: result.get_prep_value(), // returns a string formatted as "<resource_type>/<type>/v<version>/<public_id>.<format>" e.g. "image/upload/v123456789/test.png"
+          };
+          props.onImageUpload(res);
+          console.log("Done! Here is the image info: ", res);
+        } else if (error) {
+          console.log(error);
         }
       },
     });
-    myUploadWidget.open();
-  };
+  });
 
   return (
     <button
       className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-      onClick={uploadImageWidget}
+      onClick={() => {
+        widgetRef.current.open();
+      }}
     >
       Update Image
     </button>
   );
 };
 
-export default ImageUpload;
+export default UploadWidget;

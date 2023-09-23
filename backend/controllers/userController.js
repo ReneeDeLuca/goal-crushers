@@ -1,7 +1,7 @@
 import asyncHandler from "express-async-handler";
 import User from "../models/User.js";
-import cloudinary from "../middleware/cloudinary.js";
 import express from "express";
+import cloudinary from "../middleware/cloudinary.js";
 
 const router = express.Router();
 
@@ -40,8 +40,8 @@ const getUser = asyncHandler(async (req, res) => {
 const updateUserImage = asyncHandler(async (req, res) => {
   console.log(req.body);
   const userId = req.body.userId
-  const imageUrl = req.body.url;
-  const imageId = req.body.image;
+  const imageUrl = req.body.imageUrl
+  const imageId = req.body.userImage;
   const user = await User.findById(userId);
   try {
     if (user) {
@@ -76,8 +76,8 @@ const updateUserAboutMe = asyncHandler(async (req, res) => {
       res.status(200).json({
         id: updatedUser._id,
         aboutMe: updatedUser.aboutMe,
+        message: "Updated User Profile"
       });
-      res.status(200).json({ message: "Updated User Profile" });
     }
     if (!user) {
       return res.status(404).json({ message: "User not found" });

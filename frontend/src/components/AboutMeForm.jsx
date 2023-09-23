@@ -29,9 +29,9 @@ const AboutMeForm = (user) => {
   return (
     <table className="col-span-1">
       <tbody>
-        <tr className="mt-2">
-          <td className="flex card p-5 md:px-5 md:pb-0 md:pt-5 items-start">
-            <section className="flex min-h-full flex-1 flex-col px-6 py-6">
+        <tr className="">
+          <td className="flex card px-5 md:pb-0 md:pt-5 items-start">
+            <section className="flex min-h-full flex-1 flex-col px-6">
               <div className="mx-auto w-full sm:max-w-sm">
                 <h2 className="mt-4 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
                   Update About Me
@@ -60,17 +60,19 @@ const AboutMeForm = (user) => {
                       onChange={onAboutMeChanged}
                     />
                   </div>
-                  <div>
-                    <button
-                      type="submit"
-                      id="submitProfile"
-                      value="submit "
-                      className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                      disabled={isLoading}
-                      onClick={updateAboutMeHandler}
-                    >
-                      {isLoading ? "Loading..." : "Update Profile"}
-                    </button>
+                  <div className="flex justify-center">
+                    <span className="sm:block">
+                      <button
+                        type="submit"
+                        id="submitProfile"
+                        value="submit "
+                        className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+                        disabled={isLoading}
+                        onClick={updateAboutMeHandler}
+                      >
+                        {isLoading ? "Loading..." : "Update Profile"}
+                      </button>
+                    </span>
                   </div>
                 </form>
               </div>

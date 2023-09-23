@@ -11,6 +11,7 @@ import mainRoutes from './routes/mainRoutes.js';
 import profileRoutes from './routes/profileRoutes.js';
 import commentRoutes from './routes/commentRoutes.js';
 import statusRoutes from './routes/statusRoutes.js';
+import imageRoutes from './routes/imageRoutes.js';
 
 connectDB();
 const app = express();
@@ -26,6 +27,7 @@ app.use('/api/goal', goalRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/comment', commentRoutes);
 app.use('/api/status', statusRoutes);
+app.use('/api/images', imageRoutes);
 
 
 
