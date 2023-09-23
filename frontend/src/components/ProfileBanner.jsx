@@ -25,13 +25,33 @@ const ProfileBanner = ({ user }) => {
       );
     }
   };
+  const RenderAboutMe = () => {
+    if (user.aboutMe === "") {
+      return (
+        <p className="text-md mx-2 text-gray-800 whitespace-pre-line">
+          <span className="font-bold text-indigo-800 text-left">About me:</span>{" "}
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Doloremque
+          voluptas optio soluta doloribus! Accusantium dignissimos voluptate
+          voluptatibus, ad deleniti repudiandae quaerat adipisci! Error
+          laboriosam ratione aspernatur nulla rem natus labore?
+        </p>
+      );
+    } else {
+      return (
+        <p className="text-md mx-2 max-w-full max-h-full overflow-y-auto break-words text-gray-800 whitespace-pre-line">
+          <span className="font-bold text-indigo-800 text-left">About me:</span>{" "}
+          {user.aboutMe}
+        </p>
+      );
+    }
+  };
 
   return (
     <>
       <section>
         <section
           id="profile-banner"
-          className="grid-flow-row-dense grid-cols-2 grid-row-2 lg: grid-row-1 md:grid-cols-4"
+          className="grid-flow-row-dense grid-cols-2 grid-rows-2 md:grid-rows-1 md:grid-cols-4"
         >
           <div className="profile-banner-item col-span-1 justify-start">
             <div className="flex flex-col pl-6 items-start">
@@ -58,17 +78,7 @@ const ProfileBanner = ({ user }) => {
             <RenderAvatar />
           </div>
           <div className="flex flex-col profile-banner-item col-span-2 justify-center">
-            {/* <span className="text-md mx-2 text-gray-800">{user.aboutMe}</span> */}
-            <p className="text-md mx-2 text-gray-800">
-              <span className="font-bold text-indigo-800 text-left">
-                About me:
-              </span>{" "}
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Doloremque voluptas optio soluta doloribus! Accusantium
-              dignissimos voluptate voluptatibus, ad deleniti repudiandae
-              quaerat adipisci! Error laboriosam ratione aspernatur nulla rem
-              natus labore?
-            </p>
+            <RenderAboutMe />
           </div>
         </section>
       </section>

@@ -18,15 +18,18 @@ const UserSchema = new mongoose.Schema({
   },
   image: {
     type: String,
-    require: false,
+    require: true,
+    default: ''
   },
   cloudinaryId: {
     type: String,
-    require: false,
+    require: true,
+    default: ''
   },
   aboutMe: {
     type: String,
-    required: false,
+    required: true,
+    default: ''
   },
   favorites: {
     type: [mongoose.Schema.Types.ObjectId],

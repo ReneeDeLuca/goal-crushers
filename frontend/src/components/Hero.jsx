@@ -12,7 +12,7 @@ const Hero = () => {
           <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-6">
             <div className="sm:mx-auto sm:w-full sm:max-w-sm">
               <h2 className="my-4 text-center text-3xl font-bold leading-9 tracking-tight text-gray-900">
-                Welcome to Serial Crushers!
+                Welcome to Goal Crushers!
               </h2>
               <div className="divide-y divide-slate-400">
                 <div className="py-1"></div>

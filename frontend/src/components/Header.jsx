@@ -63,7 +63,7 @@ export default function Header() {
           <div className="min-w-0 basis-1/2">
             <Link to="/">
               <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">
-                Serial Crushers
+                Goal Crushers
               </h2>
             </Link>
             <div className="md:mt-1 flex md:flex-col mt-0 flex-row flex-wrap space-x-6"></div>

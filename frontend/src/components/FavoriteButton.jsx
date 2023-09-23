@@ -17,7 +17,6 @@ const FavoriteButton = ({ followId, followName }) => {
     isError,
     error,
   } = useGetUserByIdQuery(userId);
-  console.log(loggedInUser);
 
   const favorites = [...loggedInUser.favorites];
 

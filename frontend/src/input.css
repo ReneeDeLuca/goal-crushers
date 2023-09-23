@@ -232,3 +232,11 @@ tbody tr .goal-cal-completed-day {
     border-radius: .25rem;
     justify-content: space-evenly;
 }
+
+/* Preview Image */
+
+.preview-image {
+    height: 3rem;
+    width: 3rem;
+    border-radius: 100%;
+}
