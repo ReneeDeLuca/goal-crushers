@@ -21,11 +21,8 @@ const ProfileGoal = ({ goal }) => {
           </Link>
         </div>
       </section>
-      <section
-        id="calendar-chart"
-        className="md:overflow-y-auto pr-4 flex-row pt-1"
-      >
-        <div className="calendar-label mr-6 ml-4 basis-1/5">
+      <section id="calendar-chart" className="md:overflow-y-auto px-2 pt-1">
+        <div className="calendar-label col-span-1">
           <CalendarHeader
             key={goal._id}
             id={goal._id}
@@ -33,7 +30,7 @@ const ProfileGoal = ({ goal }) => {
             endDate={goal.endDate}
           />
         </div>
-        <div className="basis-3/5">
+        <div className="col-span-2 mx-auto">
           <CreateCalendar
             key={goal._id}
             id={goal._id}
@@ -43,7 +40,7 @@ const ProfileGoal = ({ goal }) => {
           />
         </div>
         <div>
-          <section className="basis-1/5 calendar-label"></section>
+          <section className="col-span-1 calendar-label justify-end"></section>
         </div>
       </section>
       <section className="goal-meta-data">

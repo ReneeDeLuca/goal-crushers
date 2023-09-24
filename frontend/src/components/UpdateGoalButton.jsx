@@ -8,19 +8,14 @@ const UpdateGoalDataButton = ({ goal }) => {
   const [updateGoalData, { isLoading }] = useUpdateGoalDataMutation();
   const [addStatus] = useAddStatusMutation();
 
-  const [datesCompleted, setDatesCompleted] = useState(goal.datesCompleted);
-
-  const onDateUpdated = () =>
-    setDatesCompleted([...datesCompleted, Date.now()]);
-
   const onUpdateGoalClicked = async () => {
+    const dateOptions = {
+      weekday: "short",
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    };
     try {
-      const dateOptions = {
-        weekday: "short",
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      };
       const res = await updateGoalData({
         id: goal._id,
         date: new Date().toLocaleDateString("en", dateOptions),
@@ -35,9 +30,7 @@ const UpdateGoalDataButton = ({ goal }) => {
         }).unwrap();
       }
       console.log(res);
-      setDatesCompleted([...datesCompleted, res.date]);
-      toast.success("Goal updated successfully");
-      onDateUpdated();
+      toast.success("Goal updated");
     } catch (err) {
       toast.error(err?.data?.message || err.error);
     }

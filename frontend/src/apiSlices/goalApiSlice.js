@@ -50,8 +50,6 @@ export const goalApiSlice = apiSlice.injectEndpoints({
                 transformResponse: (response) => response.data,
                 transformErrorResponse: (response) => response.status,
             }),
-            // Invalidates all queries that subscribe to this Goal `id` only.
-            // In this case, `getGoalById` will be re-run. `getAllGoals` *might*  rerun, if this id was under its results.
             invalidatesTags: (result, error, { id }) => [{ type: 'Goal', id }],
           }),
         updateGoal: builder.mutation({
@@ -62,6 +60,9 @@ export const goalApiSlice = apiSlice.injectEndpoints({
               transformResponse: (response) => response.data,
             transformErrorResponse: (response) => response.status,
             }),
+            // Invalidates all queries that subscribe to this Goal `id` only.
+            // In this case, `getGoalById` will be re-run. `getAllGoals` *might*  rerun, if this id was under its results.
+            
             invalidatesTags: (result, error, { id }) => [{ type: 'Goal', id }],
         }),
         reactionAdded: builder.mutation({
