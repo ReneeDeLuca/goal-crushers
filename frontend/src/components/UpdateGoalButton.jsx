@@ -7,39 +7,40 @@ import { useAddStatusMutation } from "../apiSlices/statusApiSlice";
 const UpdateGoalDataButton = ({ goal }) => {
   const [updateGoalData, { isLoading }] = useUpdateGoalDataMutation();
   const [addStatus] = useAddStatusMutation();
-
-  const [datesCompleted, setDatesCompleted] = useState(goal.datesCompleted);
-
-  const onDateUpdated = () =>
-    setDatesCompleted([...datesCompleted, Date.now()]);
+  const [isUpdated, setIsUpdated] = useState(false);
+  const [datesCompleted, setDatesCompleted] = useState([goal.datesCompleted]);
 
   const onUpdateGoalClicked = async () => {
-    try {
-      const dateOptions = {
-        weekday: "short",
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      };
-      const res = await updateGoalData({
-        id: goal._id,
-        date: new Date().toLocaleDateString("en", dateOptions),
-      }).unwrap();
-      if (goal.isPublic) {
-        await addStatus({
-          user: goal.user,
-          userName: goal.userName,
-          goalId: goal._id,
-          goalTitle: goal.title,
-          statusType: "goal progress",
+    const dateOptions = {
+      weekday: "short",
+      year: "numeric",
+      month: "short",
+      day: "numeric",
+    };
+    if (!isUpdated) {
+      try {
+        if (goal.isPublic) {
+          await addStatus({
+            user: goal.user,
+            userName: goal.userName,
+            goalId: goal._id,
+            goalTitle: goal.title,
+            statusType: "goal progress",
+          }).unwrap();
+        }
+        const res = await updateGoalData({
+          id: goal._id,
+          date: new Date().toLocaleDateString("en", dateOptions),
         }).unwrap();
+        console.log(res);
+        setIsUpdated(true);
+        setDatesCompleted(res);
+        toast.success("Goal updated");
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
       }
-      console.log(res);
-      setDatesCompleted([...datesCompleted, res.date]);
-      toast.success("Goal updated successfully");
-      onDateUpdated();
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
+    } else {
+      toast.error("Goal already updated today");
     }
   };
 

@@ -32,15 +32,12 @@ const SingleGoal = ({ goal }) => {
           <div className="basis-1/2 text-center pt-8 items-baseline">
             <h2 className="text-xl underline align-bottom items-start font-bold text-gray-600">{`${goalData.title}`}</h2>
           </div>
-          <div className="flex flex-column basis-1/2 text-end py-4 my-auto justify-end">
+          <div className="basis-1/2 text-end py-4 my-auto justify-end">
             <span></span>
           </div>
         </section>
-        <section
-          id="calendar-chart"
-          className="md:overflow-y-auto pr-4 flex-row pt-1"
-        >
-          <div className="calendar-label mr-6 ml-4 basis-1/5">
+        <section id="calendar-chart" className="md:overflow-y-auto px-2 pt-1">
+          <div className="calendar-label col-span-1">
             <CalendarHeader
               key={goalData.title}
               id={goalData._id}
@@ -48,7 +45,7 @@ const SingleGoal = ({ goal }) => {
               endDate={goalData.endDate}
             />
           </div>
-          <div className="basis-3/5">
+          <div className="col-span-2 mx-auto">
             <CreateCalendar
               key={goalData.endDate}
               id={goalData._id}
@@ -58,7 +55,7 @@ const SingleGoal = ({ goal }) => {
             />
           </div>
           <div>
-            <section className="basis-1/5 calendar-label"></section>
+            <section className="col-span-1 calendar-label justify-end"></section>
           </div>
         </section>
         <section className="goal-meta-data">

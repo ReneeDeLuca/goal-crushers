@@ -53,10 +53,10 @@ const updateGoalData = asyncHandler(async (req, res) => {
     const date = req.body.date;
     const goalId = req.body.id;
     const goal = await Goal.findById(goalId);
-    const added = goal.datesCompleted.addToSet(date);
-    await goal.save();
+    const added = await goal.datesCompleted.addToSet(date);  
+    await goal.save({j: true});
 
-    res.status(200).json({message: "Goal Progress Updated"})
+    res.json(goal.datesCompleted)
     console.log("Goal Progress Updated");
 
   } catch (err) {
@@ -91,9 +91,7 @@ const updateGoal = asyncHandler(async (req, res) => {
 const reactionAdded = asyncHandler(async (req, res) => {
   try{
     const reaction = req.body.reaction;
-    console.log(reaction);
     const goalId = req.params.id
-    console.log(goalId);
     const goal = await Goal.findOneAndUpdate(
       {_id: goalId.slice(1)},
       {$inc: {[reaction]: 1}},

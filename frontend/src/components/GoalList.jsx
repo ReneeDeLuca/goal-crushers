@@ -10,7 +10,6 @@ const GoalList = ({ userInfo }) => {
   const {
     data: goals = [],
     isLoading,
-    isFetching,
     isSuccess,
     isError,
     error,
@@ -65,10 +64,6 @@ const GoalList = ({ userInfo }) => {
 
   if (isLoading) {
     content = <div className="loader">Loading...</div>;
-  } else if (isFetching) {
-    document
-      .getElementsByClassName("goal-list-group")[0]
-      .classList.add("disabled");
   } else if (isSuccess) {
     if (sortedGoals.length === 0) {
       content = (

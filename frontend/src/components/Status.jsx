@@ -1,7 +1,7 @@
 /* eslint-disable react/prop-types */
 import TimeAgo from "./TimeAgo";
 import { Link } from "react-router-dom";
-//import { useGetUserByIdQuery } from "../services/userApi";
+import { useGetUserByIdQuery } from "../apiSlices/userApiSlice";
 
 const Status = ({ status }) => {
   let statusType = status.statusType;
@@ -14,7 +14,7 @@ const Status = ({ status }) => {
   let createdAt = status.createdAt;
   let statusId = status._id;
 
-  //const { data: userData = {} } = useGetUserByIdQuery(user);
+  const { data: userData = {} } = useGetUserByIdQuery(user);
 
   let content;
 
@@ -24,8 +24,8 @@ const Status = ({ status }) => {
         <div className="flex basis-2/3 gap-x-4">
           <img
             className="h-12 w-12 flex-none rounded-full bg-gray-50"
-            src="/4900_8_04_catalyststuff.jpg"
-            alt=""
+            src={`${userData.image}`}
+            alt="user_image"
           />
           <div className="min-w-0 flex-auto">
             <p className="text-sm font-semibold leading-6 text-gray-900">
@@ -57,8 +57,8 @@ const Status = ({ status }) => {
         <div className="flex basis-2/3 gap-x-4">
           <img
             className="h-12 w-12 flex-none rounded-full bg-gray-50"
-            src="/4900_8_04_catalyststuff.jpg"
-            alt=""
+            src={`${userData.image}`}
+            alt="user_image"
           />
           <div className="min-w-0 flex-auto">
             <p className="text-sm font-semibold leading-6 text-gray-900">
@@ -94,8 +94,8 @@ const Status = ({ status }) => {
         <div className="flex basis-2/3 gap-x-4">
           <img
             className="h-12 w-12 flex-none rounded-full bg-gray-50"
-            src="/4900_8_04_catalyststuff.jpg"
-            alt=""
+            src={`${userData.image}`}
+            alt="user_image"
           />
           <div className="min-w-0 flex-auto">
             <p className="text-sm font-semibold leading-6 text-gray-900">
@@ -131,8 +131,8 @@ const Status = ({ status }) => {
         <div className="flex basis-2/3 gap-x-4">
           <img
             className="h-12 w-12 flex-none rounded-full bg-gray-50"
-            src="/4900_8_04_catalyststuff.jpg"
-            alt=""
+            src={`${userData.image}`}
+            alt="user_image"
           />
           <div className="min-w-0 flex-auto">
             <p className="text-sm font-semibold leading-6 text-gray-900">

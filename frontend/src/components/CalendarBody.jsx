@@ -1,5 +1,4 @@
 import getDateArray from "./DateArray";
-import Tooltip from "./Tooltip";
 import format from "date-fns/format";
 
 const CalendarBody = (goal) => {
@@ -41,27 +40,23 @@ const CalendarBody = (goal) => {
             if (completedDatesArray.includes(checkDate)) {
               return (
                 <td
-                  className="goal-cal-completed-day"
+                  className="goal-cal-completed-day has-tooltip"
                   key={`day-${format(new Date(dateObj.date), "PP")}`}
                 >
-                  {
-                    <Tooltip
-                      message={`${format(new Date(dateObj.date), "PP")}`}
-                    />
-                  }
+                  <span className="tooltip rounded shadow-lg text-xs p-1 bg-gray-300 text-indigo-500 -mt-8">
+                    {`${format(new Date(dateObj.date), "PP")}`}
+                  </span>
                 </td>
               );
             } else {
               return (
                 <td
-                  className="goal-cal-day"
+                  className="goal-cal-day has-tooltip"
                   key={`day-${format(new Date(dateObj.date), "PP")}`}
                 >
-                  {
-                    <Tooltip
-                      message={`${format(new Date(dateObj.date), "PP")}`}
-                    />
-                  }
+                  <span className="tooltip rounded shadow-lg text-xs p-1 bg-gray-300 text-indigo-500 -mt-8">
+                    {`${format(new Date(dateObj.date), "PP")}`}
+                  </span>
                 </td>
               );
             }

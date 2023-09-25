@@ -52,7 +52,7 @@ const RegisterScreen = () => {
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-6">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-4 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
-            Register
+            Register A New Account
           </h2>
         </div>
       </div>
@@ -73,7 +73,7 @@ const RegisterScreen = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 p-1 text-gray-900 shadow-sm ring-1 ring-offset-0 ring-gray-300 placeholder:text-gray-400 resize-none focus:ring-2  focus:ring-indigo-600 sm:text-sm sm:leading-6 caret-indigo-600"
               />
             </div>
           </div>
@@ -93,7 +93,7 @@ const RegisterScreen = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 p-1 text-gray-900 shadow-sm ring-1 ring-offset-0 ring-gray-300 placeholder:text-gray-400 resize-none focus:ring-2  focus:ring-indigo-600 sm:text-sm sm:leading-6 caret-indigo-600"
               />
             </div>
           </div>
@@ -114,7 +114,7 @@ const RegisterScreen = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 p-1 text-gray-900 shadow-sm ring-1 ring-offset-0 ring-gray-300 placeholder:text-gray-400 resize-none focus:ring-2  focus:ring-indigo-600 sm:text-sm sm:leading-6 caret-indigo-600"
               />
             </div>
           </div>
@@ -135,7 +135,7 @@ const RegisterScreen = () => {
                 value={confirmPassword}
                 onChange={(e) => setConfirmPassword(e.target.value)}
                 required
-                className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                className="block w-full rounded-md border-0 p-1 text-gray-900 shadow-sm ring-1 ring-offset-0 ring-gray-300 placeholder:text-gray-400 resize-none focus:ring-2  focus:ring-indigo-600 sm:text-sm sm:leading-6 caret-indigo-600"
               />
             </div>
           </div>

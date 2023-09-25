@@ -48,7 +48,7 @@ const ProfileBanner = ({ user }) => {
 
   return (
     <>
-      <section>
+      <section className="mx-auto">
         <section
           id="profile-banner"
           className="grid-flow-row-dense grid-cols-2 grid-rows-2 md:grid-rows-1 md:grid-cols-4"
