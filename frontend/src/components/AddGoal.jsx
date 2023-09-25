@@ -66,13 +66,15 @@ const AddGoal = () => {
           fire,
           star,
         }).unwrap();
-        await addStatus({
-          userId: user,
-          userName: userName,
-          goalId: res._id,
-          goalTitle: title,
-          statusType: "new goal",
-        }).unwrap();
+        if (isPublic) {
+          await addStatus({
+            userId: user,
+            userName: userName,
+            goalId: res._id,
+            goalTitle: title,
+            statusType: "new goal",
+          }).unwrap();
+        }
         console.log(res);
         setTitle("");
         setEndDate(new Date());

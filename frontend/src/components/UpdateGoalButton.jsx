@@ -7,6 +7,8 @@ import { useAddStatusMutation } from "../apiSlices/statusApiSlice";
 const UpdateGoalDataButton = ({ goal }) => {
   const [updateGoalData, { isLoading }] = useUpdateGoalDataMutation();
   const [addStatus] = useAddStatusMutation();
+  const [isUpdated, setIsUpdated] = useState(false);
+  const [datesCompleted, setDatesCompleted] = useState([goal.datesCompleted]);
 
   const onUpdateGoalClicked = async () => {
     const dateOptions = {
@@ -15,24 +17,30 @@ const UpdateGoalDataButton = ({ goal }) => {
       month: "short",
       day: "numeric",
     };
-    try {
-      const res = await updateGoalData({
-        id: goal._id,
-        date: new Date().toLocaleDateString("en", dateOptions),
-      }).unwrap();
-      if (goal.isPublic) {
-        await addStatus({
-          user: goal.user,
-          userName: goal.userName,
-          goalId: goal._id,
-          goalTitle: goal.title,
-          statusType: "goal progress",
+    if (!isUpdated) {
+      try {
+        if (goal.isPublic) {
+          await addStatus({
+            user: goal.user,
+            userName: goal.userName,
+            goalId: goal._id,
+            goalTitle: goal.title,
+            statusType: "goal progress",
+          }).unwrap();
+        }
+        const res = await updateGoalData({
+          id: goal._id,
+          date: new Date().toLocaleDateString("en", dateOptions),
         }).unwrap();
+        console.log(res);
+        setIsUpdated(true);
+        setDatesCompleted(res);
+        toast.success("Goal updated");
+      } catch (err) {
+        toast.error(err?.data?.message || err.error);
       }
-      console.log(res);
-      toast.success("Goal updated");
-    } catch (err) {
-      toast.error(err?.data?.message || err.error);
+    } else {
+      toast.error("Goal already updated today");
     }
   };
 

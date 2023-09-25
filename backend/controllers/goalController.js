@@ -54,9 +54,9 @@ const updateGoalData = asyncHandler(async (req, res) => {
     const goalId = req.body.id;
     const goal = await Goal.findById(goalId);
     const added = await goal.datesCompleted.addToSet(date);  
-    await goal.save();
+    await goal.save({j: true});
 
-    res.json({goal})
+    res.json(goal.datesCompleted)
     console.log("Goal Progress Updated");
 
   } catch (err) {

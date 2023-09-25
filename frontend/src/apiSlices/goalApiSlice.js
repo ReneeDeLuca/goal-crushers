@@ -13,16 +13,10 @@ export const goalApiSlice = apiSlice.injectEndpoints({
             }),
                 // If any mutation is executed that `invalidate`s any of these tags, this query will re-run to be always up-to-date.
                 // The `LIST` id is a "virtual id" we just made up to be able to invalidate this query specifically if a new `Goal` element was added.            
-                providesTags: (result) =>
-                // is result available?
-                result
-                  ? // successful query
-                    [
-                      ...result.map(({ id }) => ({ type: 'Goal', id })),
-                      { type: 'Goal', id: 'LIST' },
-                    ]
-                  : // an error occurred, but we still want to refetch this query when `{ type: 'Goal', id: 'LIST' }` is invalidated
-                    [{ type: 'Goal', id: 'LIST' }],
+                providesTags: (result = [], error, arg) => [
+                    'Goal',
+                    ...result.map(({ id }) => ({ type: 'Goal', id }))
+                  ]
             
         }),
         getGoalById: builder.query({
@@ -31,7 +25,7 @@ export const goalApiSlice = apiSlice.injectEndpoints({
                 transformResponse: (response) => response.data,
                 transformErrorResponse: (response) => response.status,
             }),
-            providesTags: (result, error, id) => [{type: "Goal", id}],
+            providesTags: (result, error, arg) => [{ type: 'Goal', id: arg }]
         }),
             //mutations - send updates to the server
         addGoal: builder.mutation({
@@ -40,7 +34,7 @@ export const goalApiSlice = apiSlice.injectEndpoints({
                 method: "POST",
                 body: data,
             }),
-            invalidatesTags: (result, error, { id }) => [{ type: 'Goal', id }],
+            invalidatesTags: ['Goal'],
         }),
         updateGoalData: builder.mutation({
             query: ({id, date }) => ({
@@ -50,7 +44,7 @@ export const goalApiSlice = apiSlice.injectEndpoints({
                 transformResponse: (response) => response.data,
                 transformErrorResponse: (response) => response.status,
             }),
-            invalidatesTags: (result, error, { id }) => [{ type: 'Goal', id }],
+            invalidatesTags: ['Goal'],
           }),
         updateGoal: builder.mutation({
             query: ({id, title, endDate, isPublic}) => ({
@@ -63,7 +57,7 @@ export const goalApiSlice = apiSlice.injectEndpoints({
             // Invalidates all queries that subscribe to this Goal `id` only.
             // In this case, `getGoalById` will be re-run. `getAllGoals` *might*  rerun, if this id was under its results.
             
-            invalidatesTags: (result, error, { id }) => [{ type: 'Goal', id }],
+            invalidatesTags: (result, error, arg) => [{ type: 'Goal', id: arg.id }]
         }),
         reactionAdded: builder.mutation({
             query: ({id, reaction}) => ({
