@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { apiSlice } from "./apiSlice";
 const GOAL_URL = "/api/goal";
 
