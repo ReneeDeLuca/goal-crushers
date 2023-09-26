@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import path from 'path';
 dotenv.config();
 import cookieParser from 'cookie-parser';
 import {notFound, errorHandler} from './middleware/errorMiddleware.js';
@@ -13,7 +14,6 @@ import commentRoutes from './routes/commentRoutes.js';
 import statusRoutes from './routes/statusRoutes.js';
 import imageRoutes from './routes/imageRoutes.js';
 
-connectDB();
 const app = express();
 
 app.use(express.json());
@@ -49,5 +49,9 @@ if (process.env.NODE_ENV === 'production') {
 app.use(notFound);
 app.use(errorHandler);
 
-
-app.listen(port, () => console.log(`Server running on port ${port}`));
+//Connect to the database before listening
+connectDB().then(() => {
+  app.listen(port, () => {
+      console.log("listening for requests");
+  })
+})
