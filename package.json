@@ -5,7 +5,8 @@
   "type": "module",
   "main": "backend/server.js",
   "scripts": {
-    "start": "node backend/server.js",
+    "start": "cd backend && node server.js",
+    "postinstall": "cd frontend && npm install && ../backend && npm install",
     "server": "nodemon backend/server.js"
   },
   "keywords": [],
