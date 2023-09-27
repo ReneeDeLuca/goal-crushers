@@ -5,7 +5,7 @@ dotenv.config();
 import cookieParser from "cookie-parser";
 import { notFound, errorHandler } from "./middleware/errorMiddleware.js";
 import connectDB from "./config/db.js";
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 import userRoutes from "./routes/userRoutes.js";
 import goalRoutes from "./routes/goalRoutes.js";
 import mainRoutes from "./routes/mainRoutes.js";
@@ -48,7 +48,7 @@ app.use(errorHandler);
 
 //Connect to the database before listening
 connectDB().then(() => {
-  app.listen(port, () => {
+  app.listen(PORT, () => {
     console.log("listening for requests");
   });
 });
