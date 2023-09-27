@@ -1,17 +1,33 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import {fileURLToPath} from 'url'
 
 // https://vitejs.dev/config/
-export default defineConfig({
+const defaultConfig = {
   plugins: [react()],
-  server:{
-    port: 3000,
-    proxy: {
-      '/api': {
-        target: 'http://localhost:3001',
-        changeOrigin: true
+  resolve: {
+    alias: {
+      '@': fileURLToPath(new URL('./src', import.meta.url))
+    }
+  },
+}
+export default defineConfig(({ command, mode }) => {
+  if (command === 'serve') {
+    const isDev = mode === 'development'
+    return {
+      ...defaultConfig,
+    server:{
+      proxy: {
+        '/api': {
+          target: isDev ? 'http://localhost:3000' : 'https://goalcrushers.cyclic.cloud/',
+          changeOrigin: isDev,
+          secure: !isDev,
+        }
       }
     }
+    } 
+  } else {
+    return defaultConfig
   }
 })
       
