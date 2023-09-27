@@ -8,7 +8,7 @@
   "server": "nodemon backend/server.js",
   "start": "cd backend && node server.js",
   "build": "cd frontend && npm install && npm run build",
-  "postinstall": "cd frontend && npm install && .. && npm install"
+  "postinstall": "cd frontend && npm install && ../ && npm install"
   },
   "keywords": [],
   "author": "",
