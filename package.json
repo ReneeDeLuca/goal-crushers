@@ -3,19 +3,22 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "backend/server.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node server.js",
-    "dev": "nodemon server.js",
-    "postinstall": "cd frontend && npm install",
-    "build": "cd frontend && npm run build"
-  },
+    "build": "cd frontend && npm run build",
+    "install-frontend": "cd frontend && npm install",
+    "heroku-postbuild": "npm run install-frontend && npm run build",
+    "server": "nodemon server.js",
+    "develop": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix frontend\"",
+    "start": "concurrently --kill-others-on-fail \"npm run server\" \"npm run start --prefix frontend\""
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "cloudinary": "^1.39.0",
+    "concurrently": "^8.2.1",
     "cookie-parser": "^1.4.6",
     "date-fns": "^2.30.0",
     "dotenv": "^16.3.1",
