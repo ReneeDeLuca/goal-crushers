@@ -5,10 +5,10 @@
   "type": "module",
   "main": "backend/server.js",
   "scripts": {
-  "server": "nodemon backend/server.js",
-  "start": "cd backend && node server.js",
-  "build": "cd frontend && npm install && npm run build",
-  "postinstall": "cd frontend && npm install && ../ && npm install"
+    "start": "node backend/server.js",
+    "dev": "nodemon backend/server.js",
+    "postinstall": "cd frontend && npm install",
+    "build": "cd frontend && npm run build"
   },
   "keywords": [],
   "author": "",
