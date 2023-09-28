@@ -3,7 +3,28 @@ import react from "@vitejs/plugin-react";
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    {
+      name: "build-html",
+      apply: "build",
+      transformIndexHtml: (html) => {
+        return {
+          html,
+          tags: [
+            {
+              tag: "script",
+              attrs: {
+                type: "module",
+                src: "/app.js",
+              },
+              injectTo: "body",
+            },
+          ],
+        };
+      },
+    },
+  ],
   server: {
     host: "0.0.0.0",
   },
