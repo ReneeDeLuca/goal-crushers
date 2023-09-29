@@ -25,12 +25,6 @@ export default defineConfig({
       },
     },
   ],
-  css: {
-    modules: {
-      localsConvention: "camelCase",
-      generateScopedName: "[local]_[hash:base64:2]",
-    },
-  },
   server: {
     host: "0.0.0.0",
   },
