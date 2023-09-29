@@ -31,6 +31,9 @@ app.use("/api/status", statusRoutes);
 app.use("/api/images", imageRoutes);
 
 const __dirname = path.resolve();
+express.static.mime.define({ "text/css": ["css"] });
+express.static.mime.define({ module: ["jsx"] });
+express.static.mime.define({ "text/javascript": ["js"] });
 if (process.env.NODE_ENV === "production") {
   app.use(express.static(path.join(__dirname, "app", "frontend", "assets")));
   app.use(
@@ -41,7 +44,11 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(
       path.join(__dirname, "frontend", "dist", "index.html"),
       (err) => {
-        res.status(500).send(err);
+        if (err) {
+          res.status(500).send(err);
+        } else {
+          res.contentType(req.params.file);
+        }
       }
     );
   });
