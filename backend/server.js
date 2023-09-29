@@ -31,13 +31,16 @@ app.use("/api/status", statusRoutes);
 app.use("/api/images", imageRoutes);
 
 const __dirname = path.resolve();
-express.static.mime.define({ "text/css": ["css"] });
-express.static.mime.define({ module: ["jsx"] });
-express.static.mime.define({ "text/javascript": ["js"] });
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "app", "frontend", "assets")));
   app.use(
-    express.static(path.join(__dirname, "app", "frontend", "src", "main.jsx"))
+    express
+      .static(path.join(__dirname, "app", "frontend", "assets"))
+      .mime.define({ "text/css": ["css"] }, { module: ["js"] })
+  );
+  app.use(
+    express
+      .static(path.join(__dirname, "app", "frontend", "src", "main.jsx"))
+      .mime.define({ module: ["jsx"] })
   );
 
   app.get("*", (req, res) => {
