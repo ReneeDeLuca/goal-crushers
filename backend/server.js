@@ -31,13 +31,16 @@ app.use("/api/status", statusRoutes);
 app.use("/api/images", imageRoutes);
 
 if (process.env.NODE_ENV === "production") {
-  const __dirname = path.resolve();
-  app.use(express.static(path.join(__dirname, "frontend", "dist", "assets")));
-  app.use(express.static(path.join(__dirname, "frontend", "src", "main.jsx")));
+  app.use(
+    express.static(path.join(__dirname, "app", "frontend", "dist", "assets"))
+  );
+  app.use(
+    express.static(path.join(__dirname, "app", "frontend", "src", "main.jsx"))
+  );
 
   app.get("*", (req, res) => {
     res.sendFile(
-      path.join(__dirname, "frontend", "dist", "index.html"),
+      path.join(__dirname, "app", "frontend", "dist", "index.html"),
       (err) => {
         res.status(500).send(err);
       }
