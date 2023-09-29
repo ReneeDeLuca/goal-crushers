@@ -13,6 +13,7 @@ import profileRoutes from "./routes/profileRoutes.js";
 import commentRoutes from "./routes/commentRoutes.js";
 import statusRoutes from "./routes/statusRoutes.js";
 import imageRoutes from "./routes/imageRoutes.js";
+import exp from "constants";
 
 const app = express();
 
@@ -31,7 +32,8 @@ app.use("/api/images", imageRoutes);
 
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();
-  app.use(express.static(path.join(__dirname, "assets")));
+  app.use(express.static(path.join(__dirname, "frontend", "dist", "assets")));
+  app.use(express.static(path.join(__dirname, "frontend", "src", "main.jsx")));
 
   app.get("*", (req, res) => {
     res.sendFile(
