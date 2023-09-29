@@ -30,6 +30,7 @@ app.use("/api/comment", commentRoutes);
 app.use("/api/status", statusRoutes);
 app.use("/api/images", imageRoutes);
 
+const __dirname = path.resolve();
 if (process.env.NODE_ENV === "production") {
   app.use(
     express.static(path.join(__dirname, "app", "frontend", "dist", "assets"))
