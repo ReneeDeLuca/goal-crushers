@@ -44,11 +44,7 @@ if (process.env.NODE_ENV === "production") {
     res.sendFile(
       path.join(__dirname, "frontend", "dist", "index.html"),
       (err) => {
-        if (err) {
-          res.status(500).send(err);
-        } else {
-          res.contentType(req.params.file);
-        }
+        res.status(500).send(err);
       }
     );
   });
