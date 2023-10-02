@@ -47,7 +47,8 @@ const AddGoal = () => {
   const onTitleChanged = (e) => setTitle(e.target.value);
   const onEndDateChanged = (e) => setEndDate(e.target.value);
 
-  const canSave = [title, endDate].every(Boolean) && !isLoading;
+  const canSave =
+    [title, endDate].every(Boolean) && !isLoading && endDate > new Date();
 
   const togglePublic = () => setIsPublic(!isPublic);
 

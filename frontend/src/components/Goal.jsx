@@ -69,12 +69,11 @@ const Goal = ({ goal }) => {
                 Ends on:{" "}
               </span>
               <span className="text-xs text-gray-800 basis-2/5 text-start">{`${formatEndDate}`}</span>
-              <a
-                className="text-xs text-gray-600 basis-2/5 text-end pr-2"
-                href="/deleteGoal"
-              >
-                Delete Goal?
-              </a>
+              <Link to={`/goal/:${goal._id}`}>
+                <span className="text-xs text-gray-800 basis-2/5 text-start">
+                  Delete Goal?
+                </span>
+              </Link>
             </li>
           </ul>
         </div>

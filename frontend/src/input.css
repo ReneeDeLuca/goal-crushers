@@ -250,3 +250,12 @@ tbody tr .goal-cal-completed-day {
     width: 3rem;
     border-radius: 100%;
 }
+
+/* Footer */
+footer {
+    background-color: lavender;
+}
+
+.footer{
+    background-color: lavender;
+}
