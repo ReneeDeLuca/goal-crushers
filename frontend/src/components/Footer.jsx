@@ -10,11 +10,11 @@ const Footer = () => {
   let portfolioLink = "https://reneedeluca.dev";
   let imageLink = "https://www.freepik.com/author/catalyststuff";
   return (
-    <footer className="fixed left-0 right-0 bottom-0 isolate w-full h-24">
+    <footer className="fixed left-0 right-0 bottom-0 isolate w-full h-16 md:h-24">
       <section className="flex flex-col-reverse flex-end md:flex-row w-full h-full">
         <section className="flex basis-1/2 footer">
-          <div className="flex w-full flex-col items-center justify-center py-4">
-            <span className="text-xs mb-4 text-center font-normal text-gray-600 md:mb-0">
+          <div className="flex w-full flex-col items-center justify-center md:py-4">
+            <span className="text-xs mb-2 text-center font-normal text-gray-600 md:mb-0">
               © 2023 All rights reserved. Made with ❤️ by{" "}
               <a href={`${portfolioLink}`} />
               Renée DeLuca
@@ -28,7 +28,7 @@ const Footer = () => {
           </div>
         </section>
         <section className="flex basis-1/2 footer">
-          <div className="flex w-full flex-col items-center justify-center py-4">
+          <div className="flex w-full flex-col items-center justify-center pt-1 md:py-4">
             <div className="inline-grid grid-cols-3 gap-4 justify-center">
               <div className="col-span-1">
                 <a href={`${githubLink}`}>
