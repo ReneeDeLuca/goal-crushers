@@ -8,7 +8,7 @@
     "node": "18.x"
   },
   "scripts": {
-    "build": "npm run install && npm run install-frontend && npm run client-build",
+    "build": "npm install && npm run install-frontend && npm run client-build",
     "install-frontend": "cd frontend && npm install",
     "client-build": "cd frontend && npm run build",
     "server": "nodemon backend/server.js",
