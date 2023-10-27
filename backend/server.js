@@ -30,23 +30,44 @@ app.use("/api/status", statusRoutes);
 app.use("/api/images", imageRoutes);
 
 const __dirname = path.resolve();
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "frontend", "dist", "assets")));
-  app.use(express.static(path.join(__dirname, "frontend", "src", "main.jsx")));
+var options = {
+  setHeaders: function (res, path, stat) {
+    if (path.endsWith(".js")) {
+      res.append("Content-Type", "text/javascript; charset=UTF-8");
+      res.append("X-Content-Type-Options", "nosniff");
+    } else if (path.endsWith(".css")) {
+      res.append("Content-Type", "text/css");
+      res.append("X-Content-Type-Options", "nosniff");
+    } else if (path.endsWith(".jsx")) {
+      res.append("Content-Type", "text/javascript; charset=UTF-8");
+      res.append("X-Content-Type-Options", "nosniff");
+    }
+  },
+};
 
-  app.get("*", (req, res) => {
-    res.sendFile(
-      path.join(__dirname, "frontend", "dist", "index.html"),
-      (err) => {
-        res.status(500).send(err);
-      }
-    );
-  });
-} else {
-  app.get("/", (req, res) => {
-    res.send("API is running....");
-  });
-}
+app.use(
+  "/static",
+  express.static(path.join(__dirname, "frontend", "dist", "assets"), options)
+);
+app.use(
+  "/static",
+  express.static(path.join(__dirname, "frontend", "src", "main.jsx"), options)
+);
+app.use(
+  "/static",
+  express.static(
+    path.join(__dirname, "frontend", "public", "4900_8_04_catalyststuff.jpg")
+  )
+);
+
+app.get("*", (req, res) => {
+  res.sendFile(
+    path.join(__dirname, "frontend", "dist", "index.html"),
+    (err) => {
+      res.status(500).send(err);
+    }
+  );
+});
 
 //Error Handler Middleware - otherwise express will return HTML error page
 app.use(notFound);
