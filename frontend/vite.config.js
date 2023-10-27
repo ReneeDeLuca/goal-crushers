@@ -16,7 +16,7 @@ export default defineConfig({
               tag: "script",
               attrs: {
                 type: "module",
-                src: "/src/main.jsx",
+                src: "/static/main.jsx",
               },
               injectTo: "body",
             },
