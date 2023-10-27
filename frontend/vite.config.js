@@ -25,7 +25,7 @@ export default defineConfig({
       },
     },
   ],
-  base: "/frontend/dist/",
+  base: "/static/",
   server: {
     host: "0.0.0.0",
   },
