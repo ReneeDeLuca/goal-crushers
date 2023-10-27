@@ -31,10 +31,8 @@ app.use("/api/images", imageRoutes);
 
 const __dirname = path.resolve();
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "app", "frontend", "assets")));
-  app.use(
-    express.static(path.join(__dirname, "app", "frontend", "src", "main.jsx"))
-  );
+  app.use(express.static(path.join(__dirname, "frontend", "dist", "assets")));
+  app.use(express.static(path.join(__dirname, "frontend", "src", "main.jsx")));
 
   app.get("*", (req, res) => {
     res.sendFile(
