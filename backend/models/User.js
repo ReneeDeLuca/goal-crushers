@@ -1,55 +1,58 @@
 import mongoose from "mongoose";
 import bcrypt from "bcryptjs";
 
-const UserSchema = new mongoose.Schema({
-  name: { 
-    type: String, 
-    unique: true,
-    required: true, 
+const UserSchema = new mongoose.Schema(
+  {
+    name: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    email: {
+      type: String,
+      unique: true,
+      required: true,
+    },
+    password: {
+      type: String,
+      required: true,
+    },
+    image: {
+      type: String,
+      require: true,
+      default: "",
+    },
+    cloudinaryId: {
+      type: String,
+      require: true,
+      default: "",
+    },
+    aboutMe: {
+      type: String,
+      required: true,
+      default: " ",
+    },
+    favorites: {
+      type: [mongoose.Schema.Types.ObjectId],
+      ref: "User",
+      required: true,
+    },
+    status: {
+      type: String,
+      enum: ["public", "private"],
+      default: "public",
+    },
   },
-  email: { 
-    type: String, 
-    unique: true,
-    required: true, 
-  },
-  password: {
-    type: String,
-    required: true,
-  },
-  image: {
-    type: String,
-    require: true,
-    default: ''
-  },
-  cloudinaryId: {
-    type: String,
-    require: true,
-    default: ''
-  },
-  aboutMe: {
-    type: String,
-    required: true,
-    default: ''
-  },
-  favorites: {
-    type: [mongoose.Schema.Types.ObjectId],
-    ref: "User",
-    required: true,
-  },
-  status: {
-    type: String,
-    enum: ["public", "private"],
-    default: "public",
-  },  
-}, {
-  timestamps: true,
-});
+  {
+    timestamps: true,
+  }
+);
 
 // Password hash middleware.
 
 UserSchema.pre("save", async function (next) {
   if (!this.isModified("password")) {
-      next();
+    next();
   }
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
